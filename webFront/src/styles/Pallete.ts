@@ -7,24 +7,59 @@ export enum Palette {
   backgroundColor = "#e9e9e9",
 }
 
-// type ButtonProperty = {
-//   backgroundColor: Palette;
-//   color: Palette;
-//   border: Palette;
-// };
+type ButtonProperty = {
+  backgroundColor: Palette;
+  color: Palette;
+  border: Palette;
+};
 
-// export enum ThemeColor {
-//   primary = "primary",
-//   secondary = "secondary",
-//   header = "tertiary",
-//   white = "white",
-//   black = "quadratic",
-// }
+type ButtonSizeProperty = {
+  width: string,
+  height: string,
+  fontSize: string,
+  radius: string,
+}
+export enum ThemeColor {
+  first = "first",
+}
 
-// export const buttonColorMap: { [key in ThemeColor]: ButtonProperty } = {
-//   primary: {
-//     backgroundColor: Palette.primary,
-//     color: Palette.white,
-//     border: Palette.primary,
-//   },
-// };
+export enum ThemeSize {
+  tag = "tag",
+  small = "small",
+  middle = "middle",
+  large = "large",
+}
+export const buttonColorMap: { [key in ThemeColor]: ButtonProperty } = {
+  first: {
+    backgroundColor: Palette.header,
+    color: Palette.primary,
+    border: Palette.primary,
+  },
+};
+
+export const buttonSizeMap: { [key in ThemeSize]: ButtonSizeProperty} = {
+  tag: {
+    width: "24px",
+    height: "10px",
+    fontSize: "8px",
+    radius: "50%",
+  },
+  small: {
+    width: "24px",
+    height: "10px",
+    fontSize: "8px",
+    radius: "4px",
+  },
+  middle: {
+    width: "24px",
+    height: "10px",
+    fontSize: "8px",
+    radius: "6px",
+  },
+  large: {
+    width: "24px",
+    height: "10px",
+    fontSize: "8px",
+    radius: "8px",
+  }
+}

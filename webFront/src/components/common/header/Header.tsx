@@ -48,7 +48,9 @@ const Header: React.FC<HeaderProps> = () => {
         ))}
         <div className="login">
           <span>
-            <Link to={"/login"}>로그인 해주세요</Link>
+            <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
+              로그인 해주세요
+            </Link>
           </span>
           <img src={DefaultImage} alt="" />
         </div>
@@ -139,18 +141,18 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
 
       cursor: pointer;
       & > img {
-        width: 36px;
-        height: 36px;
+        width: 24px;
+        height: 24px;
 
         border-radius: 50%;
         object-fit: cover;
         @media (min-width: 1004px) {
-          width: 48px;
-          height: 48px;
+          width: 36px;
+          height: 36px;
         }
       }
       & > span {
-        font-size: 12px;
+        font-size: 14px;
         @media (min-width: 1004px) {
           font-size: 16px;
         }

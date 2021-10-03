@@ -3,53 +3,55 @@ import styled from "styled-components";
 
 import kakao from "assets/icon/kakao.png";
 import naver from "assets/icon/naver.png";
-interface LoginProps {}
+
+interface LoginProps {
+}
 
 const Login: React.FC<LoginProps> = () => {
-  return (
-    <LoginBlock>
-      <div className="loginForm">
-        <div className="header">
-          <h2>Moa Server</h2>
-        </div>
-        <div className="content">
-          <form>
-            <input placeholder="ID" />
-            <input placeholder="PW" />
-            <button
-              type="submit"
-              className="btn"
-              style={{ backgroundColor: "#2c2f33" }}
-            >
-              로그인
-            </button>
-            <div
-              className="btn"
-              style={{ backgroundColor: "#FEDE00", color: "#3A1A1B" }}
-            >
-              <img
-                src={kakao}
-                alt=""
-                style={{ width: "24px", height: "24px", marginRight: "8px" }}
-              />
-              카카오톡으로 로그인
+    return (
+        <LoginBlock>
+            <div className="loginForm">
+                <div className="header">
+                    <h2>Moa Server</h2>
+                </div>
+                <div className="content">
+                    <form>
+                        <input placeholder="ID"/>
+                        <input placeholder="PW"/>
+                        <button
+                            type="submit"
+                            className="btn"
+                            style={{backgroundColor: "#2c2f33"}}
+                        >
+                            로그인
+                        </button>
+                        <div
+                            className="btn"
+                            style={{backgroundColor: "#FEDE00", color: "#3A1A1B"}}
+                        >
+                            <img
+                                src={kakao}
+                                alt=""
+                                style={{width: "24px", height: "24px", marginRight: "8px"}}
+                            />
+                            카카오톡으로 로그인
+                        </div>
+                        <div className="btn" style={{backgroundColor: "#00C639"}}>
+                            <img
+                                src={naver}
+                                alt=""
+                                style={{width: "36px", height: "36px", marginRight: "8px"}}
+                            />
+                            네이버로 로그인
+                        </div>
+                    </form>
+                </div>
+                <div className="footer">
+                    <span>created by GoldFrosch</span>
+                </div>
             </div>
-            <div className="btn" style={{ backgroundColor: "#00C639" }}>
-              <img
-                src={naver}
-                alt=""
-                style={{ width: "36px", height: "36px", marginRight: "8px" }}
-              />
-              네이버로 로그인
-            </div>
-          </form>
-        </div>
-        <div className="footer">
-          <span>created by GoldFrosch</span>
-        </div>
-      </div>
-    </LoginBlock>
-  );
+        </LoginBlock>
+    );
 };
 
 const LoginBlock = styled.div`

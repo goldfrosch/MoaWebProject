@@ -1,66 +1,68 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 
 import test1 from "assets/test/test1.jpg";
 import test2 from "assets/test/test2.png";
 import test3 from "assets/test/test3.jpg";
 
-interface HomeProps {}
+interface HomeProps {
+}
+
 const Home: React.FC<HomeProps> = () => {
-  const [carouselNum, setCarouselNum] = useState<number>(0);
-  const CarouselRef = useRef<any>(null);
+    const [carouselNum, setCarouselNum] = useState<number>(0);
+    const CarouselRef = useRef<any>(null);
 
-  const PrevSlide = () => {
-    if (carouselNum === 0) {
-      setCarouselNum(2);
-    } else {
-      setCarouselNum(carouselNum - 1);
-    }
-  };
-  const NextSlide = () => {
-    if (carouselNum === 2) {
-      setCarouselNum(0);
-    } else {
-      setCarouselNum(carouselNum + 1);
-    }
-  };
-  // const SetSlide = (id: number) => {
-  //   setCarouselNum(id);
-  // };
+    const PrevSlide = () => {
+        if (carouselNum === 0) {
+            setCarouselNum(2);
+        } else {
+            setCarouselNum(carouselNum - 1);
+        }
+    };
+    const NextSlide = () => {
+        if (carouselNum === 2) {
+            setCarouselNum(0);
+        } else {
+            setCarouselNum(carouselNum + 1);
+        }
+    };
+    // const SetSlide = (id: number) => {
+    //   setCarouselNum(id);
+    // };
 
-  useEffect(() => {
-    CarouselRef.current.style.transition = "all 0.5s ease-in-out";
-    CarouselRef.current.style.transform = `translateX(-${carouselNum}00%)`;
-  }, [carouselNum]);
+    useEffect(() => {
+        CarouselRef.current.style.transition = "all 0.5s ease-in-out";
+        CarouselRef.current.style.transform = `translateX(-${carouselNum}00%)`;
+    }, [carouselNum]);
 
-  return (
-    <HomeBlock>
-      <div className="carousel">
-        <div className="slider" ref={CarouselRef}>
-          <div className="slide">
-            <img src={test1} alt="" />
-          </div>
-          <div className="slide">
-            <img src={test2} alt="" />
-          </div>
-          <div className="slide">
-            <img src={test3} alt="" />
-          </div>
-        </div>
-      </div>
-      <div className="option">
-        <div className="slideControl">
-          <div className="item" onClick={PrevSlide} />
-        </div>
-        <div className="slideList">
-          <div className="list"></div>
-        </div>
-        <div className="slideControl">
-          <div className="item" onClick={NextSlide} />
-        </div>
-      </div>
-    </HomeBlock>
-  );
+    return (
+        <HomeBlock>
+            <div className="carousel">
+                <div className="slider" ref={CarouselRef}>
+                    <div className="slide">
+                        <img src={test1} alt=""/>
+                    </div>
+                    <div className="slide">
+                        <img src={test2} alt=""/>
+                    </div>
+                    <div className="slide">
+                        <img src={test3} alt=""/>
+                    </div>
+                </div>
+            </div>
+            <div className="option">
+                <div className="slideControl">
+                    <div className="item" onClick={PrevSlide}/>
+                </div>
+                <div className="slideList">
+                    <div className="list"></div>
+                </div>
+                <div className="slideControl">
+                    <div className="item" onClick={NextSlide}/>
+                </div>
+            </div>
+        </HomeBlock>
+    );
 };
 
 const HomeBlock = styled.div`

@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-interface FieldProps {}
-const Field: React.FC<FieldProps> = ({ children }) => {
-  return <FieldBlock>{children}</FieldBlock>;
+interface FieldProps {
+}
+
+const Field: React.FC<FieldProps> = ({children}) => {
+    return <FieldBlock>{children}</FieldBlock>;
 };
 
 const FieldBlock = styled.div`

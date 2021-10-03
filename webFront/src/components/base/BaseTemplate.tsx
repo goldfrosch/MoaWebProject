@@ -3,16 +3,18 @@ import styled from "styled-components";
 
 import Footer from "components/common/footer/Footer";
 import Header from "components/common/header/Header";
-interface BaseTemplateProps {}
 
-const BaseTemplate: React.FC<BaseTemplateProps> = ({ children }) => {
-  return (
-    <BaseTemplateBlock>
-      <Header />
-      <div className="content">{children}</div>
-      <Footer />
-    </BaseTemplateBlock>
-  );
+interface BaseTemplateProps {
+}
+
+const BaseTemplate: React.FC<BaseTemplateProps> = ({children}) => {
+    return (
+        <BaseTemplateBlock>
+            <Header/>
+            <div className="content">{children}</div>
+            <Footer/>
+        </BaseTemplateBlock>
+    );
 };
 
 const BaseTemplateBlock = styled.div`

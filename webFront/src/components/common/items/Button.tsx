@@ -1,28 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  ThemeColor,
-  ThemeSize,
-  buttonSizeMap,
-  buttonColorMap,
+    ThemeColor,
+    ThemeSize,
+    buttonSizeMap,
+    buttonColorMap,
 } from "styles/Pallete";
 
 interface ButtonProps {
-  theme: ThemeColor;
-  size: ThemeSize;
-  btnCmd?: () => void;
+    theme: ThemeColor;
+    size: ThemeSize;
+    btnCmd?: () => void;
 }
-const Button: React.FC<ButtonProps> = ({ theme, size, btnCmd, children }) => {
-  return (
-    <ButtonBlock theme={theme} size={size} onClick={btnCmd}>
-      {children}
-    </ButtonBlock>
-  );
+
+const Button: React.FC<ButtonProps> = ({theme, size, btnCmd, children}) => {
+    return (
+        <ButtonBlock theme={theme} size={size} onClick={btnCmd}>
+            {children}
+        </ButtonBlock>
+    );
 };
 
 type ButtonBlockProps = {
-  theme: ThemeColor;
-  size: ThemeSize;
+    theme: ThemeColor;
+    size: ThemeSize;
 };
 
 const ButtonBlock = styled.div<ButtonBlockProps>`

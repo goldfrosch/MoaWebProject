@@ -3,8 +3,9 @@ export enum Palette {
     secondary = "#99aab5",
     header = "#2c2f33",
     white = "#ffffff",
+    lightgray = "#b8b7b7",
     black = "#23272a",
-    backgroundColor = "#e9e9e9",
+    backgroundColor = "#fbfbfb",
 }
 
 type ButtonProperty = {
@@ -22,6 +23,7 @@ type ButtonSizeProperty = {
 
 export enum ThemeColor {
     first = "first",
+    second = "second"
 }
 
 export enum ThemeSize {
@@ -29,13 +31,19 @@ export enum ThemeSize {
     small = "small",
     middle = "middle",
     large = "large",
+    space = "space",
 }
 
 export const buttonColorMap: { [key in ThemeColor]: ButtonProperty } = {
     first: {
         backgroundColor: Palette.header,
-        color: Palette.primary,
-        border: Palette.primary,
+        color: Palette.white,
+        border: Palette.header,
+    },
+    second: {
+        backgroundColor: Palette.white,
+        color: Palette.secondary,
+        border: Palette.secondary,
     },
 };
 
@@ -47,21 +55,27 @@ export const buttonSizeMap: { [key in ThemeSize]: ButtonSizeProperty } = {
         radius: "50%",
     },
     small: {
-        width: "24px",
-        height: "10px",
+        width: "48px",
+        height: "24px",
         fontSize: "8px",
         radius: "4px",
     },
     middle: {
-        width: "24px",
-        height: "10px",
+        width: "64px",
+        height: "24px",
         fontSize: "8px",
-        radius: "6px",
+        radius: "4px",
     },
     large: {
         width: "24px",
         height: "10px",
         fontSize: "8px",
         radius: "8px",
+    },
+    space: {
+        width: "100%",
+        height: "48px",
+        fontSize: "16px",
+        radius: "6px",
     }
 }

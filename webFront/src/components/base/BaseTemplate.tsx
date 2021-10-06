@@ -4,17 +4,20 @@ import styled from "styled-components";
 import Footer from "components/common/footer/Footer";
 import Header from "components/common/header/Header";
 
-interface BaseTemplateProps {
-}
+interface BaseTemplateProps {}
 
-const BaseTemplate: React.FC<BaseTemplateProps> = ({children}) => {
-    return (
-        <BaseTemplateBlock>
-            <Header/>
-            <div className="content">{children}</div>
-            <Footer/>
-        </BaseTemplateBlock>
-    );
+const BaseTemplate: React.FC<BaseTemplateProps> = ({ children }) => {
+  return (
+    <BaseTemplateBlock>
+      <Header />
+      <div className="content">
+        <div className="side" />
+        <div className="main">{children}</div>
+        <div className="side" />
+      </div>
+      <Footer />
+    </BaseTemplateBlock>
+  );
 };
 
 const BaseTemplateBlock = styled.div`
@@ -24,6 +27,20 @@ const BaseTemplateBlock = styled.div`
 
   .content {
     flex: 1;
+
+    display: flex;
+    & > .side {
+      flex: 1;
+    }
+    & > .main {
+      width: 960px;
+      @media (max-width: 1004px) {
+        width: 90%;
+      }
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+    }
   }
 `;
 export default BaseTemplate;

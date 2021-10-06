@@ -1,72 +1,71 @@
 import Navigation from "constants/Navigation";
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {Palette} from "styles/Pallete";
+import { Palette } from "styles/Pallete";
 
 import DefaultImage from "assets/icon/defaultUser.svg";
 
-interface HeaderProps {
-}
+interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
-    const [select, setSelect] = useState<number>(-1);
-    const [burgerToggle, setBurgerToggle] = useState<boolean>(false);
+  const [select, setSelect] = useState<number>(-1);
+  const [burgerToggle, setBurgerToggle] = useState<boolean>(false);
 
-    //아코디언 메뉴 코드
-    const selectCategory = (id: number) => {
-        if (select === -1 || select !== id) {
-            setSelect(id);
-        } else {
-            setSelect(-1);
-        }
-    };
+  //아코디언 메뉴 코드
+  const selectCategory = (id: number) => {
+    if (select === -1 || select !== id) {
+      setSelect(id);
+    } else {
+      setSelect(-1);
+    }
+  };
 
-    return (
-        <HeaderBlock toggle={burgerToggle}>
-            <div className="logo" onClick={() => setBurgerToggle(false)}>
-                <Link to="/">로고 위치</Link>
-            </div>
-            <ul className={burgerToggle ? "navLink viewNav" : "navLink"}>
-                {Navigation.map((data, key) => (
-                    <li key={key} onClick={() => selectCategory(key)}>
-                        {data.title}
-                        {data.data.length !== 0 && (
-                            <ul className={select === key ? "subMenu view" : "subMenu"}>
-                                {data.data.map((datas, key) => (
-                                    <li key={key}>
-                                        <Link
-                                            to={datas.link}
-                                            onClick={() => setBurgerToggle(false)}
-                                        >
-                                            - {datas.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
+  return (
+    <HeaderBlock toggle={burgerToggle}>
+      <div className="logo" onClick={() => setBurgerToggle(false)}>
+        <Link to="/">로고 위치</Link>
+      </div>
+      <ul className={burgerToggle ? "navLink viewNav" : "navLink"}>
+        {Navigation.map((data, key) => (
+          <li key={key} onClick={() => selectCategory(key)}>
+            {data.title}
+            {data.data.length !== 0 && (
+              <ul className={select === key ? "subMenu view" : "subMenu"}>
+                {data.data.map((datas, key) => (
+                  <li key={key}>
+                    <Link
+                      to={datas.link}
+                      onClick={() => setBurgerToggle(false)}
+                    >
+                      - {datas.title}
+                    </Link>
+                  </li>
                 ))}
-                <div className="login">
+              </ul>
+            )}
+          </li>
+        ))}
+        <div className="login">
           <span>
             <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
               로그인 해주세요
             </Link>
           </span>
-                    <img src={DefaultImage} alt=""/>
-                </div>
-            </ul>
-            <div className="burger" onClick={() => setBurgerToggle(!burgerToggle)}>
-                <div className={burgerToggle ? "line1Checked" : "line1"}></div>
-                <div className={burgerToggle ? "line2Checked" : "line2"}></div>
-                <div className={burgerToggle ? "line3Checked" : "line3"}></div>
-            </div>
-        </HeaderBlock>
-    );
+          <img src={DefaultImage} alt="" />
+        </div>
+      </ul>
+      <div className="burger" onClick={() => setBurgerToggle(!burgerToggle)}>
+        <div className={burgerToggle ? "line1Checked" : "line1"}></div>
+        <div className={burgerToggle ? "line2Checked" : "line2"}></div>
+        <div className={burgerToggle ? "line3Checked" : "line3"}></div>
+      </div>
+    </HeaderBlock>
+  );
 };
 
 type HeaderBlockProps = {
-    toggle: boolean;
+  toggle: boolean;
 };
 const HeaderBlock = styled.header<HeaderBlockProps>`
   height: 10vh;
@@ -83,7 +82,6 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     height: 100%;
     background-color: #e9e9e9;
     color: black;
-    border: 1px solid black;
 
     display: flex;
     align-items: center;
@@ -164,7 +162,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       }
     }
     @media (max-width: 800px) {
-      width: 100vw;
+      width: 100%;
       height: 90vh;
       background-color: ${Palette.header};
 
@@ -217,7 +215,8 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
   @media (min-width: 800px) {
     & > .navLink:hover {
       width: 100%;
-      height: 40vh;
+      //수동으로... 메뉴 갯수에따라 늘어나야함... ;^;
+      height: 70vh;
       background-color: ${Palette.header};
 
       position: absolute;

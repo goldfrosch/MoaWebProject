@@ -38,6 +38,8 @@ public class Member {
     @Column(nullable = false)
     private int age;
     @Column(nullable = true)
+    private String uuid;
+    @Column(nullable = true)
     private String profileImage;
 
     //자동정보

@@ -3,16 +3,33 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import {Router} from "react-router-dom";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+import rootStore, { rootSaga } from "modules";
+
+import { Router } from "react-router-dom";
 import history from "utils/HistoryUtils";
 
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+  rootStore,
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+);
+
+sagaMiddleware.run(rootSaga);
+
 ReactDOM.render(
-    <React.StrictMode>
-        <Router history={history}>
-            <App/>
-        </Router>
-    </React.StrictMode>,
-    document.getElementById("root")
+  <React.StrictMode>
+    <Router history={history}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

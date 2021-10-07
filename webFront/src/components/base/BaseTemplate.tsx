@@ -30,11 +30,12 @@ const BaseTemplateBlock = styled.div`
 
     display: flex;
     & > .side {
+      min-height: 90vh;
       flex: 1;
     }
     & > .main {
-      width: 960px;
-      @media (max-width: 1004px) {
+      width: 1080px;
+      @media (max-width: 1080px) {
         width: 90%;
       }
       @media (max-width: 800px) {

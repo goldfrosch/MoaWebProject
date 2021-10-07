@@ -105,7 +105,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       margin: 4px;
 
       font-size: 16px;
-      @media (min-width: 1004px) {
+      @media (min-width: 1080px) {
         width: 100px;
         margin: 16px;
         font-size: 20px;
@@ -120,7 +120,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
         & > li {
           padding: 8px 0;
           font-size: 12px;
-          @media (min-width: 1004px) {
+          @media (min-width: 1080px) {
             font-size: 16px;
           }
           @media (max-width: 800px) {
@@ -145,14 +145,14 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
 
         border-radius: 50%;
         object-fit: cover;
-        @media (min-width: 1004px) {
+        @media (min-width: 1080px) {
           width: 36px;
           height: 36px;
         }
       }
       & > span {
         font-size: 14px;
-        @media (min-width: 1004px) {
+        @media (min-width: 1080px) {
           font-size: 16px;
         }
         @media (max-width: 800px) {

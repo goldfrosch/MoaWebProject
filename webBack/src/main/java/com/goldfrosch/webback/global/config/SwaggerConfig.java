@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.config;
+package com.goldfrosch.webback.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

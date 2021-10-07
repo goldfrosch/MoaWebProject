@@ -1,7 +1,7 @@
-package com.goldfrosch.webback.application.member;
+package com.goldfrosch.webback.domain.Member.application;
 
-import com.goldfrosch.webback.domain.member.Member;
-import com.goldfrosch.webback.infra.member.MemberRepository;
+import com.goldfrosch.webback.domain.Member.domain.Member;
+import com.goldfrosch.webback.domain.Member.persistance.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

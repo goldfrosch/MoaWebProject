@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.domain.member;
+package com.goldfrosch.webback.domain.Member.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +28,7 @@ public class Member {
     //관리자 등급제 (카페라는 가정하에 일반 유저부터 각 등급이 존재해
     //특정 등급 이상되어야만 글을 작성하는 방식으로 진행하기에
     //숫자로 값을 넣어버린다
+    //0 = 미인증유저, 1 = 인증유저, 2 = VIP유저, 3 = 스태프(게시판 관리자), 4 = 디자이너, 부관리자, 5 = 테스트관리자, 6 = 총관리자
     private int role;
 
     //선택정보 (프론트에서는 필수로는 들어감)

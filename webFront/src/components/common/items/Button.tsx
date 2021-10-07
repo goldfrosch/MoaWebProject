@@ -41,12 +41,14 @@ type ButtonBlockProps = {
 const ButtonBlock = styled.button<ButtonBlockProps>`
   width: ${props => buttonSizeMap[props.size as ThemeSize].width};
   height: ${props => buttonSizeMap[props.size as ThemeSize].height};
-
   background-color: ${props =>
     buttonColorMap[props.theme as ThemeColor].backgroundColor};
   color: ${props => buttonColorMap[props.theme as ThemeColor].color};
+
   border: 1px solid ${props => buttonColorMap[props.theme as ThemeColor].border};
   border-radius: ${props => buttonSizeMap[props.size as ThemeSize].radius};
+
+  font-size: ${props => buttonSizeMap[props.size as ThemeSize].fontSize};
 
   cursor: pointer;
 `;

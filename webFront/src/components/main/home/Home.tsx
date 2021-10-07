@@ -7,6 +7,7 @@ import test3 from "assets/test/test3.jpg";
 import BoardItem from "components/common/items/BoardItem";
 import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { Link } from "react-router-dom";
 
 interface HomeProps {}
 
@@ -106,9 +107,11 @@ const Home: React.FC<HomeProps> = () => {
         <BoardItem>
           <div className="borderHead">
             <span>sadf</span>
-            <Button theme={ThemeColor.second} size={ThemeSize.middle}>
-              더보기
-            </Button>
+            <Link to="/notice/notice">
+              <Button theme={ThemeColor.second} size={ThemeSize.middle}>
+                더보기
+              </Button>
+            </Link>
           </div>
           <div className="borderBody">sadf</div>
           <div className="borderBody">sadf</div>
@@ -150,6 +153,9 @@ const HomeBlock = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(450px, auto));
 
     grid-gap: 16px;
+    @media (max-width: 800px) {
+      grid-template-columns: repeat(auto-fill, minmax(100%, auto));
+    }
   }
 `;
 

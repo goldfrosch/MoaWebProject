@@ -1,8 +1,8 @@
-package com.goldfrosch.webback.ui.member;
+package com.goldfrosch.webback.domain.Member.api;
 
-import com.goldfrosch.webback.application.member.MemberService;
-import com.goldfrosch.webback.domain.member.Member;
-import com.goldfrosch.webback.ui.member.VO.RegisterVO;
+import com.goldfrosch.webback.domain.Member.application.MemberService;
+import com.goldfrosch.webback.domain.Member.domain.Member;
+import com.goldfrosch.webback.domain.Member.dto.RegisterVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

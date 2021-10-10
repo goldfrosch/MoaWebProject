@@ -3,11 +3,19 @@ import React from "react";
 import styled from "styled-components";
 import { Palette } from "styles/Pallete";
 
+import noticePhone from "assets/icon/megaphone.png";
+
 export interface BoardListProps {
   title: string;
   context: string;
+  notice: any[];
 }
-const BoardList: React.FC<BoardListProps> = ({ title, context }) => {
+const BoardList: React.FC<BoardListProps> = ({
+  title,
+  context,
+  notice,
+  children,
+}) => {
   const testClick = (id: number) => {
     console.log(id);
   };
@@ -19,21 +27,13 @@ const BoardList: React.FC<BoardListProps> = ({ title, context }) => {
           <span>{context}</span>
         </div>
         <div className="content">
-          <div className="importantItem"></div>
-          <div className="importantItem"></div>
-          <div className="importantItem"></div>
-          <div className="importantItem"></div>
-          <div className="importantItem"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
-          <div className="item"></div>
+          {notice.map((data, key) => (
+            <div className="importantItem" key={key}>
+              <img src={noticePhone} alt="" />
+              <span>{data}</span>
+            </div>
+          ))}
+          {children}
         </div>
         <div className="footer">
           <Pagination
@@ -87,11 +87,19 @@ const BoardListBlock = styled.div`
         height: 48px;
         background-color: #f6f6f6;
         border-bottom: 1px solid #e7e7e7;
+
+        padding: 0 16px;
+
+        display: flex;
+        align-items: center;
       }
       & > .item {
         width: 100%;
         height: 56px;
         border-bottom: 1px solid #e7e7e7;
+
+        display: flex;
+        align-items: center;
       }
     }
 

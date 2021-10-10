@@ -50,6 +50,7 @@ const ButtonBlock = styled.button<ButtonBlockProps>`
 
   font-size: ${props => buttonSizeMap[props.size as ThemeSize].fontSize};
 
+  margin: 8px 0;
   cursor: pointer;
 `;
 

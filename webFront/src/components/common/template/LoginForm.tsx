@@ -85,7 +85,7 @@ const LoginFormBlock = styled.div`
           border-bottom: 2px solid #b8b7b7;
 
           padding-left: 8px;
-          margin-bottom: 32px;
+          margin-bottom: 24px;
         }
         & > span {
           margin: 4px 0;

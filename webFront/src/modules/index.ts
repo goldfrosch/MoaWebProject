@@ -13,7 +13,7 @@ const rootStore = combineReducers<IRootState>({
 
 export function* rootSaga() {
   yield all([
-    AuthSaga,
+    AuthSaga(),
   ]);
 }
 

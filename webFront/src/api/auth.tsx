@@ -1,6 +1,10 @@
 import axios from "api/defaultClient";
-import { IUserRegister } from "modules/auth/type";
+import { IUserLogin, IUserRegister } from "modules/auth/type";
 
 export const userRegister = (data: IUserRegister) => {
-  return axios.post("/member/register", data);
+  return axios.post(`/register`, data);
+};
+
+export const userLogin = (data: IUserLogin) => {
+  return axios.post(`/login`, data);
 };

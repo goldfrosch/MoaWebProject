@@ -12,6 +12,11 @@ export interface IUserRegister {
   age: number,
 }
 
+export interface IUserLogin {
+  email: string,
+  password: string,
+}
+
 export type IUserAction =
   | ReturnType<typeof authRegisterAction>
   | ReturnType<typeof authRegisterSuccessAction>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 
@@ -15,6 +15,18 @@ const GenderType: Gender[] = [
   { key: "FEMALE", value: "여성" },
 ];
 
+interface IDateList {
+  year: number[];
+  month: number[];
+  day: number[];
+}
+
+interface IDay {
+  year: number;
+  month: number;
+  day: number;
+}
+
 interface RegisterProps {
   register: (data: IUserRegister) => void;
 }
@@ -23,23 +35,88 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
   const [data, setData] = useState<IUserRegister>({
     email: "",
     password: "",
-    birthday: new Date(),
-    gender: "",
-    age: 0,
+    birthday: new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDay()
+    ),
+    gender: "MALE",
+    age: 1,
+  });
+
+  const [dateList, setDateList] = useState<IDateList>({
+    year: [],
+    month: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    day: [],
+  });
+
+  const [birth, setBirth] = useState<IDay>({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth(),
+    day: new Date().getDay(),
   });
   const [rePassword, setRePassword] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
 
   const registerUser = () => {
-    if (data.password !== rePassword) {
-      setErrorMsg("비밀번호를 서로 확인바랍니다");
-    } else if (data.password.length < 8) {
-      setErrorMsg("비밀번호는 8자리 이상이여야 합니다");
+    if (data.email === "") {
+      setErrorMsg("이메일을 입력해주세요");
     } else {
-      setErrorMsg("");
-      register(data);
+      if (data.password !== rePassword) {
+        setErrorMsg("비밀번호를 서로 확인바랍니다");
+      } else if (data.password.length < 8) {
+        setErrorMsg("비밀번호는 8자리 이상이여야 합니다");
+      } else {
+        setData({
+          ...data,
+          birthday: new Date(birth.year, birth.month - 1, birth.day),
+        });
+        setErrorMsg("");
+        register(data);
+      }
     }
   };
+
+  const getDays = () => {
+    let days = [];
+    for (let i = 1; i <= new Date(birth.year, birth.month, 0).getDate(); i++) {
+      days.push(i);
+    }
+    //가입 데이터 변경
+    setData({
+      ...data,
+      age: Number(new Date().getFullYear() - birth.year + 1),
+    });
+    //연도, 월에 따른 날짜 수 변경
+    setDateList({
+      ...dateList,
+      day: days,
+    });
+  };
+
+  useEffect(() => {
+    let year: number[] = [];
+    for (let i = 0; i < 100; i++) {
+      year.push(new Date().getFullYear() - i);
+    }
+
+    let days: number[] = [];
+    for (
+      let i = 1;
+      i <=
+      new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate();
+      i++
+    ) {
+      days.push(i);
+    }
+
+    setDateList({
+      ...dateList,
+      year: year,
+      day: days,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <RegisterBlock>
@@ -69,16 +146,58 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
           <div className="selectDate">
             <select
               className="yearSelect"
-              defaultValue={data.birthday.getFullYear()}
-            ></select>
+              defaultValue={birth.year}
+              onChange={e => {
+                getDays();
+                setBirth({
+                  ...birth,
+                  year: Number(e.target.value),
+                });
+                setData({
+                  ...data,
+                  age: new Date().getFullYear() - Number(e.target.value) + 1,
+                });
+              }}
+            >
+              {dateList.year.map(data => (
+                <option value={data} key={data}>
+                  {data}
+                </option>
+              ))}
+            </select>
             <select
               className="dateSelect"
-              defaultValue={data.birthday.getMonth()}
-            ></select>
+              defaultValue={birth.month}
+              onChange={e => {
+                getDays();
+                setBirth({
+                  ...birth,
+                  month: Number(e.target.value),
+                });
+              }}
+            >
+              {dateList.month.map(data => (
+                <option value={data} key={data}>
+                  {data}
+                </option>
+              ))}
+            </select>
             <select
               className="dateSelect"
-              defaultValue={data.birthday.getDay()}
-            ></select>
+              defaultValue={birth.day}
+              onChange={e => {
+                setBirth({
+                  ...birth,
+                  day: Number(e.target.value),
+                });
+              }}
+            >
+              {dateList.day.map(data => (
+                <option value={data} key={data}>
+                  {data}
+                </option>
+              ))}
+            </select>
           </div>
           <span>성별, 나이</span>
           <div className="option">
@@ -92,7 +211,7 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
                 </option>
               ))}
             </select>
-            <input type="number" disabled />
+            <input type="number" value={data.age} disabled />
           </div>
           <span className="warning">{errorMsg}</span>
           <Button

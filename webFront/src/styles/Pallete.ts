@@ -67,10 +67,10 @@ export const buttonSizeMap: { [key in ThemeSize]: ButtonSizeProperty } = {
         radius: "4px",
     },
     large: {
-        width: "24px",
-        height: "10px",
-        fontSize: "8px",
-        radius: "8px",
+        width: "96px",
+        height: "30px",
+        fontSize: "16px",
+        radius: "4px",
     },
     space: {
         width: "100%",

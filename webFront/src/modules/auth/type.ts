@@ -1,4 +1,4 @@
-import { authRegisterAction, authRegisterSuccessAction } from "./auth";
+import { authLoginAction, authLoginSuccessAction, authRegisterAction, authRegisterSuccessAction } from "./auth";
 
 export interface IAuthState {
   
@@ -20,3 +20,5 @@ export interface IUserLogin {
 export type IUserAction =
   | ReturnType<typeof authRegisterAction>
   | ReturnType<typeof authRegisterSuccessAction>
+  | ReturnType<typeof authLoginAction>
+  | ReturnType<typeof authLoginSuccessAction>

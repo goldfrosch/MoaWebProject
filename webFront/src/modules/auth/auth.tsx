@@ -45,12 +45,12 @@ function* registerSaga(action: ReturnType<typeof authRegisterAction>) {
 
 function* loginSaga(action: ReturnType<typeof authLoginAction>) {
   try {
-    const { status }: AxiosResponse = yield call(
+    const { status, data }: AxiosResponse = yield call(
       AuthAPI.userLogin,
       action.data
     );
-    if (status !== 200) return alert("로그인 중 문제가 발생했습니다");
-    alert("TEST");
+    if (status !== 200) return alert("아이디 or 비번을 확인해주세요");
+    console.log(data);
   } catch (e) {
     console.log(e);
   }
@@ -69,6 +69,8 @@ export default function auth(
 ) {
   switch (action.type) {
     case AUTH_REGISTER_SUCCESS:
+      return { ...state };
+    case AUTH_LOGIN_SUCCESS:
       return { ...state };
     default:
       return state;

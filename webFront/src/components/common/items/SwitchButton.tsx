@@ -2,27 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import { Palette } from "styles/Pallete";
 
-interface SwitchProps {
+interface SwitchButtonProps {
   color: string | Palette;
   shadow: string | Palette;
   onChange: () => void;
 }
 
-const Switch: React.FC<SwitchProps> = ({ color, shadow, onChange }) => {
+const SwitchButton: React.FC<SwitchButtonProps> = ({
+  color,
+  shadow,
+  onChange,
+}) => {
   return (
-    <SwitchBlock color={color} shadowColor={shadow}>
+    <SwitchButtonBlock color={color} shadowColor={shadow}>
       <input type="checkbox" onChange={onChange} />
       <span className="onoff" />
-    </SwitchBlock>
+    </SwitchButtonBlock>
   );
 };
 
-type SwitchBlockProps = {
+type SwitchButtonBlockProps = {
   color: string | Palette;
   shadowColor: string | Palette;
 };
 
-const SwitchBlock = styled.label<SwitchBlockProps>`
+const SwitchButtonBlock = styled.label<SwitchButtonBlockProps>`
   width: 55px;
   height: 30px;
 
@@ -83,4 +87,4 @@ const SwitchBlock = styled.label<SwitchBlockProps>`
   }
 `;
 
-export default Switch;
+export default SwitchButton;

@@ -1,9 +1,10 @@
 import Pagination from "components/common/items/Pagination";
 import React from "react";
 import styled from "styled-components";
-import { Palette } from "styles/Pallete";
+import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import noticePhone from "assets/icon/megaphone.png";
+import Button from "components/common/items/Button";
 
 export interface BoardListProps {
   title: string;
@@ -25,6 +26,11 @@ const BoardList: React.FC<BoardListProps> = ({
         <div className="header">
           <h2 className="title">{title}</h2>
           <span>{context}</span>
+        </div>
+        <div className="option">
+          <Button theme={ThemeColor.first} size={ThemeSize.large}>
+            글쓰기
+          </Button>
         </div>
         <div className="content">
           {notice.map((data, key) => (
@@ -64,8 +70,6 @@ const BoardListBlock = styled.div`
       height: 18vh;
       color: #797979;
 
-      border-bottom: 1px solid #e7e7e7;
-
       padding: 16px 0;
 
       & > .title {
@@ -75,7 +79,11 @@ const BoardListBlock = styled.div`
         font-weight: 700;
       }
     }
-
+    & > .option {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
     & > .content {
       flex: 1;
 
@@ -92,6 +100,8 @@ const BoardListBlock = styled.div`
 
         display: flex;
         align-items: center;
+
+        gap: 8px;
       }
       & > .item {
         width: 100%;

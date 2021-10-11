@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import LoginForm from "components/common/template/LoginForm";
 import kakao from "assets/icon/kakao.png";
@@ -6,10 +6,17 @@ import naver from "assets/icon/naver.png";
 import { Link } from "react-router-dom";
 import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { IUserLogin } from "modules/auth/type";
 
-interface LoginProps {}
+interface LoginProps {
+  LoginAction: (data: IUserLogin) => void;
+}
 
-const Login: React.FC<LoginProps> = () => {
+const Login: React.FC<LoginProps> = ({ LoginAction }) => {
+  const [data, setData] = useState<IUserLogin>({
+    email: "",
+    password: "",
+  });
   const loginKakao = () => {
     return alert("준비중인 시스템입니다!");
   };
@@ -18,9 +25,33 @@ const Login: React.FC<LoginProps> = () => {
   };
   return (
     <LoginForm title="Moa Server">
-      <form>
-        <input placeholder="EMAIL" />
-        <input placeholder="PASSWORD" />
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          LoginAction(data);
+        }}
+      >
+        <input
+          placeholder="EMAIL"
+          value={data.email}
+          onChange={e =>
+            setData({
+              ...data,
+              email: e.target.value,
+            })
+          }
+        />
+        <input
+          placeholder="PASSWORD"
+          type="password"
+          value={data.password}
+          onChange={e =>
+            setData({
+              ...data,
+              password: e.target.value,
+            })
+          }
+        />
         <span style={{ color: "#444444", fontWeight: 300 }}>
           비밀번호를 잊어먹으셨습니까?
           <Link to="/register" style={{ color: "#d8538a" }}>

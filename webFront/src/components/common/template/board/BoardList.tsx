@@ -1,24 +1,47 @@
 import Pagination from "components/common/items/Pagination";
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import noticePhone from "assets/icon/megaphone.png";
 import Button from "components/common/items/Button";
+import Search from "components/common/items/Search";
+import SelectBlock from "components/common/items/Select";
+
+export interface ISearch {
+  type?: string;
+  query?: string;
+  data: string;
+}
 
 export interface BoardListProps {
   title: string;
   context: string;
   notice: any[];
 }
+
 const BoardList: React.FC<BoardListProps> = ({
   title,
   context,
   notice,
   children,
 }) => {
+  const [search, setSearch] = useState<ISearch>({
+    type: "",
+    query: "",
+    data: "",
+  });
   const testClick = (id: number) => {
     console.log(id);
+  };
+  const SearchBar = useRef<any>(null);
+  const setActive = (value: boolean) => {
+    if (value) {
+      SearchBar.current.style.boxShadow =
+        "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px";
+    } else {
+      SearchBar.current.style.boxShadow = "none";
+    }
   };
   return (
     <BoardListBlock>
@@ -28,6 +51,26 @@ const BoardList: React.FC<BoardListProps> = ({
           <span>{context}</span>
         </div>
         <div className="option">
+          <div
+            className="search"
+            onBlur={() => setActive(false)}
+            onFocus={() => setActive(true)}
+            ref={SearchBar}
+          >
+            <SelectBlock>
+              <option>asdf</option>
+            </SelectBlock>
+            <SelectBlock></SelectBlock>
+            <Search
+              value={search.data}
+              onChange={e =>
+                setSearch({
+                  ...search,
+                  data: e.target.value,
+                })
+              }
+            />
+          </div>
           <Button theme={ThemeColor.first} size={ThemeSize.large}>
             글쓰기
           </Button>
@@ -82,7 +125,15 @@ const BoardListBlock = styled.div`
     & > .option {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
+      .search {
+        padding: 0 16px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+      }
     }
     & > .content {
       flex: 1;

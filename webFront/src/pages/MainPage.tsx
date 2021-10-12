@@ -8,6 +8,7 @@ import LoginContainer from "containers/auth/LoginContainer";
 import RegisterContainer from "containers/auth/RegisterContainer";
 
 import NoticeContainer from "containers/content/notice/NoticeContainer";
+import TestWrite from "components/main/content/notice/TestWrite";
 
 const MainPage = () => {
   return (
@@ -18,6 +19,8 @@ const MainPage = () => {
         <Route exact path="/register" component={RegisterContainer} />
 
         <Route exact path="/notice/notice" component={NoticeContainer} />
+
+        <Route exact path="/test" component={TestWrite} />
       </BaseTemplate>
       <Route exact path="/notfound" component={NotFound} />
     </Switch>

@@ -24,8 +24,8 @@ public class Board {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private BoardType category;
 
     @Column(nullable = false)
     private int tag;

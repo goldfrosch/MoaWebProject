@@ -8,4 +8,5 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+
 }

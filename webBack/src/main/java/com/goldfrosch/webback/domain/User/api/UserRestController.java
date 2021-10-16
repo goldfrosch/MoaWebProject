@@ -6,6 +6,7 @@ import com.goldfrosch.webback.domain.User.dto.RegisterDTO;
 import com.goldfrosch.webback.domain.User.persistance.UserRepository;
 import com.goldfrosch.webback.global.common.response.ApiResponse;
 import com.goldfrosch.webback.global.component.JwtTokenProvider;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,9 @@ public class UserRestController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+
+//    @Getter("/profile")
+//
 
     // 회원가입
     // 암호화된 비밀번호를 넣어주기 때문에 비밀번호 찾기가 아닌

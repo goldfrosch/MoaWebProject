@@ -9,4 +9,12 @@ public class UserDTO {
     private Long id;
 
     private String email;
+
+    private String nickName;
+
+    private int rank;
+
+    private String uuid;
+
+    private String profile;
 }

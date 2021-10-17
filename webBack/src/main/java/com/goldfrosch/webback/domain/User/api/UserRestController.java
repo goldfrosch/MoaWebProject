@@ -3,6 +3,7 @@ package com.goldfrosch.webback.domain.User.api;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.domain.User.dto.LoginDTO;
 import com.goldfrosch.webback.domain.User.dto.RegisterDTO;
+import com.goldfrosch.webback.domain.User.dto.UserDTO;
 import com.goldfrosch.webback.domain.User.persistance.UserRepository;
 import com.goldfrosch.webback.global.common.response.ApiResponse;
 import com.goldfrosch.webback.global.component.JwtTokenProvider;
@@ -24,7 +25,10 @@ public class UserRestController {
     private final UserRepository userRepository;
 
 //    @Getter("/profile")
+//    public UserDTO getUser() {
 //
+//    }
+
 
     // 회원가입
     // 암호화된 비밀번호를 넣어주기 때문에 비밀번호 찾기가 아닌

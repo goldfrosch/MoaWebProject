@@ -7,9 +7,10 @@ import com.goldfrosch.webback.domain.User.dto.UserDTO;
 import com.goldfrosch.webback.domain.User.persistance.UserRepository;
 import com.goldfrosch.webback.global.common.response.ApiResponse;
 import com.goldfrosch.webback.global.component.JwtTokenProvider;
-import lombok.Getter;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,17 @@ public class UserRestController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
 
-//    @Getter("/profile")
-//    public UserDTO getUser() {
-//
-//    }
+    @GetMapping("/profile")
+    public UserDTO getUser(@AuthenticationPrincipal User user) {
+        UserDTO getProfile = new UserDTO();
+        getProfile.setEmail(user.getEmail());
+        getProfile.setNickName(user.getNickName());
+        getProfile.setRank(user.getRank());
+        getProfile.setUuid(user.getUuid());
+        getProfile.setProfile(user.getProfile());
+
+        return getProfile;
+    }
 
 
     // 회원가입

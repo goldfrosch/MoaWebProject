@@ -1,7 +1,15 @@
+// import axios from "api/defaultClient";
+
 import { AxiosResponse } from "axios";
 import * as AuthAPI from "api/auth";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { IAuthState, IUserAction, IUserLogin, IUserRegister } from "./type";
+import {
+  IAuthState,
+  IProfile,
+  IUserAction,
+  IUserLogin,
+  IUserRegister,
+} from "./type";
 import history from "utils/HistoryUtils";
 
 const AUTH_REGISTER = "AUTH_REGISTER" as const;
@@ -9,6 +17,9 @@ const AUTH_REGISTER_SUCCESS = "AUTH_REGISTER_SUCCESS" as const;
 
 const AUTH_LOGIN = "AUTH_LOGIN" as const;
 const AUTH_LOGIN_SUCCESS = "AUTH_LOGIN_SUCCESS" as const;
+
+const AUTH_GET_PROFILE = "AUTH_GET_PROFILE" as const;
+const AUTH_GET_PROFILE_SUCCESS = "AUTH_GET_PROFILE_SUCCESS" as const;
 
 export const authRegisterAction = (data: IUserRegister) => ({
   type: AUTH_REGISTER,
@@ -19,13 +30,22 @@ export const authRegisterSuccessAction = () => ({
   type: AUTH_REGISTER_SUCCESS,
 });
 
-export const authLoginAction = (data: IUserLogin) => ({
+export const authLoginAction = (datas: IUserLogin) => ({
   type: AUTH_LOGIN,
-  data,
+  datas,
 });
 
 export const authLoginSuccessAction = () => ({
   type: AUTH_LOGIN_SUCCESS,
+});
+
+export const authGetProfileAction = () => ({
+  type: AUTH_GET_PROFILE,
+});
+
+export const authGetProfileSuccessAction = (data: IProfile) => ({
+  type: AUTH_GET_PROFILE_SUCCESS,
+  data,
 });
 
 function* registerSaga(action: ReturnType<typeof authRegisterAction>) {
@@ -45,12 +65,30 @@ function* registerSaga(action: ReturnType<typeof authRegisterAction>) {
 
 function* loginSaga(action: ReturnType<typeof authLoginAction>) {
   try {
-    const { status, data }: AxiosResponse = yield call(
+    const { data, status }: AxiosResponse = yield call(
       AuthAPI.userLogin,
-      action.data
+      action.datas
     );
     if (status !== 200) return alert("아이디 or 비번을 확인해주세요");
-    console.log(data);
+    let token: any = data;
+    console.log(token.data);
+    //axios.defaults.headers.common['Authorization'] 으로 기본 헤더값 설정
+    // axios.defaults.headers.common["Authorization"] = token.data;
+    yield put(authLoginSuccessAction());
+    history.push("/");
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* profileSaga(action: ReturnType<typeof authGetProfileAction>) {
+  try {
+    if (sessionStorage.getItem("CURRENT_USER") !== null) {
+      const { data, status }: AxiosResponse = yield call(AuthAPI.userProfile);
+      if (status !== 200)
+        return alert("페이지 로딩중 문제 발생. 로그인을 다시 해주세요");
+      yield put(authGetProfileSuccessAction(data));
+    }
   } catch (e) {
     console.log(e);
   }
@@ -59,9 +97,12 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
 export function* AuthSaga() {
   yield takeEvery(AUTH_REGISTER, registerSaga);
   yield takeEvery(AUTH_LOGIN, loginSaga);
+  yield takeEvery(AUTH_GET_PROFILE, profileSaga);
 }
 
-const initialState: IAuthState = {};
+const initialState: IAuthState = {
+  profile: null,
+};
 
 export default function auth(
   state: IAuthState = initialState,
@@ -72,6 +113,8 @@ export default function auth(
       return { ...state };
     case AUTH_LOGIN_SUCCESS:
       return { ...state };
+    case AUTH_GET_PROFILE_SUCCESS:
+      return { ...state, profile: { ...action.data } };
     default:
       return state;
   }

@@ -8,3 +8,7 @@ export const userRegister = (data: IUserRegister) => {
 export const userLogin = (data: IUserLogin) => {
   return axios.post(`/login`, data);
 };
+
+export const userProfile = () => {
+  return axios.get(`/profile`);
+};

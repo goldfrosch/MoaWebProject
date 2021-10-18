@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 import Footer from "components/common/footer/Footer";
-import Header from "components/common/header/Header";
+import HeaderContainer from "containers/common/HeaderContainer";
 
 interface BaseTemplateProps {}
 
 const BaseTemplate: React.FC<BaseTemplateProps> = ({ children }) => {
   return (
     <BaseTemplateBlock>
-      <Header />
+      <HeaderContainer />
       <div className="content">
         <div className="side" />
         <div className="main">{children}</div>

@@ -18,6 +18,8 @@ const AUTH_REGISTER_SUCCESS = "AUTH_REGISTER_SUCCESS" as const;
 const AUTH_LOGIN = "AUTH_LOGIN" as const;
 const AUTH_LOGIN_SUCCESS = "AUTH_LOGIN_SUCCESS" as const;
 
+const AUTH_LOGOUT = "AUTH_LOGOUT" as const;
+
 const AUTH_GET_PROFILE = "AUTH_GET_PROFILE" as const;
 const AUTH_GET_PROFILE_SUCCESS = "AUTH_GET_PROFILE_SUCCESS" as const;
 
@@ -37,6 +39,10 @@ export const authLoginAction = (datas: IUserLogin) => ({
 
 export const authLoginSuccessAction = () => ({
   type: AUTH_LOGIN_SUCCESS,
+});
+
+export const authLogoutAction = () => ({
+  type: AUTH_LOGOUT,
 });
 
 export const authGetProfileAction = () => ({
@@ -75,6 +81,7 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
     //axios.defaults.headers.common['Authorization'] 으로 기본 헤더값 설정
     axios.defaults.headers.common["Authorization"] = token;
     yield put(authLoginSuccessAction());
+    yield put(authGetProfileAction());
     history.push("/");
   } catch (e) {
     console.log(e);
@@ -106,7 +113,13 @@ export function* AuthSaga() {
 }
 
 const initialState: IAuthState = {
-  profile: null,
+  profile: {
+    email: "",
+    nickName: null,
+    profile: null,
+    rank: 0,
+    uuid: null,
+  },
 };
 
 export default function auth(
@@ -118,6 +131,11 @@ export default function auth(
       return { ...state };
     case AUTH_LOGIN_SUCCESS:
       return { ...state };
+    case AUTH_LOGOUT:
+      delete axios.defaults.headers.common["Authorization"];
+      localStorage.removeItem("CURRENT_USER");
+      history.push("/");
+      return initialState;
     case AUTH_GET_PROFILE_SUCCESS:
       return { ...state, profile: { ...action.data } };
     default:

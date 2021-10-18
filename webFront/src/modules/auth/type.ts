@@ -1,4 +1,4 @@
-import { authGetProfileAction, authGetProfileSuccessAction, authLoginAction, authLoginSuccessAction, authRegisterAction, authRegisterSuccessAction } from "./auth";
+import { authGetProfileAction, authGetProfileSuccessAction, authLoginAction, authLoginSuccessAction, authLogoutAction, authRegisterAction, authRegisterSuccessAction } from "./auth";
 
 export interface IUserRegister {
   email: string,
@@ -15,13 +15,13 @@ export interface IUserLogin {
 
 export interface IProfile {
   email: string,
-  nickName: string,
-  profile: string,
+  nickName: string | null,
+  profile: string | null,
   rank: number,
-  uuid: string
+  uuid: string | null,
 }
 export interface IAuthState {
-  profile: IProfile | null,
+  profile: IProfile,
 }
 
 export type IUserAction =
@@ -29,5 +29,6 @@ export type IUserAction =
   | ReturnType<typeof authRegisterSuccessAction>
   | ReturnType<typeof authLoginAction>
   | ReturnType<typeof authLoginSuccessAction>
+  | ReturnType<typeof authLogoutAction>
   | ReturnType<typeof authGetProfileAction>
   | ReturnType<typeof authGetProfileSuccessAction>

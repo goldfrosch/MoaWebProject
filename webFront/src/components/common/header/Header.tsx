@@ -1,16 +1,20 @@
 import Navigation from "constants/Navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Palette } from "styles/Pallete";
 
 import DefaultImage from "assets/icon/defaultUser.svg";
+import { IProfile } from "modules/auth/type";
 
-interface HeaderProps {}
+interface HeaderProps {
+  profile: IProfile;
+}
 
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC<HeaderProps> = ({ profile }) => {
   const [select, setSelect] = useState<number>(-1);
   const [burgerToggle, setBurgerToggle] = useState<boolean>(false);
+  const [data, setData] = useState<IProfile>({ ...profile });
 
   //아코디언 메뉴 코드
   const selectCategory = (id: number) => {
@@ -20,6 +24,11 @@ const Header: React.FC<HeaderProps> = () => {
       setSelect(-1);
     }
   };
+
+  useEffect(() => {
+    setData({ ...profile });
+    console.log(data);
+  }, []);
 
   return (
     <HeaderBlock toggle={burgerToggle}>
@@ -47,12 +56,24 @@ const Header: React.FC<HeaderProps> = () => {
           </li>
         ))}
         <div className="login">
-          <span>
-            <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
-              로그인 해주세요
-            </Link>
-          </span>
-          <img src={DefaultImage} alt="" />
+          {data.email !== "" ? (
+            <>
+              <span>
+                <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
+                  {data.nickName ? data.nickName : "닉네임 등록해주세요"}
+                </Link>
+              </span>
+              <img src={DefaultImage} alt="" />
+            </>
+          ) : (
+            <>
+              <span>
+                <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
+                  로그인
+                </Link>
+              </span>
+            </>
+          )}
         </div>
       </ul>
       <div className="burger" onClick={() => setBurgerToggle(!burgerToggle)}>

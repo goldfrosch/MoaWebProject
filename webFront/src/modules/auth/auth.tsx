@@ -1,4 +1,4 @@
-// import axios from "api/defaultClient";
+import axios from "api/defaultClient";
 
 import { AxiosResponse } from "axios";
 import * as AuthAPI from "api/auth";
@@ -69,25 +69,30 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
       AuthAPI.userLogin,
       action.datas
     );
-    if (status !== 200) return alert("아이디 or 비번을 확인해주세요");
+    if (status !== 200) return alert("문제 발생, 관리자에게 무늬바람");
     let token: any = data;
-    console.log(token.data);
+    localStorage.setItem("CURRENT_USER", token);
     //axios.defaults.headers.common['Authorization'] 으로 기본 헤더값 설정
-    // axios.defaults.headers.common["Authorization"] = token.data;
+    axios.defaults.headers.common["Authorization"] = token;
     yield put(authLoginSuccessAction());
     history.push("/");
   } catch (e) {
     console.log(e);
+    return alert("아이디 or 비번을 확인해주세요");
   }
 }
 
 function* profileSaga(action: ReturnType<typeof authGetProfileAction>) {
   try {
-    if (sessionStorage.getItem("CURRENT_USER") !== null) {
+    if (localStorage.getItem("CURRENT_USER")) {
+      const token = localStorage.getItem("CURRENT_USER");
+      axios.defaults.headers.common["Authorization"] = String(token);
+
       const { data, status }: AxiosResponse = yield call(AuthAPI.userProfile);
+      let datas: any = data;
       if (status !== 200)
         return alert("페이지 로딩중 문제 발생. 로그인을 다시 해주세요");
-      yield put(authGetProfileSuccessAction(data));
+      yield put(authGetProfileSuccessAction(datas));
     }
   } catch (e) {
     console.log(e);

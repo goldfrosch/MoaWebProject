@@ -5,11 +5,10 @@ import com.goldfrosch.webback.domain.User.dto.LoginDTO;
 import com.goldfrosch.webback.domain.User.dto.RegisterDTO;
 import com.goldfrosch.webback.domain.User.dto.UserDTO;
 import com.goldfrosch.webback.domain.User.persistance.UserRepository;
-import com.goldfrosch.webback.global.common.response.ApiResponse;
 import com.goldfrosch.webback.global.component.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class UserRestController {
@@ -27,6 +27,7 @@ public class UserRestController {
 
     @GetMapping("/profile")
     public UserDTO getUser(@AuthenticationPrincipal User user) {
+        log.info(user.toString());
         UserDTO getProfile = new UserDTO();
         getProfile.setEmail(user.getEmail());
         getProfile.setNickName(user.getNickName());
@@ -58,12 +59,13 @@ public class UserRestController {
 
     // 로그인
     @PostMapping("/login")
-    public ApiResponse<String> login(@RequestBody LoginDTO user) {
+    public String login(@RequestBody LoginDTO user) {
         User member = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+
         if (!passwordEncoder.matches(user.getPassword(), member.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
-        return new ApiResponse<>(HttpStatus.OK, jwtTokenProvider.createToken(member.getUsername(), member.getRoles()));
+        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 }

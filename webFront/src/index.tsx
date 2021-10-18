@@ -11,6 +11,7 @@ import rootStore, { rootSaga } from "modules";
 
 import { Router } from "react-router-dom";
 import history from "utils/HistoryUtils";
+import GlobalStyle from "styles/Global";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -25,6 +26,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router history={history}>
       <Provider store={store}>
+        <GlobalStyle />
         <App />
       </Provider>
     </Router>

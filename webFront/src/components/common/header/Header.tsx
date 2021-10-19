@@ -27,7 +27,6 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
 
   useEffect(() => {
     setData({ ...profile });
-    console.log(data);
   }, []);
 
   return (

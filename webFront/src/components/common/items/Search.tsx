@@ -10,7 +10,7 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = ({ value, onChange }) => {
   return (
     <SearchBlock>
-      <input value={value} type="text" onChange={onChange} />
+      <input defaultValue={value} type="text" onChange={onChange} />
       <img src={SearchIcon} alt="" />
     </SearchBlock>
   );

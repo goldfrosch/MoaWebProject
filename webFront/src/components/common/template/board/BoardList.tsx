@@ -54,7 +54,7 @@ const BoardList: React.FC<BoardListProps> = ({
               <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                defaultValue={search.type}
+                value={search.type}
                 onChange={(e: any) =>
                   setSearch({
                     ...search,

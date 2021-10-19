@@ -8,6 +8,14 @@ import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { IUserLogin } from "modules/auth/type";
 
+import Input from "@mui/material/Input";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+
 interface LoginProps {
   LoginAction: (data: IUserLogin) => void;
 }
@@ -17,6 +25,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState<Boolean>(false);
   const loginKakao = () => {
     return alert("준비중인 시스템입니다!");
   };
@@ -31,27 +40,49 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
           LoginAction(data);
         }}
       >
-        <input
-          placeholder="EMAIL"
-          value={data.email}
-          onChange={e =>
-            setData({
-              ...data,
-              email: e.target.value,
-            })
-          }
-        />
-        <input
-          placeholder="PASSWORD"
-          type="password"
-          value={data.password}
-          onChange={e =>
-            setData({
-              ...data,
-              password: e.target.value,
-            })
-          }
-        />
+        {/* 이메일 Form FormControl은 실제로는 Div*/}
+        <FormControl sx={{ m: 1, width: "100%" }} variant="standard">
+          <InputLabel htmlFor="standard-adornment-email">이메일</InputLabel>
+          <Input
+            id="standard-adornment-email"
+            type="text"
+            value={data.email}
+            onChange={(e: any) =>
+              setData({
+                ...data,
+                email: e.target.value,
+              })
+            }
+          />
+        </FormControl>
+        {/* 비밀번호 Form FormControl은 실제로는 Div*/}
+        <FormControl sx={{ m: 1, width: "100%" }} variant="standard">
+          <InputLabel htmlFor="standard-adornment-password">
+            비밀번호
+          </InputLabel>
+          <Input
+            id="standard-adornment-password"
+            type={showPassword ? "text" : "password"}
+            value={data.password}
+            onChange={(e: any) =>
+              setData({
+                ...data,
+                password: e.target.value,
+              })
+            }
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
         <span style={{ color: "#444444", fontWeight: 300 }}>
           비밀번호를 잊어먹으셨습니까?
           <Link to="/register" style={{ color: "#d8538a" }}>

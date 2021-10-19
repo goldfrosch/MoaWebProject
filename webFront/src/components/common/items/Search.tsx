@@ -5,7 +5,7 @@ import SearchIcon from "assets/icon/search.svg";
 
 interface SearchProps {
   value: any;
-  onChange: (e: any) => void;
+  onChange?: (e: any) => void;
 }
 const Search: React.FC<SearchProps> = ({ value, onChange }) => {
   return (
@@ -25,11 +25,23 @@ const SearchBlock = styled.div`
     width: 240px;
     height: 36px;
     border: none;
-    border-bottom: 1px solid #e9e9e9;
+    border-bottom: 1px solid #979797;
 
     background: none;
 
     padding-left: 8px;
+  }
+  img {
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid #e9e9e9;
+    border-radius: 8px;
+
+    cursor: pointer;
+  }
+  img:hover {
+    background-color: rgba(0, 0, 0, 0.01);
   }
 `;
 

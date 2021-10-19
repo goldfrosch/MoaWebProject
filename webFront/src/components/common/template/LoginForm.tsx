@@ -77,16 +77,6 @@ const LoginFormBlock = styled.div`
         align-items: center;
 
         padding: 16px;
-        & > input {
-          width: 100%;
-          height: 32px;
-
-          border: none;
-          border-bottom: 2px solid #b8b7b7;
-
-          padding-left: 8px;
-          margin-bottom: 24px;
-        }
         & > span {
           margin: 4px 0;
         }
@@ -152,16 +142,6 @@ const LoginFormBlock = styled.div`
           align-items: center;
 
           padding: 16px;
-          & > input {
-            width: 100%;
-            height: 36px;
-
-            border: none;
-            border-bottom: 2px solid #b8b7b7;
-
-            padding-left: 6px;
-            margin-bottom: 16px;
-          }
           & > span {
             font-size: 14px;
             margin: 4px 0;

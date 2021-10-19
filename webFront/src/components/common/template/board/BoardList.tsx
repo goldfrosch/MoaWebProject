@@ -1,17 +1,21 @@
-import Pagination from "components/common/items/Pagination";
-import React, { useRef, useState } from "react";
+// import Pagination from "components/common/items/Pagination";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
+import { Pagination } from "@mui/material";
 import noticePhone from "assets/icon/megaphone.png";
 import Button from "components/common/items/Button";
 import Search from "components/common/items/Search";
-import SelectBlock from "components/common/items/Select";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export interface ISearch {
   type?: string;
-  query?: string;
-  data: string;
+  query: string;
 }
 
 export interface BoardListProps {
@@ -29,20 +33,7 @@ const BoardList: React.FC<BoardListProps> = ({
   const [search, setSearch] = useState<ISearch>({
     type: "",
     query: "",
-    data: "",
   });
-  const testClick = (id: number) => {
-    console.log(id);
-  };
-  const SearchBar = useRef<any>(null);
-  const setActive = (value: boolean) => {
-    if (value) {
-      SearchBar.current.style.boxShadow =
-        "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px";
-    } else {
-      SearchBar.current.style.boxShadow = "none";
-    }
-  };
   return (
     <BoardListBlock>
       <div className="main">
@@ -51,25 +42,37 @@ const BoardList: React.FC<BoardListProps> = ({
           <span>{context}</span>
         </div>
         <div className="option">
-          <div
-            className="search"
-            onBlur={() => setActive(false)}
-            onFocus={() => setActive(true)}
-            ref={SearchBar}
-          >
-            <SelectBlock>
-              <option>asdf</option>
-            </SelectBlock>
-            <SelectBlock></SelectBlock>
-            <Search
-              value={search.data}
-              onChange={e =>
-                setSearch({
-                  ...search,
-                  data: e.target.value,
-                })
-              }
-            />
+          <div className="search">
+            {/* 검색 타입 */}
+            <FormControl
+              variant="standard"
+              sx={{ m: 1, minWidth: 120, height: 60, color: "#e9e9e9" }}
+            >
+              <InputLabel id="demo-simple-select-standard-label">
+                검색 타입
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                defaultValue={search.type}
+                onChange={(e: any) =>
+                  setSearch({
+                    ...search,
+                    type: e.target.value,
+                  })
+                }
+                label="type"
+              >
+                <MenuItem value="">
+                  <em>없음</em>
+                </MenuItem>
+                <MenuItem value="NICKNAME">닉네임</MenuItem>
+                <MenuItem value="TITLE">제목</MenuItem>
+              </Select>
+            </FormControl>
+            <form>
+              <Search value="" />
+            </form>
           </div>
           <Button theme={ThemeColor.first} size={ThemeSize.large}>
             글쓰기
@@ -85,11 +88,18 @@ const BoardList: React.FC<BoardListProps> = ({
           {children}
         </div>
         <div className="footer">
-          <Pagination
-            nowPage={1}
-            movePage={() => testClick(1)}
-            totalCounts={500}
-          />
+          <Pagination count={10} showFirstButton showLastButton />
+          {/* const [page, setPage] = React.useState(1);
+          const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+            setPage(value);
+          };
+
+          return (
+            <Stack spacing={2}>
+              <Typography>Page: {page}</Typography>
+              <Pagination count={10} page={page} onChange={handleChange} />
+            </Stack>
+          ); */}
         </div>
       </div>
     </BoardListBlock>

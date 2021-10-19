@@ -75,7 +75,7 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
       AuthAPI.userLogin,
       action.datas
     );
-    if (status !== 200) return alert("문제 발생, 관리자에게 무늬바람");
+    if (status !== 200) return alert("아이디 or 비번을 확인해주세요");
     let token: any = data;
     localStorage.setItem("CURRENT_USER", token);
     //axios.defaults.headers.common['Authorization'] 으로 기본 헤더값 설정
@@ -85,7 +85,8 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
     history.push("/");
   } catch (e) {
     console.log(e);
-    return alert("아이디 or 비번을 확인해주세요");
+    let error: any = e;
+    return alert(error.response.data.message);
   }
 }
 

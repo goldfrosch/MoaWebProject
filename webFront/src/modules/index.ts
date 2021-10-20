@@ -7,6 +7,11 @@ export interface IRootState {
   auth: IAuthState;
 }
 
+export interface ISnackbar {
+  type: string,
+  message: string,
+}
+
 const rootStore = combineReducers<IRootState>({
   auth
 });

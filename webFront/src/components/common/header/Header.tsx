@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
 
   useEffect(() => {
     setData({ ...profile });
-  }, []);
+  }, [profile]);
 
   return (
     <HeaderBlock toggle={burgerToggle}>

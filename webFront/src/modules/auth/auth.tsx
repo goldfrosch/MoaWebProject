@@ -60,7 +60,7 @@ function* registerSaga(action: ReturnType<typeof authRegisterAction>) {
       AuthAPI.userRegister,
       action.data
     );
-    if (status !== 200) return alert("회원가입 도중 문제가 발생하였습니다");
+    if (status !== 200) return alert("회원가입중 문제가 발생했습니다");
     alert("회원가입이 완료되었습니다");
     yield put(authRegisterSuccessAction());
     history.push("/login");
@@ -84,9 +84,8 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
     yield put(authGetProfileAction());
     history.push("/");
   } catch (e) {
-    console.log(e);
     let error: any = e;
-    return alert(error.response.data.message);
+    alert(error.response.data.message);
   }
 }
 

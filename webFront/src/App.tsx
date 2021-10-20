@@ -3,6 +3,8 @@ import MainPage from "pages/MainPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+import { SnackbarProvider } from "notistack";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -10,9 +12,9 @@ function App() {
     dispatch(authGetProfileAction());
   });
   return (
-    <>
+    <SnackbarProvider maxSnack={3}>
       <MainPage />
-    </>
+    </SnackbarProvider>
   );
 }
 

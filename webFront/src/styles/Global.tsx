@@ -12,14 +12,13 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${Palette.backgroundColor};
 
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: #ffffff;
         }
         ::-webkit-scrollbar-thumb {
-            border-radius: 3.5px;
+            border-radius: 4px;
             background-color: #ced4da;
-
             &:hover {
                 background-color: #adb5bd;
             }

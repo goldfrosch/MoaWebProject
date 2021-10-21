@@ -1,6 +1,12 @@
-import { ISnackbar } from "modules";
-import { setSnackbarAction } from "modules/snackbar/snackbar";
-import { authGetProfileAction, authGetProfileSuccessAction, authLoginAction, authLoginSuccessAction, authLogoutAction, authRegisterAction, authRegisterSuccessAction } from "./auth";
+import { 
+  authGetProfileAction,
+  authGetProfileSuccessAction,
+  authLoginAction,
+  authLoginSuccessAction,
+  authLogoutAction,
+  authRegisterAction,
+  authRegisterSuccessAction
+} from "./auth";
 
 export interface IUserRegister {
   email: string,
@@ -34,4 +40,3 @@ export type IUserAction =
   | ReturnType<typeof authLogoutAction>
   | ReturnType<typeof authGetProfileAction>
   | ReturnType<typeof authGetProfileSuccessAction>
-  | ReturnType<typeof setSnackbarAction>

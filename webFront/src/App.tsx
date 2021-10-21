@@ -4,15 +4,15 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { SnackbarProvider } from "notistack";
-
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(authGetProfileAction());
   });
+
   return (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
       <MainPage />
     </SnackbarProvider>
   );

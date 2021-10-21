@@ -8,9 +8,13 @@ import {
   IProfile,
   IUserAction,
   IUserLogin,
-  IUserRegister,
+  IUserRegister
 } from "./type";
 import history from "utils/HistoryUtils";
+import {
+  setMessageErrorAction,
+  setMessageSuccessAction
+} from "modules/snackbar/snackbar";
 
 const AUTH_REGISTER = "AUTH_REGISTER" as const;
 const AUTH_REGISTER_SUCCESS = "AUTH_REGISTER_SUCCESS" as const;
@@ -25,33 +29,33 @@ const AUTH_GET_PROFILE_SUCCESS = "AUTH_GET_PROFILE_SUCCESS" as const;
 
 export const authRegisterAction = (data: IUserRegister) => ({
   type: AUTH_REGISTER,
-  data,
+  data
 });
 
 export const authRegisterSuccessAction = () => ({
-  type: AUTH_REGISTER_SUCCESS,
+  type: AUTH_REGISTER_SUCCESS
 });
 
 export const authLoginAction = (datas: IUserLogin) => ({
   type: AUTH_LOGIN,
-  datas,
+  datas
 });
 
 export const authLoginSuccessAction = () => ({
-  type: AUTH_LOGIN_SUCCESS,
+  type: AUTH_LOGIN_SUCCESS
 });
 
 export const authLogoutAction = () => ({
-  type: AUTH_LOGOUT,
+  type: AUTH_LOGOUT
 });
 
 export const authGetProfileAction = () => ({
-  type: AUTH_GET_PROFILE,
+  type: AUTH_GET_PROFILE
 });
 
 export const authGetProfileSuccessAction = (data: IProfile) => ({
   type: AUTH_GET_PROFILE_SUCCESS,
-  data,
+  data
 });
 
 function* registerSaga(action: ReturnType<typeof authRegisterAction>) {
@@ -75,17 +79,21 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
       AuthAPI.userLogin,
       action.datas
     );
-    if (status !== 200) return alert("아이디 or 비번을 확인해주세요");
+    if (status !== 200) return alert("문제 발생, 관리자에게 문의");
     let token: any = data;
     localStorage.setItem("CURRENT_USER", token);
-    //axios.defaults.headers.common['Authorization'] 으로 기본 헤더값 설정
+
     axios.defaults.headers.common["Authorization"] = token;
+
     yield put(authLoginSuccessAction());
     yield put(authGetProfileAction());
+
+    yield put(setMessageSuccessAction("환영합니다"));
+
     history.push("/");
   } catch (e) {
     let error: any = e;
-    alert(error.response.data.message);
+    yield put(setMessageErrorAction(error.response.data.message));
   }
 }
 
@@ -118,8 +126,8 @@ const initialState: IAuthState = {
     nickName: null,
     profile: null,
     rank: 0,
-    uuid: null,
-  },
+    uuid: null
+  }
 };
 
 export default function auth(

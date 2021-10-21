@@ -23,14 +23,12 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <Router history={history}>
-      <Provider store={store}>
-        <GlobalStyle />
-        <App />
-      </Provider>
+      <GlobalStyle />
+      <App />
     </Router>
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById("root")
 );
 

@@ -240,6 +240,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       width: 120px;
       display: flex;
       align-items: center;
+      justify-content: center;
 
       cursor: pointer;
       & > .profile {
@@ -261,6 +262,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       }
       @media (max-width: 800px) {
         width: 100%;
+        justify-content: flex-start;
       }
     }
     @media (max-width: 800px) {

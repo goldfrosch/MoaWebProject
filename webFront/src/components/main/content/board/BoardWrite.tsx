@@ -5,17 +5,10 @@ import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Button from "components/common/items/Button";
 
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import "@ckeditor/ckeditor5-build-classic/build/translations/ko";
-
 interface BoardWriteProps {
   data: string;
 }
 const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
-  const ckeditorConfig = {
-    language: "ko"
-  };
   return (
     <BoardWriteBlock>
       <div className="main">
@@ -33,19 +26,7 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
             <input placeholder="제목을 입력해주세요" />
           </div>
         </div>
-        <CKEditor
-          editor={ClassicEditor}
-          config={ckeditorConfig}
-          data={
-            data === "notice"
-              ? "<p>공지사항 글 예시</p>"
-              : "<p>Hello from CKEditor 5!</p><br /><p>예시용 자료입니다</p>"
-          }
-          onChange={(event: any, editor: any) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
-        />
+        <div>asfdasfd</div>
         <div className="footer">
           <Button theme={ThemeColor.first} size={ThemeSize.large}>
             저장하기

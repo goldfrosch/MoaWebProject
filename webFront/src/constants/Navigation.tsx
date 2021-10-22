@@ -14,106 +14,106 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "모아서버",
-        link: "/board?type=tutorial&query=moa"
+        link: "/tutorial/moa",
       },
       {
         title: "백설기온라인",
-        link: "/board?type=tutorial&query=wsg"
-      }
-    ]
+        link: "/tutorial/wsg",
+      },
+    ],
   },
   {
     title: "공지사항",
     data: [
       {
         title: "공지사항",
-        link: "/board?type=notice"
+        link: "/notice/notice",
       },
       {
         title: "업데이트",
-        link: "/board?type=update"
+        link: "/notice/update",
       },
       {
         title: "이벤트",
-        link: "/board?type=event"
-      }
-    ]
+        link: "/notice/event",
+      },
+    ],
   },
   {
     title: "커뮤니티",
     data: [
       {
         title: "자유게시판",
-        link: "/board?type=free"
+        link: "/community/free",
       },
       {
         title: "사진게시판",
-        link: "/grid?type=photo"
+        link: "/community/photo",
       },
       {
         title: "꿀팁게시판",
-        link: "/board?type=tip"
+        link: "/community/tip",
       },
       {
         title: "건의게시판",
-        link: "/board?type=suggest"
+        link: "/community/suggest",
       },
       {
-        title: "Q&A",
-        link: "/board?type=qna"
+        title: "자유 QnA",
+        link: "/community/qna",
       },
       {
         title: "내그기그",
-        link: "/grid?type=canvas"
-      }
-    ]
+        link: "/community/canvas",
+      },
+    ],
   },
   {
     title: "신고관리",
     data: [
       {
         title: "버그제보",
-        link: "/board?type=bug"
+        link: "/report/bug",
       },
       {
         title: "유저신고",
-        link: "/board?type=report"
+        link: "/report/user",
       },
       {
         title: "처리완료",
-        link: "/board?type=done"
+        link: "/report/done",
       },
       {
         title: "이의신청",
-        link: "/board?type=opposition"
+        link: "/report/opposition",
       },
       {
         title: "사과게시판",
-        link: "/board?type=apology"
-      }
-    ]
+        link: "/report/apology",
+      },
+    ],
   },
   {
     title: "기타사항",
     data: [
       {
         title: "후원문의",
-        link: "/etc/donate"
+        link: "/etc/donate",
       },
       {
         title: "1:1 문의",
-        link: "/etc/inquiry"
+        link: "/etc/inquiry",
       },
       {
         title: "재능기부",
-        link: "/etc/talent"
+        link: "/etc/talent",
       },
       {
         title: "MINI GAME",
-        link: "/etc/minigame"
-      }
-    ]
-  }
+        link: "/etc/minigame",
+      },
+    ],
+  },
 ];
 
 export default Navigation;

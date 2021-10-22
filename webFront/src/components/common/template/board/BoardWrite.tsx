@@ -30,7 +30,7 @@ const BoardWrite: React.FC<BoardWriteProps> = () => {
         <CKEditor
           editor={ClassicEditor}
           config={{
-            language: "ko"
+            language: "ko",
           }}
           data="<p>Hello from CKEditor 5!</p><br /><p>예시용 자료입니다</p>"
           onChange={(event: any, editor: any) => {

@@ -7,24 +7,23 @@ import HomeContainer from "containers/home/HomeContainer";
 import LoginContainer from "containers/auth/LoginContainer";
 import RegisterContainer from "containers/auth/RegisterContainer";
 
-import BoardContainer from "containers/content/board/BoardContainer";
-import BoardWriteContainer from "containers/content/board/BoardWriteContainer";
+import NoticeContainer from "containers/content/notice/NoticeContainer";
+import TestWrite from "components/main/content/notice/TestWrite";
 
 const MainPage = () => {
   return (
-    <BaseTemplate>
-      <Switch>
+    <Switch>
+      <BaseTemplate>
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/register" component={RegisterContainer} />
 
-        <Route exact path="/board" component={BoardContainer} />
-        <Route exact path="/board/write" component={BoardWriteContainer} />
+        <Route exact path="/notice/notice" component={NoticeContainer} />
 
-        {/* Error Page */}
-        <Route component={NotFound} />
-      </Switch>
-    </BaseTemplate>
+        <Route exact path="/test" component={TestWrite} />
+      </BaseTemplate>
+      <Route exact path="/notfound" component={NotFound} />
+    </Switch>
   );
 };
 

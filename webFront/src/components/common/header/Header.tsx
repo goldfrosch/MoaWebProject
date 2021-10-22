@@ -97,7 +97,6 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
   justify-content: space-between;
 
   overflow-x: hidden;
-
   & > .logo {
     width: 160px;
     height: 100%;

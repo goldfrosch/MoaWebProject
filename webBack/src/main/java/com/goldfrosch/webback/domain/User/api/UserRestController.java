@@ -1,9 +1,9 @@
 package com.goldfrosch.webback.domain.User.api;
 
 import com.goldfrosch.webback.domain.User.domain.User;
-import com.goldfrosch.webback.domain.User.dto.LoginDTO;
-import com.goldfrosch.webback.domain.User.dto.RegisterDTO;
-import com.goldfrosch.webback.domain.User.dto.UserDTO;
+import com.goldfrosch.webback.domain.User.entity.dao.LoginDAO;
+import com.goldfrosch.webback.domain.User.entity.dao.RegisterDAO;
+import com.goldfrosch.webback.domain.User.entity.dto.UserDTO;
 import com.goldfrosch.webback.domain.User.persistance.UserRepository;
 import com.goldfrosch.webback.global.component.JwtTokenProvider;
 
@@ -43,7 +43,7 @@ public class UserRestController {
     // 암호화된 비밀번호를 넣어주기 때문에 비밀번호 찾기가 아닌
     // 특정 정답을 맞춘 뒤 비밀번호 변경을 넣어야할 듯 함
     @PostMapping("/register")
-    public Long join(@RequestBody RegisterDTO user) {
+    public Long join(@RequestBody RegisterDAO user) {
         return userRepository.save(User.builder()
                 .email(user.getEmail())
                 .password(passwordEncoder.encode(user.getPassword()))
@@ -59,7 +59,7 @@ public class UserRestController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO user) {
+    public String login(@RequestBody LoginDAO user) {
         User member = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
 

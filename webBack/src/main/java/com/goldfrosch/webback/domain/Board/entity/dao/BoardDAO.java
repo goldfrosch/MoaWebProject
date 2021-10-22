@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.domain.Board.dto;
+package com.goldfrosch.webback.domain.Board.entity.dao;
 
 import com.goldfrosch.webback.domain.Board.domain.BoardType;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardDTO {
+public class BoardDAO {
     private Long authorId;
 
     private String title;

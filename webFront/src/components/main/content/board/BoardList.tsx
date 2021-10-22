@@ -1,45 +1,56 @@
-// import Pagination from "components/common/items/Pagination";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
-import { Pagination } from "@mui/material";
 import noticePhone from "assets/icon/megaphone.png";
 import Button from "components/common/items/Button";
 import Search from "components/common/items/Search";
+import { IBoardData } from "containers/content/board/BoardListContainer";
+import history from "utils/HistoryUtils";
 
+import { Pagination } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export interface ISearch {
-  type?: string;
-  query: string;
-}
-
 export interface BoardListProps {
-  title: string;
-  context: string;
-  notice: any[];
+  data: IBoardData;
 }
 
-const BoardList: React.FC<BoardListProps> = ({
-  title,
-  context,
-  notice,
-  children,
-}) => {
-  const [search, setSearch] = useState<ISearch>({
-    type: "",
-    query: "",
+const BoardList: React.FC<BoardListProps> = ({ data }) => {
+  const [searchData, setSearchData] = useState<IBoardData>({
+    ...data
   });
+
+  //검색할 쿼리 내용 onChangeEvent
+  const handleSearchChange = (e: any) => {
+    setSearchData({ ...searchData, query: e.target.value });
+  };
+
+  //검색 후 API 로딩
+  const handleSubmit = (e: React.ChangeEvent<unknown>) => {
+    e.preventDefault();
+    console.log(searchData);
+  };
+
+  //글 작성 페이지로 이동
+  const handleWriteBoard = () => {
+    history.push("/board/write?type=" + searchData.type);
+  };
+
+  //페이지네이션 관련
+  const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
+    e.preventDefault();
+    setSearchData({ ...searchData, page: value });
+  };
+
   return (
     <BoardListBlock>
       <div className="main">
         <div className="header">
-          <h2 className="title">{title}</h2>
-          <span>{context}</span>
+          <h2 className="title">테스트 제목</h2>
+          <span>테스트 설명</span>
         </div>
         <div className="option">
           <div className="search">
@@ -54,52 +65,48 @@ const BoardList: React.FC<BoardListProps> = ({
               <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                value={search.type}
+                value={searchData.search}
                 onChange={(e: any) =>
-                  setSearch({
-                    ...search,
-                    type: e.target.value,
+                  setSearchData({
+                    ...searchData,
+                    search: e.target.value
                   })
                 }
                 label="type"
               >
-                <MenuItem value="">
-                  <em>없음</em>
-                </MenuItem>
                 <MenuItem value="NICKNAME">닉네임</MenuItem>
                 <MenuItem value="TITLE">제목</MenuItem>
               </Select>
             </FormControl>
-            <form>
-              <Search value="" />
-            </form>
+            <Search
+              value={searchData.query}
+              onSubmit={handleSubmit}
+              onChange={handleSearchChange}
+            />
           </div>
-          <Button theme={ThemeColor.first} size={ThemeSize.large}>
+          <Button
+            theme={ThemeColor.first}
+            size={ThemeSize.large}
+            onClick={handleWriteBoard}
+          >
             글쓰기
           </Button>
         </div>
         <div className="content">
-          {notice.map((data, key) => (
-            <div className="importantItem" key={key}>
-              <img src={noticePhone} alt="" />
-              <span>{data}</span>
-            </div>
-          ))}
-          {children}
+          <div className="importantItem">
+            <img src={noticePhone} alt="" />
+            <span>asdfasfds</span>
+          </div>
+          <div className="item">asd</div>
         </div>
         <div className="footer">
-          <Pagination count={10} showFirstButton showLastButton />
-          {/* const [page, setPage] = React.useState(1);
-          const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-            setPage(value);
-          };
-
-          return (
-            <Stack spacing={2}>
-              <Typography>Page: {page}</Typography>
-              <Pagination count={10} page={page} onChange={handleChange} />
-            </Stack>
-          ); */}
+          <Pagination
+            count={10}
+            showFirstButton
+            showLastButton
+            page={searchData.page}
+            onChange={handlePageChange}
+          />
         </div>
       </div>
     </BoardListBlock>
@@ -163,6 +170,11 @@ const BoardListBlock = styled.div`
         align-items: center;
 
         gap: 8px;
+
+        & > img {
+          width: 24px;
+          height: 24px;
+        }
       }
       & > .item {
         width: 100%;
@@ -171,6 +183,8 @@ const BoardListBlock = styled.div`
 
         display: flex;
         align-items: center;
+
+        padding: 0 16px;
       }
     }
 

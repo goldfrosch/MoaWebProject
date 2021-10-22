@@ -1,17 +1,9 @@
 package com.goldfrosch.webback.domain.Board.api;
 
 import com.goldfrosch.webback.domain.Board.application.BoardService;
-import com.goldfrosch.webback.domain.Board.domain.Board;
-import com.goldfrosch.webback.domain.Board.dto.BoardDTO;
-import com.goldfrosch.webback.domain.User.domain.User;
-import com.goldfrosch.webback.global.common.response.ApiResponse;
-import com.goldfrosch.webback.global.common.response.PagingResponse;
+import com.goldfrosch.webback.domain.Board.entity.dao.BoardDAO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +21,8 @@ public class BoardRestController {
 //
 //    }
     @PostMapping("/board")
-    public ApiResponse<String> postBoard(@RequestBody BoardDTO board) {
+    public String postBoard(@RequestBody BoardDAO board) {
         boardService.postBoard(board);
-        return new ApiResponse<>(HttpStatus.OK,"완료");
+        return "완료";
     }
 }

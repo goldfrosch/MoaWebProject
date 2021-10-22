@@ -4,20 +4,26 @@ import styled from "styled-components";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Button from "components/common/items/Button";
+
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/ko";
 
-interface BoardWriteProps {}
-const BoardWrite: React.FC<BoardWriteProps> = () => {
+interface BoardWriteProps {
+  data: string;
+}
+const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
+  const ckeditorConfig = {
+    language: "ko"
+  };
   return (
     <BoardWriteBlock>
       <div className="main">
         <div className="header">
           <h2 className="title">글 작성하기</h2>
           <div className="option">
-            <select className="category">
-              <option>테스트1번</option>
+            <select className="category" disabled>
+              <option>{data}</option>
             </select>
             <select className="tag">
               <option>말머리 없음?</option>
@@ -29,20 +35,16 @@ const BoardWrite: React.FC<BoardWriteProps> = () => {
         </div>
         <CKEditor
           editor={ClassicEditor}
-          config={{
-            language: "ko",
-          }}
-          data="<p>Hello from CKEditor 5!</p><br /><p>예시용 자료입니다</p>"
+          config={ckeditorConfig}
+          data={
+            data === "notice"
+              ? "<p>공지사항 글 예시</p>"
+              : "<p>Hello from CKEditor 5!</p><br /><p>예시용 자료입니다</p>"
+          }
           onChange={(event: any, editor: any) => {
             const data = editor.getData();
             console.log({ event, editor, data });
           }}
-          // onBlur={(event: any, editor: any) => {
-          //   console.log("Blur.", editor);
-          // }}
-          // onFocus={(event: any, editor: any) => {
-          //   console.log("Focus.", editor);
-          // }}
         />
         <div className="footer">
           <Button theme={ThemeColor.first} size={ThemeSize.large}>

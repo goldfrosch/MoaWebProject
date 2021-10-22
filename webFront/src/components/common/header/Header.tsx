@@ -1,11 +1,22 @@
-import Navigation from "constants/Navigation";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import { Palette } from "styles/Pallete";
 
-import DefaultImage from "assets/icon/defaultUser.svg";
 import { IProfile } from "modules/auth/type";
+import Navigation from "constants/Navigation";
+
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
 
 interface HeaderProps {
   profile: IProfile;
@@ -15,6 +26,16 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
   const [select, setSelect] = useState<number>(-1);
   const [burgerToggle, setBurgerToggle] = useState<boolean>(false);
   const [data, setData] = useState<IProfile>({ ...profile });
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  //프로필 관련 메뉴
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   //아코디언 메뉴 코드
   const selectCategory = (id: number) => {
@@ -57,12 +78,75 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
         <div className="login">
           {data.email !== "" ? (
             <>
-              <span>
+              <span className="profile">
                 <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
-                  {data.nickName ? data.nickName : "닉네임 등록해주세요"}
+                  {data.nickName ? "개인 설정" : "로그인이 필요합니다"}
                 </Link>
               </span>
-              <img src={DefaultImage} alt="" />
+              <div className="user">
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center"
+                  }}
+                >
+                  <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+                    <Avatar />
+                  </IconButton>
+                </Box>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  onClick={handleClose}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1
+                      },
+                      "&:before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 20,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0
+                      }
+                    }
+                  }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                >
+                  <MenuItem>
+                    <Avatar /> 계정 정보
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    개인 설정
+                  </MenuItem>
+                  <MenuItem>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    로그아웃
+                  </MenuItem>
+                </Menu>
+              </div>
             </>
           ) : (
             <>
@@ -153,32 +237,30 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       }
     }
     & > .login {
-      width: 180px;
+      width: 120px;
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
 
       cursor: pointer;
-      & > img {
-        width: 24px;
-        height: 24px;
-
-        border-radius: 50%;
-        object-fit: cover;
-        @media (min-width: 1080px) {
-          width: 36px;
-          height: 36px;
-        }
-      }
-      & > span {
+      & > .profile {
+        display: none;
         font-size: 14px;
         @media (min-width: 1080px) {
           font-size: 16px;
         }
         @media (max-width: 800px) {
-          font-size: 30px;
-          font-weight: 500;
+          display: block;
+          font-size: 20px;
         }
+      }
+      & > .user {
+        display: block;
+        @media (max-width: 800px) {
+          display: none;
+        }
+      }
+      @media (max-width: 800px) {
+        width: 100%;
       }
     }
     @media (max-width: 800px) {

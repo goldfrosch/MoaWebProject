@@ -11,13 +11,12 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class PagingResponse<T> {
+    private String title;
+    private String context;
 
     private int currentPage;
     private int totalPage;
     private Long totalCount;
+
     private List<T> list;
-
-
-
-
 }

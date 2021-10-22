@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.domain.User.dto;
+package com.goldfrosch.webback.domain.User.entity.dao;
 
 import com.goldfrosch.webback.domain.User.domain.Gender;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class RegisterDTO {
+public class RegisterDAO {
     private String email;
     private String password;
     private LocalDateTime birthday;

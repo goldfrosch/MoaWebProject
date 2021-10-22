@@ -6,17 +6,20 @@ import SearchIcon from "assets/icon/search.svg";
 interface SearchProps {
   value: any;
   onChange?: (e: any) => void;
+  onSubmit: (e: any) => void;
 }
-const Search: React.FC<SearchProps> = ({ value, onChange }) => {
+const Search: React.FC<SearchProps> = ({ value, onChange, onSubmit }) => {
   return (
-    <SearchBlock>
+    <SearchBlock onSubmit={onSubmit}>
       <input defaultValue={value} type="text" onChange={onChange} />
-      <img src={SearchIcon} alt="" />
+      <button type="submit">
+        <img src={SearchIcon} alt="" />
+      </button>
     </SearchBlock>
   );
 };
 
-const SearchBlock = styled.div`
+const SearchBlock = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,15 +34,24 @@ const SearchBlock = styled.div`
 
     padding-left: 8px;
   }
-  img {
-    width: 32px;
-    height: 32px;
+  button {
+    background: none;
 
-    border: 1px solid #e9e9e9;
-    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    cursor: pointer;
+    img {
+      width: 32px;
+      height: 32px;
+
+      border: 1px solid #e9e9e9;
+      border-radius: 8px;
+
+      cursor: pointer;
+    }
   }
+
   img:hover {
     background-color: rgba(0, 0, 0, 0.01);
   }

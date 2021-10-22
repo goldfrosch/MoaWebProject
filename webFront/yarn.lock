@@ -2362,7 +2362,7 @@
   dependencies:
     "@types/ckeditor__ckeditor5-core" "*"
 
-"@types/ckeditor__ckeditor5-basic-styles@*":
+"@types/ckeditor__ckeditor5-basic-styles@*", "@types/ckeditor__ckeditor5-basic-styles@^28.0.2":
   version "28.0.2"
   resolved "https://registry.yarnpkg.com/@types/ckeditor__ckeditor5-basic-styles/-/ckeditor__ckeditor5-basic-styles-28.0.2.tgz#8ff10fd6b05fb907b8dd518bb5d417db868aa3d3"
   integrity sha512-ap6vMacs5rjcWRlHrYPsZPshHoPR7sruPgbuzduGQCy7X86SglOPwtd6XvMOMItslbLv1wYbJ3h9+S1kBOVvfA==
@@ -2602,7 +2602,7 @@
   dependencies:
     "@types/ckeditor__ckeditor5-core" "*"
 
-"@types/ckeditor__ckeditor5-link@*":
+"@types/ckeditor__ckeditor5-link@*", "@types/ckeditor__ckeditor5-link@^29.0.3":
   version "29.0.3"
   resolved "https://registry.yarnpkg.com/@types/ckeditor__ckeditor5-link/-/ckeditor__ckeditor5-link-29.0.3.tgz#72ab8596c385e4b0118072418e765364d1986257"
   integrity sha512-VBn0XA17ow1l831EVdPYBjpd8EatHb9EFhyoSRXGEBULd3bIey0jRZBQUXyl/dT7eLaN4xs64tDmnaoO/HpjRQ==
@@ -2626,7 +2626,7 @@
     "@types/ckeditor__ckeditor5-typing" "*"
     "@types/ckeditor__ckeditor5-utils" "*"
 
-"@types/ckeditor__ckeditor5-media-embed@*":
+"@types/ckeditor__ckeditor5-media-embed@*", "@types/ckeditor__ckeditor5-media-embed@^29.0.2":
   version "29.0.2"
   resolved "https://registry.yarnpkg.com/@types/ckeditor__ckeditor5-media-embed/-/ckeditor__ckeditor5-media-embed-29.0.2.tgz#1a4d96dde6141a04b10b515e4c864cd215a3669d"
   integrity sha512-Sf06c9bFMy8zbEYYp3xnuQ12vL/+Zj/GKW2IpVh27bcARLV1Om8UIFrggrZFuJ/Bq2h6n93PCwnQ3BYnKf98gg==

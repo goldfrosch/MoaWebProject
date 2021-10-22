@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.domain.User.dto;
+package com.goldfrosch.webback.domain.User.entity.dto;
 
 import lombok.Getter;
 import lombok.Setter;

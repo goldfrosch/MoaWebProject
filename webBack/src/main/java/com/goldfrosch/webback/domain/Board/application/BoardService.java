@@ -1,7 +1,7 @@
 package com.goldfrosch.webback.domain.Board.application;
 
 import com.goldfrosch.webback.domain.Board.domain.Board;
-import com.goldfrosch.webback.domain.Board.dto.BoardDTO;
+import com.goldfrosch.webback.domain.Board.entity.dao.BoardDAO;
 import com.goldfrosch.webback.domain.Board.persistance.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public void postBoard(BoardDTO board) {
+    public void postBoard(BoardDAO board) {
         Board newBoard = Board.builder()
                 .authorId(board.getAuthorId())
                 .category(board.getType())

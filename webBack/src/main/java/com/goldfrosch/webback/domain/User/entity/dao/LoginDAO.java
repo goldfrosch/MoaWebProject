@@ -1,11 +1,11 @@
-package com.goldfrosch.webback.domain.User.dto;
+package com.goldfrosch.webback.domain.User.entity.dao;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginDTO {
+public class LoginDAO {
     private String email;
     private String password;
 }

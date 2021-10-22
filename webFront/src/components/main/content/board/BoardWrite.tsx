@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
+import Button from "components/common/items/Button";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "@ckeditor/ckeditor5-build-classic/build/translations/ko";
-import Button from "components/common/items/Button";
 
 interface BoardWriteProps {}
 const BoardWrite: React.FC<BoardWriteProps> = () => {

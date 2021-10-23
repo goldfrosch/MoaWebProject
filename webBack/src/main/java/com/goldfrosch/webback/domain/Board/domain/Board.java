@@ -1,5 +1,7 @@
 package com.goldfrosch.webback.domain.Board.domain;
 
+import com.goldfrosch.webback.domain.Board.domain.BoardList;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
 
 @Getter
 @NoArgsConstructor
@@ -24,7 +27,8 @@ public class Board {
     @Column(nullable = false)
     private String title;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private BoardList category;
 
     @Column(nullable = false)
     private String prefix;

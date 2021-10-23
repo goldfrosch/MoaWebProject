@@ -2,6 +2,7 @@ package com.goldfrosch.webback.domain.Board.api;
 
 import com.goldfrosch.webback.domain.Board.application.BoardService;
 import com.goldfrosch.webback.domain.Board.domain.Board;
+import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardDAO;
 import com.goldfrosch.webback.domain.Board.persistance.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
@@ -22,7 +23,7 @@ public class BoardRestController {
 
     @GetMapping("/boards")
     public List<Board> getBoardPaging (
-        @RequestParam(defaultValue = "") String category,
+        @RequestParam(defaultValue = "") BoardList category,
         @RequestParam(required = false, defaultValue = "1") int page,
         @RequestParam(required = false, defaultValue = "10") int size,
         @RequestParam(required = false) String query
@@ -35,9 +36,15 @@ public class BoardRestController {
         }
     }
 
+//    @GetMapping("/board/{id}")
+//    public String postBoard(@PathVariable Long id) {
+//        boardService.postBoard(board);
+//        return "완료";
+//    }
+
     @PostMapping("/board")
-    public String postBoard(@RequestBody BoardDAO board) {
-        boardService.postBoard(board);
+    public String postBoard(@RequestBody BoardDAO board, @AuthenticationPrincipal User user) {
+        boardService.postBoard(board, user);
         return "완료";
     }
 }

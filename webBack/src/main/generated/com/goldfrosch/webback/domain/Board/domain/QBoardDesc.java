@@ -19,7 +19,7 @@ public class QBoardDesc extends EntityPathBase<BoardDesc> {
 
     public static final QBoardDesc boardDesc = new QBoardDesc("boardDesc");
 
-    public final StringPath category = createString("category");
+    public final EnumPath<BoardList> category = createEnum("category", BoardList.class);
 
     public final StringPath context = createString("context");
 

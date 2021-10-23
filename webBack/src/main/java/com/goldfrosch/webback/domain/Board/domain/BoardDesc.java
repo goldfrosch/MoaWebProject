@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Entity
 public class BoardDesc {
     @Id
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private BoardList category;
 
     @Column
     private String title;

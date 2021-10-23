@@ -4,6 +4,7 @@ import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.domain.User.entity.dao.LoginDAO;
 import com.goldfrosch.webback.domain.User.entity.dao.RegisterDAO;
 import com.goldfrosch.webback.domain.User.entity.dto.UserDTO;
+import com.goldfrosch.webback.domain.User.persistance.UserQueryRepository;
 import com.goldfrosch.webback.domain.User.persistance.UserRepository;
 import com.goldfrosch.webback.global.component.JwtTokenProvider;
 
@@ -24,6 +25,8 @@ public class UserRestController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+
+    private final UserQueryRepository userQueryRepository;
 
     @GetMapping("/profile")
     public UserDTO getUser(@AuthenticationPrincipal User user) {
@@ -71,9 +74,7 @@ public class UserRestController {
 
     //중복 유저 이메일 찾기
     @GetMapping("/findEmail")
-    public String findEmail(@RequestBody String email) {
-        User findUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
-        return "이미 중복된 이메일 입니다.";
+    public String findEmail(@RequestParam String email) {
+        return userQueryRepository.findOverlapEmail(email);
     }
 }

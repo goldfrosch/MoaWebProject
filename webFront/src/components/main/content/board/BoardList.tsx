@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+
+import * as BoardAPI from "api/board";
+
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import noticePhone from "assets/icon/megaphone.png";
@@ -13,6 +16,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { IBoardListData } from "modules/board/type";
+import { AxiosResponse } from "axios";
 
 export interface BoardListProps {
   data: IBoardData;
@@ -22,6 +27,17 @@ const BoardList: React.FC<BoardListProps> = ({ data }) => {
   const [searchData, setSearchData] = useState<IBoardData>({
     ...data
   });
+  const [board, setBoard] = useState<IBoardListData[]>([]);
+
+  const getBoardsData = () => {
+    BoardAPI.getBoards(searchData)
+      .then((res: AxiosResponse) => {
+        setBoard([...res.data]);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   //검색할 쿼리 내용 onChangeEvent
   const handleSearchChange = (e: any) => {
@@ -31,7 +47,7 @@ const BoardList: React.FC<BoardListProps> = ({ data }) => {
   //검색 후 API 로딩
   const handleSubmit = (e: React.ChangeEvent<unknown>) => {
     e.preventDefault();
-    console.log(searchData);
+    getBoardsData();
   };
 
   //글 작성 페이지로 이동
@@ -43,7 +59,13 @@ const BoardList: React.FC<BoardListProps> = ({ data }) => {
   const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
     e.preventDefault();
     setSearchData({ ...searchData, page: value });
+    getBoardsData();
   };
+
+  useEffect(() => {
+    getBoardsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <BoardListBlock>
@@ -97,7 +119,11 @@ const BoardList: React.FC<BoardListProps> = ({ data }) => {
             <img src={noticePhone} alt="" />
             <span>asdfasfds</span>
           </div>
-          <div className="item">asd</div>
+          {board.map((data, key) => (
+            <div className="item" key={key}>
+              {data.title}
+            </div>
+          ))}
         </div>
         <div className="footer">
           <Pagination

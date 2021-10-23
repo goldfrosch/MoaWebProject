@@ -1,14 +1,12 @@
 import axios from "api/defaultClient";
-import { IUserLogin, IUserRegister } from "modules/auth/type";
+import { IGetBoards, IBoardListData } from "modules/board/type";
 
-export const userRegister = (data: IUserRegister) => {
-  return axios.post(`/register`, data);
+export const getBoards = (data: IGetBoards) => {
+  return axios.get(
+    `/boards?category=${data.category}&type=${data.type}&query=${data.query}`
+  );
 };
 
-export const userLogin = (data: IUserLogin) => {
-  return axios.post(`/login`, data);
-};
-
-export const userProfile = () => {
-  return axios.get(`/profile`);
+export const postBoard = (data: IBoardListData) => {
+  return axios.post(`/board`, data);
 };

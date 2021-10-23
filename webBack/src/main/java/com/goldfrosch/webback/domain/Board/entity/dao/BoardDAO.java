@@ -1,16 +1,16 @@
 package com.goldfrosch.webback.domain.Board.entity.dao;
 
+import com.goldfrosch.webback.domain.Board.domain.BoardList;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class BoardDAO {
-    private Long authorId;
-
     private String title;
 
-    private String type;
+    private BoardList category;
 
     private String prefix;
 

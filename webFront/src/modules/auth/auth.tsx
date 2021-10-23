@@ -80,10 +80,9 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
       action.datas
     );
     if (status !== 200) return alert("문제 발생, 관리자에게 문의");
-    let token: any = data;
-    localStorage.setItem("CURRENT_USER", token);
+    localStorage.setItem("CURRENT_USER", data);
 
-    axios.defaults.headers.common["Authorization"] = token;
+    axios.defaults.headers.common["Authorization"] = data;
 
     yield put(authLoginSuccessAction());
     yield put(authGetProfileAction());
@@ -104,10 +103,9 @@ function* profileSaga(action: ReturnType<typeof authGetProfileAction>) {
       axios.defaults.headers.common["Authorization"] = String(token);
 
       const { data, status }: AxiosResponse = yield call(AuthAPI.userProfile);
-      let datas: any = data;
       if (status !== 200)
         return alert("페이지 로딩중 문제 발생. 로그인을 다시 해주세요");
-      yield put(authGetProfileSuccessAction(datas));
+      yield put(authGetProfileSuccessAction(data));
     }
   } catch (e) {
     console.log(e);

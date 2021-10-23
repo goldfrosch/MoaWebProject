@@ -36,7 +36,7 @@ const BoardList: React.FC<BoardListProps> = ({ data }) => {
 
   //글 작성 페이지로 이동
   const handleWriteBoard = () => {
-    history.push("/board/write?type=" + searchData.type);
+    history.push("/board/write?category=" + searchData.category);
   };
 
   //페이지네이션 관련
@@ -65,11 +65,11 @@ const BoardList: React.FC<BoardListProps> = ({ data }) => {
               <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                value={searchData.search}
+                value={searchData.type}
                 onChange={(e: any) =>
                   setSearchData({
                     ...searchData,
-                    search: e.target.value
+                    type: e.target.value
                   })
                 }
                 label="type"

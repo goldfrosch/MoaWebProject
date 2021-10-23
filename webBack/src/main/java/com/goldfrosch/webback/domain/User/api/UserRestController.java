@@ -27,7 +27,7 @@ public class UserRestController {
 
     @GetMapping("/profile")
     public UserDTO getUser(@AuthenticationPrincipal User user) {
-        log.info(user.toString());
+//        log.info(user.toString());
         UserDTO getProfile = new UserDTO();
         getProfile.setEmail(user.getEmail());
         getProfile.setNickName(user.getNickName());
@@ -67,5 +67,13 @@ public class UserRestController {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
         return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+    }
+
+    //중복 유저 이메일 찾기
+    @GetMapping("/findEmail")
+    public String findEmail(@RequestBody String email) {
+        User findUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+        return "이미 중복된 이메일 입니다.";
     }
 }

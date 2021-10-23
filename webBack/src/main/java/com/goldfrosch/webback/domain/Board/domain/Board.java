@@ -24,11 +24,10 @@ public class Board {
     @Column(nullable = false)
     private String title;
 
-    @Enumerated(EnumType.STRING)
-    private BoardType category;
+    private String category;
 
     @Column(nullable = false)
-    private int tag;
+    private String prefix;
 
     @Column(columnDefinition = "TEXT")
     private String content;

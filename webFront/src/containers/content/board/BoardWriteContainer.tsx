@@ -10,7 +10,7 @@ const BoardWriteContainer: React.FC<
   const [data, setData] = useState<string>("");
 
   useEffect(() => {
-    setData(String(new URLSearchParams(location.search).get("type") ?? ""));
+    setData(String(new URLSearchParams(location.search).get("category") ?? ""));
   }, [location, data]);
 
   return <BoardWrite data={data} />;

@@ -19,7 +19,6 @@ const MainPage = () => {
         <Route exact path="/register" component={RegisterContainer} />
 
         <Route exact path="/board" component={BoardContainer} />
-
         <Route exact path="/board/write" component={BoardWriteContainer} />
 
         {/* Error Page */}

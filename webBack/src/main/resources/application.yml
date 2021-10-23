@@ -25,3 +25,5 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
+app:
+  filePath: C:\Users\user\Documents\GitHub\MoaWebProject\webBack\src\main\file

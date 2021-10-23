@@ -1,6 +1,5 @@
 package com.goldfrosch.webback.domain.Board.entity.dao;
 
-import com.goldfrosch.webback.domain.Board.domain.BoardType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +10,9 @@ public class BoardDAO {
 
     private String title;
 
-    private BoardType type;
+    private String type;
 
-    private int tag;
+    private String prefix;
 
     private String content;
 

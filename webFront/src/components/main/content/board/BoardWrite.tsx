@@ -1,14 +1,49 @@
-import React from "react";
+import React, { useRef, useState, useMemo } from "react";
 import styled from "styled-components";
 
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Button from "components/common/items/Button";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 interface BoardWriteProps {
   data: string;
 }
 const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
+  const QuillRef = useRef<ReactQuill>();
+  const [contents, setContents] = useState("");
+
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [
+            { font: ["Noto Sans KR", "Gothic"] },
+            { header: "1" },
+            { header: "2" },
+            { size: ["small", false, "large", "huge"] }
+          ],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ color: [] }, { background: [] }, { align: [] }],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" }
+          ],
+          ["link", "image", "video"],
+          ["clean"]
+        ]
+      }
+    }),
+    []
+  );
+  const handleSave = () => {
+    console.log(contents);
+  };
+
   return (
     <BoardWriteBlock>
       <div className="main">
@@ -19,16 +54,31 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
               <option>{data}</option>
             </select>
             <select className="tag">
-              <option>말머리 없음?</option>
+              <option value="">말머리 없음</option>
             </select>
           </div>
           <div className="option">
             <input placeholder="제목을 입력해주세요" />
           </div>
         </div>
-        <div>asfdasfd</div>
+        <ReactQuill
+          ref={element => {
+            if (element !== null) {
+              QuillRef.current = element;
+            }
+          }}
+          value={contents}
+          onChange={setContents}
+          modules={modules}
+          theme="snow"
+          placeholder="내용을 입력해주세요."
+        />
         <div className="footer">
-          <Button theme={ThemeColor.first} size={ThemeSize.large}>
+          <Button
+            theme={ThemeColor.first}
+            size={ThemeSize.large}
+            onClick={handleSave}
+          >
             저장하기
           </Button>
         </div>
@@ -75,9 +125,15 @@ const BoardWriteBlock = styled.div`
         }
         & > .category {
           width: 80%;
+          @media (max-width: 800px) {
+            width: 60%;
+          }
         }
         & > .tag {
           width: 20%;
+          @media (max-width: 800px) {
+            width: 40%;
+          }
         }
         & > input {
           width: 100%;
@@ -87,6 +143,9 @@ const BoardWriteBlock = styled.div`
           padding-left: 8px;
           margin-bottom: 16px;
         }
+      }
+      @media (max-width: 800px) {
+        margin-bottom: 8%;
       }
     }
     & > .footer {

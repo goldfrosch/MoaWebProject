@@ -3,9 +3,9 @@ import { RouteComponentProps } from "react-router";
 
 import BoardList from "components/main/content/board/BoardList";
 export interface IBoardData {
-  type: string;
+  category: string;
   page: number;
-  search: string;
+  type: string;
   query: string;
 }
 
@@ -14,17 +14,21 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
   location
 }) => {
   const [data, setData] = useState<IBoardData>({
-    type: String(new URLSearchParams(location.search).get("type") ?? ""),
+    category: String(
+      new URLSearchParams(location.search).get("category") ?? ""
+    ),
     page: Number(new URLSearchParams(location.search).get("page") ?? 1),
-    search: String(new URLSearchParams(location.search).get("search") ?? ""),
+    type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });
 
   useEffect(() => {
     setData({
-      type: String(new URLSearchParams(location.search).get("type") ?? ""),
+      category: String(
+        new URLSearchParams(location.search).get("category") ?? ""
+      ),
       page: Number(new URLSearchParams(location.search).get("page") ?? 1),
-      search: String(new URLSearchParams(location.search).get("search") ?? ""),
+      type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
   }, [location.search]);

@@ -14,11 +14,11 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "모아서버",
-        link: "/board?type=tutorial-moa"
+        link: "/board?category=tutorial-moa"
       },
       {
         title: "백설기온라인",
-        link: "/board?type=tutorial-wsg"
+        link: "/board?category=tutorial-wsg"
       }
     ]
   },
@@ -27,15 +27,15 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "공지사항",
-        link: "/board?type=notice"
+        link: "/board?category=notice"
       },
       {
         title: "업데이트",
-        link: "/board?type=update"
+        link: "/board?category=update"
       },
       {
         title: "이벤트",
-        link: "/board?type=event"
+        link: "/board?category=event"
       }
     ]
   },
@@ -44,27 +44,27 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "자유게시판",
-        link: "/board?type=free"
+        link: "/board?category=free"
       },
       {
         title: "사진게시판",
-        link: "/grid?type=photo"
+        link: "/grid?category=photo"
       },
       {
         title: "꿀팁게시판",
-        link: "/board?type=tip"
+        link: "/board?category=tip"
       },
       {
         title: "건의게시판",
-        link: "/board?type=suggest"
+        link: "/board?category=suggest"
       },
       {
         title: "자유 QnA",
-        link: "/board?type=qna"
+        link: "/board?category=qna"
       },
       {
         title: "내그기그",
-        link: "/grid?type=canvas"
+        link: "/grid?category=canvas"
       }
     ]
   },
@@ -73,23 +73,23 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "버그제보",
-        link: "/board?type=bug"
+        link: "/board?category=bug"
       },
       {
         title: "유저신고",
-        link: "/board?type=report"
+        link: "/board?category=report"
       },
       {
         title: "처리완료",
-        link: "/board?type=done"
+        link: "/board?category=done"
       },
       {
         title: "이의신청",
-        link: "/board?type=opposition"
+        link: "/board?category=opposition"
       },
       {
         title: "사과게시판",
-        link: "/board?type=apology"
+        link: "/board?category=apology"
       }
     ]
   },

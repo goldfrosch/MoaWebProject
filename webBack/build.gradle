@@ -1,3 +1,18 @@
+buildscript {
+    ext {
+        springBootVersion = '2.4.5'
+        querydslPluginVersion = '1.0.10'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}")
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -44,6 +59,28 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+    //sql Select querydsl
+    compileOnly group: 'com.querydsl', name: 'querydsl-core'
+    compileOnly group: 'com.querydsl', name: 'querydsl-jpa'
+    annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: "${dependencyManagement.importedProperties['querydsl.version']}", classifier: 'jpa'
+    annotationProcessor group: 'jakarta.persistence', name: 'jakarta.persistence-api'
+    annotationProcessor group: 'jakarta.annotation', name: 'jakarta.annotation-api'
+}
+
+def generated = "src/main/generated"
+
+sourceSets {
+    main.java.srcDirs += [ generated ]
+}
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file(generated)
+}
+
+clean.doLast {
+    file(generated).deleteDir()
 }
 
 test {

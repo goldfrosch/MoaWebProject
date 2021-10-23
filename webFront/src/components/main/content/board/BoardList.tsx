@@ -9,7 +9,6 @@ import noticePhone from "assets/icon/megaphone.png";
 import Button from "components/common/items/Button";
 import Search from "components/common/items/Search";
 import { IBoardData } from "containers/content/board/BoardListContainer";
-import history from "utils/HistoryUtils";
 
 import { Pagination } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -21,9 +20,10 @@ import { AxiosResponse } from "axios";
 
 export interface BoardListProps {
   data: IBoardData;
+  checkLogin: (link: string) => void;
 }
 
-const BoardList: React.FC<BoardListProps> = ({ data }) => {
+const BoardList: React.FC<BoardListProps> = ({ data, checkLogin }) => {
   const [searchData, setSearchData] = useState<IBoardData>({
     ...data
   });
@@ -52,7 +52,7 @@ const BoardList: React.FC<BoardListProps> = ({ data }) => {
 
   //글 작성 페이지로 이동
   const handleWriteBoard = () => {
-    history.push("/board/write?category=" + searchData.category);
+    checkLogin("/board/write?category=" + searchData.category);
   };
 
   //페이지네이션 관련

@@ -168,8 +168,7 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
               birthday: dates
             });
             setErrorMsg("");
-            console.log(dates);
-            // register(data);
+            register(data);
           }
         }
       }

@@ -21,14 +21,20 @@ public class BoardService {
     @Transactional
     public void postBoard(BoardDAO board, User user) {
         Board newBoard = Board.builder()
-                .authorId(user.getId())
+                .user(user)
                 .category(board.getCategory())
                 .content(board.getContent())
                 .createdDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
                 .isComment(board.getIsComment())
                 .prefix(board.getPrefix())
                 .title(board.getTitle())
                 .build();
         boardRepository.save(newBoard);
+    }
+
+    @Transactional
+    public void deleteBoardById(Long id) {
+        boardRepository.deleteById(id);
     }
 }

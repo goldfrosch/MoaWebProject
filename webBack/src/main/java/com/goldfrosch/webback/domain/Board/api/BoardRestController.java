@@ -1,18 +1,20 @@
 package com.goldfrosch.webback.domain.Board.api;
 
 import com.goldfrosch.webback.domain.Board.application.BoardService;
-import com.goldfrosch.webback.domain.Board.domain.Board;
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardDAO;
+import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
+import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
 import com.goldfrosch.webback.domain.Board.persistance.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
-import com.goldfrosch.webback.global.common.response.PagingResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class BoardRestController {
@@ -22,29 +24,38 @@ public class BoardRestController {
     private final BoardQueryRepository boardQueryRepository;
 
     @GetMapping("/boards")
-    public List<Board> getBoardPaging (
-        @RequestParam(defaultValue = "") BoardList category,
+    public List<BoardListDTO> getBoardPaging (
+        @RequestParam(defaultValue = "ALL") BoardList category,
         @RequestParam(required = false, defaultValue = "1") int page,
         @RequestParam(required = false, defaultValue = "10") int size,
-        @RequestParam(required = false) String query
+        @RequestParam(required = false, defaultValue = "TITLE") BoardSearchType type,
+        @RequestParam(required = false, defaultValue = "") String query
     ){
-        if(category.equals("")) {
-            return boardQueryRepository.getBoardFindAll(page, size);
-        }
-        else {
-            return boardQueryRepository.getBoardFindbyCategory(category, page, size);
+        return boardQueryRepository.getBoardFindbyCategory(category, page, size, type, query);
+    }
+
+    @GetMapping("/board/{id}")
+    public BoardListDTO getBoardById(@PathVariable Long id) {
+        return boardQueryRepository.getBoardById(id);
+    }
+
+    @PostMapping("/board")
+    public Boolean postBoard(@RequestBody BoardDAO board, @AuthenticationPrincipal User user) {
+        try {
+            boardService.postBoard(board, user);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
-//    @GetMapping("/board/{id}")
-//    public String postBoard(@PathVariable Long id) {
-//        boardService.postBoard(board);
-//        return "완료";
-//    }
-
-    @PostMapping("/board")
-    public String postBoard(@RequestBody BoardDAO board, @AuthenticationPrincipal User user) {
-        boardService.postBoard(board, user);
-        return "완료";
+    @DeleteMapping("/board/{id}")
+    public Boolean deleteBoardById(@PathVariable Long id) {
+        try {
+            boardService.deleteBoardById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

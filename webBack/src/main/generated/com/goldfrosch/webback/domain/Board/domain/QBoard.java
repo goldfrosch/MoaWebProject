@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,13 +18,15 @@ public class QBoard extends EntityPathBase<Board> {
 
     private static final long serialVersionUID = 893168335L;
 
-    public static final QBoard board = new QBoard("board");
+    private static final PathInits INITS = PathInits.DIRECT2;
 
-    public final NumberPath<Long> authorId = createNumber("authorId", Long.class);
+    public static final QBoard board = new QBoard("board");
 
     public final EnumPath<BoardList> category = createEnum("category", BoardList.class);
 
     public final StringPath content = createString("content");
+
+    public final NumberPath<Integer> count = createNumber("count", Integer.class);
 
     public final DateTimePath<java.time.LocalDateTime> createdDate = createDateTime("createdDate", java.time.LocalDateTime.class);
 
@@ -31,20 +34,33 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final BooleanPath isComment = createBoolean("isComment");
 
+    public final DateTimePath<java.time.LocalDateTime> modifiedDate = createDateTime("modifiedDate", java.time.LocalDateTime.class);
+
     public final StringPath prefix = createString("prefix");
 
     public final StringPath title = createString("title");
 
+    public final com.goldfrosch.webback.domain.User.domain.QUser user;
+
     public QBoard(String variable) {
-        super(Board.class, forVariable(variable));
+        this(Board.class, forVariable(variable), INITS);
     }
 
     public QBoard(Path<? extends Board> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QBoard(PathMetadata metadata) {
-        super(Board.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QBoard(PathMetadata metadata, PathInits inits) {
+        this(Board.class, metadata, inits);
+    }
+
+    public QBoard(Class<? extends Board> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.user = inits.isInitialized("user") ? new com.goldfrosch.webback.domain.User.domain.QUser(forProperty("user")) : null;
     }
 
 }

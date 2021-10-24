@@ -30,7 +30,10 @@ const BoardList: React.FC<BoardListProps> = ({ data, checkLogin }) => {
   const [board, setBoard] = useState<IBoardListData[]>([]);
 
   const getBoardsData = () => {
-    BoardAPI.getBoards(searchData)
+    BoardAPI.getBoards({
+      ...searchData,
+      category: searchData.category.toUpperCase()
+    })
       .then((res: AxiosResponse) => {
         setBoard([...res.data]);
       })

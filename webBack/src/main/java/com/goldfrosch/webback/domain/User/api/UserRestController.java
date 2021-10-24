@@ -50,6 +50,7 @@ public class UserRestController {
         return userRepository.save(User.builder()
                 .email(user.getEmail())
                 .password(passwordEncoder.encode(user.getPassword()))
+                .nickName(user.getNickName())
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
                 .age(user.getAge())
@@ -76,5 +77,11 @@ public class UserRestController {
     @GetMapping("/findEmail")
     public String findEmail(@RequestParam String email) {
         return userQueryRepository.findOverlapEmail(email);
+    }
+
+    //중복 유저 닉네임 찾기
+    @GetMapping("/findNickname")
+    public String findNickname(@RequestParam String nickName) {
+        return userQueryRepository.findOverlapNickName(nickName);
     }
 }

@@ -10,8 +10,14 @@ import java.time.LocalDateTime;
 @Setter
 public class RegisterDAO {
     private String email;
+
     private String password;
+
+    private String nickName;
+
     private LocalDateTime birthday;
+
     private Gender gender;
+
     private int age;
 }

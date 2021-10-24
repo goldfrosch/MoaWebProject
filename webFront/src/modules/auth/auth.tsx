@@ -13,7 +13,8 @@ import {
 import history from "utils/HistoryUtils";
 import {
   setMessageErrorAction,
-  setMessageSuccessAction
+  setMessageSuccessAction,
+  setMessageWarningAction
 } from "modules/snackbar/snackbar";
 
 const AUTH_REGISTER = "AUTH_REGISTER" as const;
@@ -64,9 +65,11 @@ function* registerSaga(action: ReturnType<typeof authRegisterAction>) {
       AuthAPI.userRegister,
       action.data
     );
-    if (status !== 200) return alert("회원가입중 문제가 발생했습니다");
-    alert("회원가입이 완료되었습니다");
+    if (status !== 200) {
+      yield put(setMessageWarningAction("회원가입중 문제가 발생하였습니다"));
+    }
     yield put(authRegisterSuccessAction());
+    yield put(setMessageSuccessAction("회원가입에 성공하였습니다"));
     history.push("/login");
   } catch (e) {
     console.log(e);

@@ -32,7 +32,7 @@ const Home: React.FC<HomeProps> = () => {
       <div className="items">
         <BoardItem>
           <div className="borderHead">
-            <span>sadf</span>
+            <span>공지사항</span>
             <Button theme={ThemeColor.second} size={ThemeSize.middle}>
               더보기
             </Button>
@@ -44,7 +44,7 @@ const Home: React.FC<HomeProps> = () => {
         </BoardItem>
         <BoardItem>
           <div className="borderHead">
-            <span>sadf</span>
+            <span>업데이트</span>
             <Button theme={ThemeColor.second} size={ThemeSize.middle}>
               더보기
             </Button>
@@ -57,7 +57,7 @@ const Home: React.FC<HomeProps> = () => {
       </div>
       <BoardItem>
         <div className="borderHead">
-          <span>sadf</span>
+          <span>자유게시판</span>
           <Button theme={ThemeColor.second} size={ThemeSize.middle}>
             더보기
           </Button>

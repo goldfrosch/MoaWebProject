@@ -22,4 +22,10 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                 .where(user.email.like(email))
                 .fetchOne();
     }
+
+    public String findOverlapNickName(String nickName) {
+        return jpaQueryFactory.select(user.nickName).from(user)
+                .where(user.nickName.like(nickName))
+                .fetchOne();
+    }
 }

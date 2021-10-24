@@ -12,3 +12,11 @@ export const userLogin = (data: IUserLogin) => {
 export const userProfile = () => {
   return axios.get(`/profile`);
 };
+
+export const findEmail = (data: string) => {
+  return axios.get(`findEmail?email=${data}`);
+};
+
+export const findNickname = (data: string) => {
+  return axios.get(`findNickname?nickName=${data}`);
+};

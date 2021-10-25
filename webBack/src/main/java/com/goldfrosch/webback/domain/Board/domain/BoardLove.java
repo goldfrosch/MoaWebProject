@@ -15,6 +15,10 @@ import javax.persistence.*;
 @Entity
 public class BoardLove {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long num;
+
+    @Column
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

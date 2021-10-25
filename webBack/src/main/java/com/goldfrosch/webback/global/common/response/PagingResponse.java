@@ -1,21 +1,16 @@
 package com.goldfrosch.webback.global.common.response;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 @AllArgsConstructor
 public class PagingResponse<T> {
     private String title;
     private String context;
 
-    private int currentPage;
-    private int totalPage;
     private Long totalCount;
 
     private List<T> list;

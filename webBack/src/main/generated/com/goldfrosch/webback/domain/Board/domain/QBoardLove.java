@@ -26,6 +26,8 @@ public class QBoardLove extends EntityPathBase<BoardLove> {
 
     public final BooleanPath isLove = createBoolean("isLove");
 
+    public final NumberPath<Long> num = createNumber("num", Long.class);
+
     public final com.goldfrosch.webback.domain.User.domain.QUser user;
 
     public QBoardLove(String variable) {

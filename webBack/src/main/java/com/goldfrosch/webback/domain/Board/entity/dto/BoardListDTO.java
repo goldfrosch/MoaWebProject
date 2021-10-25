@@ -28,6 +28,8 @@ public class BoardListDTO {
 
     private String uuid;
 
+    private Long isLove;
+
     @QueryProjection
     public BoardListDTO(
             String title,
@@ -37,7 +39,8 @@ public class BoardListDTO {
             int count,
             String nickName,
             int rank,
-            String uuid
+            String uuid,
+            Long isLove
             ) {
         this.title = title;
         this.category = category;
@@ -47,5 +50,6 @@ public class BoardListDTO {
         this.nickName = nickName;
         this.rank = rank;
         this.uuid = uuid;
+        this.isLove = isLove;
     }
 }

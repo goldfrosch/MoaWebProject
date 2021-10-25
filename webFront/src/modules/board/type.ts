@@ -14,12 +14,9 @@ export interface IBoardListData {
 }
 
 export interface IBoardList {
-  title: string,
-  context: string,
+  limit: number,
+  offset: number,
+  total: number,
 
-  currentPage: number,
-  totalPage: number,
-  totalCount: number,
-  
-  list: IBoardListData[],
+  result: IBoardListData[],
 }

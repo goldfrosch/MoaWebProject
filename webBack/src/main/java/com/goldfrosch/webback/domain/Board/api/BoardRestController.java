@@ -7,12 +7,12 @@ import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
 import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
 import com.goldfrosch.webback.domain.Board.persistance.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
+import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -24,7 +24,7 @@ public class BoardRestController {
     private final BoardQueryRepository boardQueryRepository;
 
     @GetMapping("/boards")
-    public List<BoardListDTO> getBoardPaging (
+    public QueryResults<BoardListDTO> getBoardPaging (
         @RequestParam(defaultValue = "ALL") BoardList category,
         @RequestParam(required = false, defaultValue = "1") int page,
         @RequestParam(required = false, defaultValue = "10") int size,

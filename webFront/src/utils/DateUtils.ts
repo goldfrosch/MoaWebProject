@@ -1,4 +1,24 @@
 class DateUtils {
+  getPrevTime(date: Date | undefined) {
+    if (date) {
+      const now = new Date();
+      const dates = new Date(date);
+
+      const prev = now.getTime() - dates.getTime();
+      if(prev < 60000) {
+        return Math.floor(prev/1000) + "초 전"
+      }
+      else if(prev < 600000) {
+        return Math.floor(prev/60000) + "분 전"
+      }
+      else if(prev < 86400000) {
+        return this.getTime(date);
+      }
+      else {
+        return this.getDay(date);
+      }
+    }
+  }
   getTime(date: Date | undefined) {
     if (date) {
       const days = new Date(date);

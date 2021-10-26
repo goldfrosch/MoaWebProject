@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { IBoardList } from "modules/board/type";
 import history from "utils/HistoryUtils";
+import DateUtils from "utils/DateUtils";
 
 export interface BoardListProps {
   board: IBoardList;
@@ -131,14 +132,24 @@ const BoardList: React.FC<BoardListProps> = ({
             <div className="item" key={key}>
               <div className="profile">
                 <div className="title">
-                  <span className="prefix">[ {data.prefix} ]</span>
+                  <span className="prefix">
+                    {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
+                  </span>
                   <span className="title">{data.title}</span>
                 </div>
                 <div className="info">
+                  <img
+                    src={`https://mc-heads.net/avatar/${data.uuid}`}
+                    alt=""
+                  />
                   <span className="nick">{data.nickName}</span>
                 </div>
               </div>
-              <div></div>
+              <div className="time">
+                <span className="times">
+                  {DateUtils.getPrevTime(data.createdDate)}
+                </span>
+              </div>
             </div>
           ))}
         </div>
@@ -245,11 +256,27 @@ const BoardListBlock = styled.div`
             }
           }
           & > .info {
+            display: flex;
+            align-items: center;
+            & > img {
+              width: 16px;
+              height: 16px;
+            }
             & > .nick {
               color: #464646;
               font-size: 12px;
               font-weight: 500;
+
+              padding-left: 6px;
             }
+          }
+        }
+        & > .time {
+          display: flex;
+          align-items: center;
+          & > .times {
+            color: ${Palette.primary};
+            font-size: 12px;
           }
         }
       }

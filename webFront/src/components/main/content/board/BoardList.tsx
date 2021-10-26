@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import * as BoardAPI from "api/board";
-
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import noticePhone from "assets/icon/megaphone.png";
@@ -15,32 +13,26 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { IBoardListData } from "modules/board/type";
-import { AxiosResponse } from "axios";
+import { IBoardList } from "modules/board/type";
+import history from "utils/HistoryUtils";
 
 export interface BoardListProps {
+  board: IBoardList;
   data: IBoardData;
   checkLogin: (link: string) => void;
+  getBoardsData: () => void;
 }
 
-const BoardList: React.FC<BoardListProps> = ({ data, checkLogin }) => {
+const BoardList: React.FC<BoardListProps> = ({
+  board,
+  data,
+  checkLogin,
+  getBoardsData
+}) => {
   const [searchData, setSearchData] = useState<IBoardData>({
-    ...data
+    ...data,
+    type: "NICKNAME"
   });
-  const [board, setBoard] = useState<IBoardListData[]>([]);
-
-  const getBoardsData = () => {
-    BoardAPI.getBoards({
-      ...searchData,
-      category: searchData.category.toUpperCase()
-    })
-      .then((res: AxiosResponse) => {
-        setBoard([...res.data]);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
 
   //검색할 쿼리 내용 onChangeEvent
   const handleSearchChange = (e: any) => {
@@ -50,6 +42,9 @@ const BoardList: React.FC<BoardListProps> = ({ data, checkLogin }) => {
   //검색 후 API 로딩
   const handleSubmit = (e: React.ChangeEvent<unknown>) => {
     e.preventDefault();
+    history.push(
+      `/board?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
+    );
     getBoardsData();
   };
 
@@ -60,8 +55,10 @@ const BoardList: React.FC<BoardListProps> = ({ data, checkLogin }) => {
 
   //페이지네이션 관련
   const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
-    e.preventDefault();
-    setSearchData({ ...searchData, page: value });
+    // e.preventDefault();
+    history.push(
+      `/board?page=${value}&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
+    );
     getBoardsData();
   };
 
@@ -122,18 +119,35 @@ const BoardList: React.FC<BoardListProps> = ({ data, checkLogin }) => {
             <img src={noticePhone} alt="" />
             <span>asdfasfds</span>
           </div>
-          {board.map((data, key) => (
+          <div className="importantItem">
+            <img src={noticePhone} alt="" />
+            <span>asdfasfds</span>
+          </div>
+          <div className="importantItem">
+            <img src={noticePhone} alt="" />
+            <span>asdfasfds</span>
+          </div>
+          {board.results.map((data, key) => (
             <div className="item" key={key}>
-              {data.title}
+              <div className="profile">
+                <div className="title">
+                  <span className="prefix">[ {data.prefix} ]</span>
+                  <span className="title">{data.title}</span>
+                </div>
+                <div className="info">
+                  <span className="nick">{data.nickName}</span>
+                </div>
+              </div>
+              <div></div>
             </div>
           ))}
         </div>
         <div className="footer">
           <Pagination
-            count={10}
+            count={Math.ceil(board.total / board.limit)}
             showFirstButton
             showLastButton
-            page={searchData.page}
+            page={data.page}
             onChange={handlePageChange}
           />
         </div>
@@ -212,8 +226,35 @@ const BoardListBlock = styled.div`
 
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
         padding: 0 16px;
+
+        cursor: pointer;
+
+        & > .profile {
+          & > .title {
+            & > .prefix {
+              font-size: 12px;
+              font-weight: 500;
+            }
+            & > .title {
+              padding-left: 6px;
+              font-size: 14px;
+              font-weight: 400;
+            }
+          }
+          & > .info {
+            & > .nick {
+              color: #464646;
+              font-size: 12px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+      & > .item:hover {
+        background-color: #f6f6f6;
       }
     }
 

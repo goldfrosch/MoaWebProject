@@ -111,6 +111,7 @@ function* profileSaga(action: ReturnType<typeof authGetProfileAction>) {
       yield put(authGetProfileSuccessAction(data));
     }
   } catch (e) {
+    localStorage.removeItem("CURRENT_USER");
     console.log(e);
   }
 }

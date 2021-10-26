@@ -12,7 +12,7 @@ const Footer: React.FC<FooterProps> = () => {
         <br />
         Copyright@2021 Moa Server All Wrong Reserved
         <br />
-        It just portpolio of GoldFrosch
+        It just portpolio for GoldFrosch
         <br />
         Help ME
       </div>

@@ -4,7 +4,6 @@ import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class BoardListDTO {
+    private Long id;
+
     private String title;
 
     private BoardList category;
@@ -32,6 +33,7 @@ public class BoardListDTO {
 
     @QueryProjection
     public BoardListDTO(
+            Long id,
             String title,
             BoardList category,
             String prefix,
@@ -42,6 +44,7 @@ public class BoardListDTO {
             String uuid,
             Long isLove
             ) {
+        this.id = id;
         this.title = title;
         this.category = category;
         this.prefix = prefix;

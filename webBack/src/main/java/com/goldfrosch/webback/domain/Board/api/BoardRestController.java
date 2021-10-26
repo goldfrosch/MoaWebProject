@@ -25,8 +25,8 @@ public class BoardRestController {
 
     @GetMapping("/boards")
     public QueryResults<BoardListDTO> getBoardPaging (
-        @RequestParam(defaultValue = "ALL") BoardList category,
-        @RequestParam(required = false, defaultValue = "1") int page,
+        @RequestParam BoardList category,
+        @RequestParam int page,
         @RequestParam(required = false, defaultValue = "10") int size,
         @RequestParam(required = false, defaultValue = "TITLE") BoardSearchType type,
         @RequestParam(required = false, defaultValue = "") String query

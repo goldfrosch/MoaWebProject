@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
 
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
+
 import BoardList from "components/main/content/board/BoardList";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "modules";
@@ -9,6 +12,8 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
+import { IBoardList } from "modules/board/type";
+
 export interface IBoardData {
   category: string;
   page: number;
@@ -31,6 +36,14 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });
+  const [board, setBoard] = useState<IBoardList>({
+    empty: true,
+    limit: 10,
+    offset: 0,
+    total: 0,
+
+    results: []
+  });
 
   const checkLogin = (link: string) => {
     dispatch(setMessageClearAction());
@@ -43,6 +56,23 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
     }
   };
 
+  const getBoardsData = () => {
+    BoardAPI.getBoards({
+      category: String(
+        new URLSearchParams(location.search).get("category") ?? ""
+      ).toUpperCase(),
+      page: Number(new URLSearchParams(location.search).get("page") ?? 1),
+      type: String(new URLSearchParams(location.search).get("type") ?? ""),
+      query: String(new URLSearchParams(location.search).get("query") ?? "")
+    })
+      .then((res: AxiosResponse) => {
+        setBoard(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     setData({
       category: String(
@@ -52,8 +82,17 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
+    getBoardsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
-  return <BoardList data={data} checkLogin={checkLogin} />;
+  return (
+    <BoardList
+      board={board}
+      data={data}
+      checkLogin={checkLogin}
+      getBoardsData={getBoardsData}
+    />
+  );
 };
 
 export default BoardContainer;

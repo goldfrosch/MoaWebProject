@@ -130,7 +130,8 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
                   <MenuItem>
-                    <Avatar /> 계정 정보
+                    <Avatar />
+                    <span>{data.nickName}</span>
                   </MenuItem>
                   <Divider />
                   <MenuItem>

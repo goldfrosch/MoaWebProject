@@ -34,7 +34,7 @@ const BaseTemplateBlock = styled.div`
       flex: 1;
     }
     & > .main {
-      width: 1080px;
+      width: 80%;
       @media (max-width: 1080px) {
         width: 90%;
       }

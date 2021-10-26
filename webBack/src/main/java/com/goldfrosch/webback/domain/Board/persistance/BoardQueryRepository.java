@@ -24,16 +24,18 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
     }
 
     public QueryResults<BoardListDTO> getBoardFindbyCategory(BoardList category, int page, int count, BoardSearchType type, String query) {
+        if(type.equals(BoardSearchType.TITLE)) {
             return jpaQueryFactory.select(Projections.constructor(BoardListDTO.class,
-                                board.title,
-                                board.category,
-                                board.prefix,
-                                board.createdDate,
-                                board.count,
-                                board.user.nickName,
-                                board.user.rank,
-                                board.user.uuid,
-                                jpaQueryFactory.select(boardLove.count()).from(boardLove).where(boardLove.id.eq(board.id))
+                                    board.id,
+                                    board.title,
+                                    board.category,
+                                    board.prefix,
+                                    board.createdDate,
+                                    board.count,
+                                    board.user.nickName,
+                                    board.user.rank,
+                                    board.user.uuid,
+                                    jpaQueryFactory.select(boardLove.count()).from(boardLove).where(boardLove.id.eq(board.id))
                             )
                     )
                     .from(board)
@@ -43,10 +45,35 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
                     .offset(((page - 1) * 10L))
                     .limit(count)
                     .fetchResults();
+        }
+        else {
+            return jpaQueryFactory.select(Projections.constructor(BoardListDTO.class,
+                                    board.id,
+                                    board.title,
+                                    board.category,
+                                    board.prefix,
+                                    board.createdDate,
+                                    board.count,
+                                    board.user.nickName,
+                                    board.user.rank,
+                                    board.user.uuid,
+                                    jpaQueryFactory.select(boardLove.count()).from(boardLove).where(boardLove.id.eq(board.id))
+                            )
+                    )
+                    .from(board)
+                    .where(board.category.eq(category))
+                    .where(board.user.nickName.contains(query))
+                    .orderBy(board.id.desc())
+                    .offset(((page - 1) * 10L))
+                    .limit(count)
+                    .fetchResults();
+        }
+
     }
 
     public BoardListDTO getBoardById(Long number) {
         return jpaQueryFactory.select(Projections.constructor(BoardListDTO.class,
+                        board.id,
                         board.title,
                         board.category,
                         board.prefix,

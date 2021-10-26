@@ -1,18 +1,40 @@
 import React, { useRef, useState, useMemo } from "react";
 import styled from "styled-components";
 
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
+
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Button from "components/common/items/Button";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { IProfile } from "modules/auth/type";
+import { IBoardData } from "modules/board/type";
+import { useDispatch } from "react-redux";
+import {
+  setMessageClearAction,
+  setMessageErrorAction,
+  setMessageSuccessAction
+} from "modules/snackbar/snackbar";
+import history from "utils/HistoryUtils";
 
 interface BoardWriteProps {
   data: string;
+  userData: IProfile;
 }
 const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
+  const dispatch = useDispatch();
+
   const QuillRef = useRef<ReactQuill>();
+  const [datas, setDatas] = useState<IBoardData>({
+    category: data,
+    content: "",
+    isComment: true,
+    prefix: "",
+    title: ""
+  });
   const [contents, setContents] = useState("");
 
   const modules = useMemo(
@@ -41,7 +63,20 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
     []
   );
   const handleSave = () => {
-    console.log(contents);
+    dispatch(setMessageClearAction());
+    BoardAPI.postBoard({
+      ...datas,
+      content: contents
+    })
+      .then((res: AxiosResponse) => {
+        if (res.data) {
+          dispatch(setMessageSuccessAction("성공적으로 작성했습니다"));
+          history.goBack();
+        }
+      })
+      .catch(error => {
+        dispatch(setMessageErrorAction("글 작성 중 문제가 발생했습니다"));
+      });
   };
 
   return (
@@ -58,7 +93,13 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
             </select>
           </div>
           <div className="option">
-            <input placeholder="제목을 입력해주세요" />
+            <input
+              placeholder="제목을 입력해주세요"
+              value={datas.title}
+              onChange={(e: any) => {
+                setDatas({ ...datas, title: e.target.value });
+              }}
+            />
           </div>
         </div>
         <ReactQuill
@@ -144,9 +185,12 @@ const BoardWriteBlock = styled.div`
           margin-bottom: 16px;
         }
       }
-      @media (max-width: 800px) {
-        margin-bottom: 8%;
+      @media (max-width: 560px) {
+        margin-bottom: 12%;
       }
+    }
+    & > .content {
+      height: 450px;
     }
     & > .footer {
       display: flex;

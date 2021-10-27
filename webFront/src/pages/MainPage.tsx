@@ -9,6 +9,7 @@ import RegisterContainer from "containers/auth/RegisterContainer";
 
 import BoardContainer from "containers/content/board/BoardListContainer";
 import BoardWriteContainer from "containers/content/board/BoardWriteContainer";
+import BoardDetailContainer from "containers/content/board/BoardDetailContainer";
 
 const MainPage = () => {
   return (
@@ -17,9 +18,9 @@ const MainPage = () => {
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/register" component={RegisterContainer} />
-
         <Route exact path="/board" component={BoardContainer} />
         <Route exact path="/board/write" component={BoardWriteContainer} />
+        <Route exact path="/board/:id" component={BoardDetailContainer} />
 
         {/* Error Page */}
         <Route component={NotFound} />

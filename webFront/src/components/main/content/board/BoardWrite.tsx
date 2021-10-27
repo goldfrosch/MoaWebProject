@@ -10,7 +10,6 @@ import Button from "components/common/items/Button";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { IProfile } from "modules/auth/type";
 import { IBoardData } from "modules/board/type";
 import { useDispatch } from "react-redux";
 import {
@@ -22,7 +21,6 @@ import history from "utils/HistoryUtils";
 
 interface BoardWriteProps {
   data: string;
-  userData: IProfile;
 }
 const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
   const dispatch = useDispatch();
@@ -64,8 +62,14 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
   );
   const handleSave = () => {
     dispatch(setMessageClearAction());
+    console.log({
+      ...datas,
+      category: data.toUpperCase(),
+      content: contents
+    });
     BoardAPI.postBoard({
       ...datas,
+      category: data.toUpperCase(),
       content: contents
     })
       .then((res: AxiosResponse) => {
@@ -75,6 +79,7 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
         }
       })
       .catch(error => {
+        console.log(error);
         dispatch(setMessageErrorAction("글 작성 중 문제가 발생했습니다"));
       });
   };

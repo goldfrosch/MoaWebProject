@@ -32,7 +32,7 @@ public class Board {
     @Column(nullable = false)
     private String prefix;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
     @Column(nullable = false)

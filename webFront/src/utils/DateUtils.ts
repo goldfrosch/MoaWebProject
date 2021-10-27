@@ -23,7 +23,7 @@ class DateUtils {
     if (date) {
       const days = new Date(date);
       const hour = ("0" + days.getHours()).slice(-2);
-      const minute = ("0" + days.getHours()).slice(-2);
+      const minute = ("0" + days.getMinutes()).slice(-2);
 
       const timeString = hour + ":" + minute;
       return timeString;

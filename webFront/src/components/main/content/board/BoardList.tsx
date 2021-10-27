@@ -129,7 +129,13 @@ const BoardList: React.FC<BoardListProps> = ({
             <span>asdfasfds</span>
           </div>
           {board.results.map((data, key) => (
-            <div className="item" key={key}>
+            <div
+              className="item"
+              onClick={() => {
+                history.push(`/board/${data.id}`);
+              }}
+              key={key}
+            >
               <div className="profile">
                 <div className="title">
                   <span className="prefix">

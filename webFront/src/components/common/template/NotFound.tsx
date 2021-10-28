@@ -26,7 +26,7 @@ const NotFoundBlock = styled.div`
 
   & > img {
     width: 80%;
-    height: 35%;
+    height: 50%;
 
     margin-bottom: 32px;
   }

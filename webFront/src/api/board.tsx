@@ -7,6 +7,10 @@ export const getBoards = (data: IGetBoards) => {
   );
 };
 
+export const getBoard = (id: number) => {
+  return axios.get(`/board/${id}`);
+};
+
 export const postBoard = (data: IBoardData) => {
   return axios.post(`/board`, data);
 };

@@ -2,16 +2,21 @@ package com.goldfrosch.webback.domain.Board.api;
 
 import com.goldfrosch.webback.domain.Board.application.BoardService;
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
+import com.goldfrosch.webback.domain.Board.domain.BoardTag;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
+import com.goldfrosch.webback.domain.Board.entity.dto.BoardItemDTO;
 import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
 import com.goldfrosch.webback.domain.Board.persistance.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Slf4j
@@ -35,8 +40,13 @@ public class BoardRestController {
     }
 
     @GetMapping("/board/{id}")
-    public BoardListDTO getBoardById(@PathVariable Long id) {
+    public BoardItemDTO getBoardById(@PathVariable Long id) {
         return boardQueryRepository.getBoardById(id);
+    }
+
+    @GetMapping("/boardtags/{type}")
+    public List<String> getBoardTag(@PathVariable BoardList type) {
+        return boardQueryRepository.getBoardTag(type);
     }
 
     @PostMapping("/board")

@@ -9,6 +9,7 @@ export interface IBoardListData {
   id: number,
   category: string,
   count: number,
+  content?: string,
   createdDate: Date,
   isLove: number,
   nickName: string,

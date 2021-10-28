@@ -1,6 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import BoardDetail from "components/main/content/board/BoardDetail";
+
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
+import { IBoardListData } from "modules/board/type";
 
 export interface match<P> {
   params: P;
@@ -21,10 +25,31 @@ export interface MatchParams {
 const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   match
 }) => {
-  useEffect(() => {
-    console.log(match.params.id);
+  const [data, setData] = useState<IBoardListData>({
+    id: 0,
+    category: "",
+    count: 0,
+    content: "",
+    createdDate: new Date(),
+    isLove: 0,
+    nickName: "",
+    prefix: "",
+    rank: 0,
+    title: "",
+    uuid: ""
   });
-  return <BoardDetail />;
+
+  useEffect(() => {
+    BoardAPI.getBoard(match.params.id)
+      .then((res: AxiosResponse) => {
+        setData(res.data);
+        console.log(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [match.params.id]);
+  return <BoardDetail data={data} />;
 };
 
 export default BoardDetailContainer;

@@ -8,6 +8,7 @@ import BoardItem from "components/common/items/BoardItem";
 import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { Link } from "react-router-dom";
+import HistoryUtils from "utils/HistoryUtils";
 
 interface HomeProps {}
 
@@ -33,7 +34,13 @@ const Home: React.FC<HomeProps> = () => {
         <BoardItem>
           <div className="borderHead">
             <span>공지사항</span>
-            <Button theme={ThemeColor.second} size={ThemeSize.middle}>
+            <Button
+              theme={ThemeColor.second}
+              size={ThemeSize.middle}
+              onClick={() => {
+                HistoryUtils.push("/board?category=notice");
+              }}
+            >
               더보기
             </Button>
           </div>
@@ -150,7 +157,7 @@ const HomeBlock = styled.div`
     padding: 16px 0;
 
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(450px, auto));
+    grid-template-columns: repeat(auto-fill, minmax(40%, auto));
 
     grid-gap: 16px;
     @media (max-width: 800px) {

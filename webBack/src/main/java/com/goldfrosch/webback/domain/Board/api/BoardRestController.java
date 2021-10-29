@@ -9,10 +9,10 @@ import com.goldfrosch.webback.domain.Board.entity.dto.BoardItemDTO;
 import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
 import com.goldfrosch.webback.domain.Board.persistance.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
+import com.goldfrosch.webback.global.common.response.PagingResponse;
 import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,14 +29,19 @@ public class BoardRestController {
     private final BoardQueryRepository boardQueryRepository;
 
     @GetMapping("/boards")
-    public QueryResults<BoardListDTO> getBoardPaging (
+    public PagingResponse getBoardPaging (
         @RequestParam BoardList category,
         @RequestParam int page,
         @RequestParam(required = false, defaultValue = "10") int size,
         @RequestParam(required = false, defaultValue = "TITLE") BoardSearchType type,
         @RequestParam(required = false, defaultValue = "") String query
     ){
-        return boardQueryRepository.getBoardFindbyCategory(category, page, size, type, query);
+        PagingResponse pagingResponse = new PagingResponse(
+                boardQueryRepository.getBoardNotice(),
+                boardQueryRepository.getBoardFindbyCategory(category, page, size, type, query)
+        );
+
+        return pagingResponse;
     }
 
     @GetMapping("/board/{id}")

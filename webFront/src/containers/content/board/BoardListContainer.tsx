@@ -12,7 +12,7 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
-import { IBoardList } from "modules/board/type";
+import { IBoard } from "modules/board/type";
 
 export interface IBoardData {
   category: string;
@@ -36,13 +36,16 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });
-  const [board, setBoard] = useState<IBoardList>({
-    empty: true,
-    limit: 10,
-    offset: 0,
-    total: 0,
+  const [board, setBoard] = useState<IBoard>({
+    newNotice: [],
+    list: {
+      empty: true,
+      limit: 10,
+      offset: 0,
+      total: 0,
 
-    results: []
+      results: []
+    }
   });
 
   const checkLogin = (link: string) => {

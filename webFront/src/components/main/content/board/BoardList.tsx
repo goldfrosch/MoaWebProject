@@ -13,12 +13,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { IBoardList } from "modules/board/type";
+import { IBoard } from "modules/board/type";
 import history from "utils/HistoryUtils";
 import DateUtils from "utils/DateUtils";
 
 export interface BoardListProps {
-  board: IBoardList;
+  board: IBoard;
   data: IBoardData;
   checkLogin: (link: string) => void;
   getBoardsData: () => void;
@@ -116,19 +116,13 @@ const BoardList: React.FC<BoardListProps> = ({
           </Button>
         </div>
         <div className="content">
-          <div className="importantItem">
-            <img src={noticePhone} alt="" />
-            <span>asdfasfds</span>
-          </div>
-          <div className="importantItem">
-            <img src={noticePhone} alt="" />
-            <span>asdfasfds</span>
-          </div>
-          <div className="importantItem">
-            <img src={noticePhone} alt="" />
-            <span>asdfasfds</span>
-          </div>
-          {board.results.map((data, key) => (
+          {board.newNotice.map((data, key) => (
+            <div className="importantItem">
+              <img src={noticePhone} alt="" />
+              <span>{data.title}</span>
+            </div>
+          ))}
+          {board.list.results.map((data, key) => (
             <div
               className="item"
               onClick={() => {
@@ -161,7 +155,7 @@ const BoardList: React.FC<BoardListProps> = ({
         </div>
         <div className="footer">
           <Pagination
-            count={Math.ceil(board.total / board.limit)}
+            count={Math.ceil(board.list.total / board.list.limit)}
             showFirstButton
             showLastButton
             page={data.page}

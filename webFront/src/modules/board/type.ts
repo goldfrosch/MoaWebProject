@@ -35,3 +35,8 @@ export interface IBoardList {
 
   results: IBoardListData[],
 }
+
+export interface IBoard {
+  newNotice: IBoardListData[],
+  list: IBoardList,
+}

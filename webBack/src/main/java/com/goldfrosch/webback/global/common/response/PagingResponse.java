@@ -1,17 +1,19 @@
 package com.goldfrosch.webback.global.common.response;
 
+import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
+import com.querydsl.core.QueryResults;
 import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class PagingResponse<T> {
-    private String title;
-    private String context;
+public class PagingResponse {
+    private List<BoardListDTO> newNotice;
+    private QueryResults<BoardListDTO> list;
 
-    private Long totalCount;
-
-    private List<T> list;
+    public PagingResponse(List<BoardListDTO> newNotice, QueryResults<BoardListDTO> list) {
+        this.newNotice = newNotice;
+        this.list = list;
+    }
 }

@@ -117,9 +117,28 @@ const BoardList: React.FC<BoardListProps> = ({
         </div>
         <div className="content">
           {board.newNotice.map((data, key) => (
-            <div className="importantItem">
-              <img src={noticePhone} alt="" />
-              <span>{data.title}</span>
+            <div className="importantItem" key={key}>
+              <div className="profile">
+                <img src={noticePhone} alt="" />
+                <div className="title">
+                  <span className="prefix">
+                    {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
+                  </span>
+                  <span className="title">{data.title}</span>
+                  <div className="info">
+                    <img
+                      src={`https://mc-heads.net/avatar/${data.uuid}`}
+                      alt=""
+                    />
+                    <span className="nick">{data.nickName}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="time">
+                <span className="times">
+                  {DateUtils.getPrevTime(data.createdDate)}
+                </span>
+              </div>
             </div>
           ))}
           {board.list.results.map((data, key) => (
@@ -222,12 +241,45 @@ const BoardListBlock = styled.div`
 
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
         gap: 8px;
 
-        & > img {
-          width: 24px;
-          height: 24px;
+        & > .profile {
+          display: flex;
+          align-items: center;
+          & > img {
+            width: 24px;
+            height: 24px;
+
+            margin-right: 8px;
+          }
+          & > .title {
+            & > .prefix {
+              font-size: 12px;
+              font-weight: 500;
+            }
+            & > .title {
+              padding-left: 6px;
+              font-size: 14px;
+              font-weight: 400;
+            }
+            & > .info {
+              display: flex;
+              align-items: center;
+              & > img {
+                width: 16px;
+                height: 16px;
+              }
+              & > .nick {
+                color: #464646;
+                font-size: 12px;
+                font-weight: 500;
+
+                padding-left: 6px;
+              }
+            }
+          }
         }
       }
       & > .item {

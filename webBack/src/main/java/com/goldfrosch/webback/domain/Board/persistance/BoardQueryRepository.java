@@ -44,6 +44,7 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
             jpaQueryFactory.select(boardLove.count()).from(boardLove).where(boardLove.id.eq(board.id))
         )).from(board)
         .where(board.category.eq(BoardList.valueOf("NOTICE")))
+        .orderBy(board.id.desc())
         .limit(3)
         .fetch();
     }

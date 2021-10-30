@@ -13,6 +13,7 @@ import com.goldfrosch.webback.global.common.response.PagingResponse;
 import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,19 +38,19 @@ public class BoardRestController {
         @RequestParam(required = false, defaultValue = "") String query
     ){
         PagingResponse pagingResponse = new PagingResponse(
-                boardQueryRepository.getBoardNotice(),
+                boardQueryRepository.getBoardNotice(category, 3),
                 boardQueryRepository.getBoardFindbyCategory(category, page, size, type, query)
         );
 
         return pagingResponse;
     }
 
-    @GetMapping("/board/{id}")
+    @GetMapping("/boards/{id}")
     public BoardItemDTO getBoardById(@PathVariable Long id) {
         return boardQueryRepository.getBoardById(id);
     }
 
-    @GetMapping("/boardtags/{type}")
+    @GetMapping("/board/tags/{type}")
     public List<String> getBoardTag(@PathVariable BoardList type) {
         return boardQueryRepository.getBoardTag(type);
     }

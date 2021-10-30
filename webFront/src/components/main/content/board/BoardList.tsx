@@ -16,6 +16,7 @@ import Select from "@mui/material/Select";
 import { IBoard } from "modules/board/type";
 import history from "utils/HistoryUtils";
 import DateUtils from "utils/DateUtils";
+import DescUtils from "utils/DescUtils";
 
 export interface BoardListProps {
   board: IBoard;
@@ -72,15 +73,15 @@ const BoardList: React.FC<BoardListProps> = ({
     <BoardListBlock>
       <div className="main">
         <div className="header">
-          <h2 className="title">테스트 제목</h2>
-          <span>테스트 설명</span>
+          <h2 className="title">{DescUtils.SetTitle(searchData.category)}</h2>
+          <span>{DescUtils.SetContext(searchData.category)}</span>
         </div>
         <div className="option">
           <div className="search">
             {/* 검색 타입 */}
             <FormControl
               variant="standard"
-              sx={{ m: 1, minWidth: 120, height: 60, color: "#e9e9e9" }}
+              sx={{ m: 1, minWidth: 60, height: 60, color: "#e9e9e9" }}
             >
               <InputLabel id="demo-simple-select-standard-label">
                 검색 타입
@@ -107,13 +108,15 @@ const BoardList: React.FC<BoardListProps> = ({
               onChange={handleSearchChange}
             />
           </div>
-          <Button
-            theme={ThemeColor.first}
-            size={ThemeSize.large}
-            onClick={handleWriteBoard}
-          >
-            글쓰기
-          </Button>
+          <div className="write">
+            <Button
+              theme={ThemeColor.first}
+              size={ThemeSize.large}
+              onClick={handleWriteBoard}
+            >
+              글쓰기
+            </Button>
+          </div>
         </div>
         <div className="content">
           {board.newNotice.map((data, key) => (
@@ -141,36 +144,40 @@ const BoardList: React.FC<BoardListProps> = ({
               </div>
             </div>
           ))}
-          {board.list.results.map((data, key) => (
-            <div
-              className="item"
-              onClick={() => {
-                history.push(`/board/${data.id}`);
-              }}
-              key={key}
-            >
-              <div className="profile">
-                <div className="title">
-                  <span className="prefix">
-                    {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
+          {board.list.results.length === 0 ? (
+            <p style={{ color: "#797979" }}>게시글들이 존재하지 않습니다</p>
+          ) : (
+            board.list.results.map((data, key) => (
+              <div
+                className="item"
+                onClick={() => {
+                  history.push(`/board/${data.id}`);
+                }}
+                key={key}
+              >
+                <div className="profile">
+                  <div className="title">
+                    <span className="prefix">
+                      {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
+                    </span>
+                    <span className="title">{data.title}</span>
+                  </div>
+                  <div className="info">
+                    <img
+                      src={`https://mc-heads.net/avatar/${data.uuid}`}
+                      alt=""
+                    />
+                    <span className="nick">{data.nickName}</span>
+                  </div>
+                </div>
+                <div className="time">
+                  <span className="times">
+                    {DateUtils.getPrevTime(data.createdDate)}
                   </span>
-                  <span className="title">{data.title}</span>
-                </div>
-                <div className="info">
-                  <img
-                    src={`https://mc-heads.net/avatar/${data.uuid}`}
-                    alt=""
-                  />
-                  <span className="nick">{data.nickName}</span>
                 </div>
               </div>
-              <div className="time">
-                <span className="times">
-                  {DateUtils.getPrevTime(data.createdDate)}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
         <div className="footer">
           <Pagination
@@ -203,7 +210,9 @@ const BoardListBlock = styled.div`
       height: 18vh;
       color: #797979;
 
-      padding: 16px 0;
+      @media (max-width: 800px) {
+        padding: 16px;
+      }
 
       & > .title {
         color: ${Palette.primary};
@@ -223,6 +232,18 @@ const BoardListBlock = styled.div`
         align-items: center;
 
         gap: 8px;
+      }
+      @media (max-width: 800px) {
+        display: block;
+      }
+      & > .write {
+        @media (max-width: 800px) {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+
+          padding: 0 16px;
+        }
       }
     }
     & > .content {
@@ -281,6 +302,14 @@ const BoardListBlock = styled.div`
             }
           }
         }
+        & > .time {
+          display: flex;
+          align-items: center;
+          & > .times {
+            color: #797979;
+            font-size: 12px;
+          }
+        }
       }
       & > .item {
         width: 100%;
@@ -327,7 +356,7 @@ const BoardListBlock = styled.div`
           display: flex;
           align-items: center;
           & > .times {
-            color: ${Palette.primary};
+            color: #797979;
             font-size: 12px;
           }
         }

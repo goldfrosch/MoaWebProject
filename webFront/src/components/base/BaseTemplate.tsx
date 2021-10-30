@@ -21,18 +21,15 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({ children }) => {
 };
 
 const BaseTemplateBlock = styled.div`
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 
-  .content {
-    flex: 1;
+  & > .content {
+    padding: 0 16px;
+    min-height: 90vh;
 
     display: flex;
-    & > .side {
-      min-height: 90vh;
-      flex: 1;
-    }
+    justify-content: center;
     & > .main {
       width: 80%;
       @media (max-width: 1080px) {

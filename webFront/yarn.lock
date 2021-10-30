@@ -11113,6 +11113,16 @@ stylis@^4.0.10, stylis@^4.0.3:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.0.10.tgz#446512d1097197ab3f02fb3c258358c3f7a14240"
   integrity sha512-m3k+dk7QeJw660eIKRRn3xPF6uuvHs/FFzjX3HQ5ove0qYsiygoAhwn5a3IYKaZPo5LrYD0rfVmtv1gNY1uYwg==
 
+suneditor-react@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/suneditor-react/-/suneditor-react-3.3.0.tgz#06f6cef81c10a5a3e27af106eaea91068afad6c1"
+  integrity sha512-FB0C7/52MoXtAr96ACTJU3WUHAlSKTd0GnLGj8cKuXW8L8KtUOvxzXn7qGzhJS/hL9HcQCRYz1UHKUdtGIbwUg==
+
+suneditor@^2.41.3:
+  version "2.41.3"
+  resolved "https://registry.yarnpkg.com/suneditor/-/suneditor-2.41.3.tgz#2eb70d5c793ed50eab3ba2d282e984e076bb217e"
+  integrity sha512-V4Hz1PY2MhIhw2Lf1iInjEhuVp65B5EbqKb8GpBluZDfx3MnZnNm5v/+Ssr1rV9swTCUWOsl8Qo92KhLMZIllA==
+
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"

@@ -33,8 +33,19 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMenu = (status: boolean) => {
+    setBurgerToggle(status);
+    if (status) {
+      document.body.style.overflowY = "hidden";
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflowY = "scroll";
+    }
   };
 
   //아코디언 메뉴 코드
@@ -52,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
 
   return (
     <HeaderBlock toggle={burgerToggle}>
-      <div className="logo" onClick={() => setBurgerToggle(false)}>
+      <div className="logo" onClick={() => handleMenu(false)}>
         <Link to="/">로고 위치</Link>
       </div>
       <ul className={burgerToggle ? "navLink viewNav" : "navLink"}>
@@ -63,10 +74,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
               <ul className={select === key ? "subMenu view" : "subMenu"}>
                 {data.data.map((datas, key) => (
                   <li key={key}>
-                    <Link
-                      to={datas.link}
-                      onClick={() => setBurgerToggle(false)}
-                    >
+                    <Link to={datas.link} onClick={() => handleMenu(false)}>
                       - {datas.title}
                     </Link>
                   </li>
@@ -79,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
           {data.email !== "" ? (
             <>
               <span className="profile">
-                <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
+                <Link to={"/login"} onClick={() => handleMenu(false)}>
                   {data.nickName ? "개인 설정" : "로그인이 필요합니다"}
                 </Link>
               </span>
@@ -152,7 +160,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
           ) : (
             <>
               <span>
-                <Link to={"/login"} onClick={() => setBurgerToggle(false)}>
+                <Link to={"/login"} onClick={() => handleMenu(false)}>
                   로그인
                 </Link>
               </span>
@@ -160,7 +168,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
           )}
         </div>
       </ul>
-      <div className="burger" onClick={() => setBurgerToggle(!burgerToggle)}>
+      <div className="burger" onClick={() => handleMenu(!burgerToggle)}>
         <div className={burgerToggle ? "line1Checked" : "line1"}></div>
         <div className={burgerToggle ? "line2Checked" : "line2"}></div>
         <div className={burgerToggle ? "line3Checked" : "line3"}></div>
@@ -194,7 +202,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     @media (max-width: 800px) {
       width: 120px;
     }
-    z-index: 2;
+    z-index: 100;
   }
   & > .navLink {
     height: 10vh;
@@ -203,7 +211,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     align-items: center;
     justify-content: flex-end;
 
-    z-index: 1;
+    z-index: 99;
     & > li {
       width: 80px;
       position: relative;
@@ -337,7 +345,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     display: none;
     cursor: pointer;
 
-    z-index: 2;
+    z-index: 99;
     & > div {
       width: 25px;
       height: 3px;

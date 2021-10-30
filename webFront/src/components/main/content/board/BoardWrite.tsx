@@ -1,5 +1,8 @@
-import React, { useRef, useState, useMemo } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+
+import SunEditor from "suneditor-react";
+import "suneditor/dist/css/suneditor.min.css";
 
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
@@ -8,8 +11,6 @@ import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Button from "components/common/items/Button";
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { IBoardData } from "modules/board/type";
 import { useDispatch } from "react-redux";
 import {
@@ -18,14 +19,15 @@ import {
   setMessageSuccessAction
 } from "modules/snackbar/snackbar";
 import history from "utils/HistoryUtils";
+import DescUtils from "utils/DescUtils";
 
 interface BoardWriteProps {
   data: string;
+  boardTag: string[];
 }
-const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
+const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
   const dispatch = useDispatch();
 
-  const QuillRef = useRef<ReactQuill>();
   const [datas, setDatas] = useState<IBoardData>({
     category: data,
     content: "",
@@ -35,31 +37,22 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
   });
   const [contents, setContents] = useState("");
 
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        container: [
-          [
-            { font: ["Noto Sans KR", "Gothic"] },
-            { header: "1" },
-            { header: "2" },
-            { size: ["small", false, "large", "huge"] }
-          ],
-          ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ color: [] }, { background: [] }, { align: [] }],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" }
-          ],
-          ["link", "image", "video"],
-          ["clean"]
-        ]
-      }
-    }),
-    []
-  );
+  const Option = {
+    buttonList: [
+      ["bold", "underline", "italic", "strike", "align", "formatBlock"],
+      [
+        "font",
+        "fontSize",
+        "fontColor",
+        "hiliteColor",
+        "table",
+        "link",
+        "image",
+        "video"
+      ]
+    ]
+  };
+
   const handleSave = () => {
     dispatch(setMessageClearAction());
     console.log({
@@ -91,10 +84,20 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
           <h2 className="title">글 작성하기</h2>
           <div className="option">
             <select className="category" disabled>
-              <option>{data}</option>
+              <option>{DescUtils.SetTitle(data)}</option>
             </select>
-            <select className="tag">
+            <select
+              className="tag"
+              onChange={(e: any) =>
+                setDatas({ ...datas, prefix: e.target.value })
+              }
+            >
               <option value="">말머리 없음</option>
+              {boardTag.map((data, key) => (
+                <option value={data} key={key}>
+                  {data}
+                </option>
+              ))}
             </select>
           </div>
           <div className="option">
@@ -107,18 +110,18 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
             />
           </div>
         </div>
-        <ReactQuill
-          ref={element => {
-            if (element !== null) {
-              QuillRef.current = element;
-            }
-          }}
-          value={contents}
-          onChange={setContents}
-          modules={modules}
-          theme="snow"
-          placeholder="내용을 입력해주세요."
-        />
+        <div>
+          <SunEditor
+            autoFocus={true}
+            lang="ko"
+            setDefaultStyle="z-index: 0"
+            width="100%"
+            height="600px"
+            defaultValue={contents}
+            onChange={setContents}
+            setOptions={Option}
+          />
+        </div>
         <div className="footer">
           <Button
             theme={ThemeColor.first}
@@ -135,9 +138,16 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data }) => {
 
 const BoardWriteBlock = styled.div`
   width: 100%;
+  height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+
+  @media (max-width: 800px) {
+    height: 160vh;
+  }
+  @media (max-height: 600px) {
+    height: 180vh;
+  }
 
   & > .main {
     width: 100%;
@@ -146,6 +156,8 @@ const BoardWriteBlock = styled.div`
     padding: 16px 0;
     display: flex;
     flex-direction: column;
+
+    position: relative;
     & > .header {
       height: 20vh;
       color: #797979;
@@ -187,15 +199,11 @@ const BoardWriteBlock = styled.div`
 
           border: 1px solid #b8b7b7;
           padding-left: 8px;
-          margin-bottom: 16px;
         }
       }
-      @media (max-width: 560px) {
-        margin-bottom: 12%;
+      @media (max-height: 780px) {
+        margin-bottom: 15%;
       }
-    }
-    & > .content {
-      height: 450px;
     }
     & > .footer {
       display: flex;

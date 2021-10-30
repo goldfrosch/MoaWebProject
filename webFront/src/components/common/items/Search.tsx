@@ -24,8 +24,11 @@ const SearchBlock = styled.form`
   align-items: center;
   justify-content: space-between;
 
+  @media (max-width: 800px) {
+    justify-content: flex-start;
+  }
   input {
-    width: 240px;
+    width: 80%;
     height: 36px;
     border: none;
     border-bottom: 1px solid #979797;

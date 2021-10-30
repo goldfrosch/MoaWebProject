@@ -29,7 +29,6 @@ const FooterBlock = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: center;
 
   & > .content {
     color: #949494;

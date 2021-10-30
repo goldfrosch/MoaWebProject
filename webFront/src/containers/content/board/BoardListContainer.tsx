@@ -51,6 +51,7 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
   const checkLogin = (link: string) => {
     dispatch(setMessageClearAction());
     if (userData.nickName) {
+      console.log(link);
       history.push(link);
     } else {
       dispatch(setMessageClearAction());

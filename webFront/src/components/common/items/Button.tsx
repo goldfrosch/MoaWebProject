@@ -4,7 +4,7 @@ import {
   ThemeColor,
   ThemeSize,
   buttonSizeMap,
-  buttonColorMap,
+  buttonColorMap
 } from "styles/Pallete";
 
 interface ButtonProps {
@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   size,
   submit,
   onClick,
-  children,
+  children
 }) => {
   return (
     <ButtonBlock

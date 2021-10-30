@@ -31,7 +31,7 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
         return jpaQueryFactory.select(boardTag.tag).from(boardTag).where(boardTag.category.eq(category)).fetch();
     }
 
-    public List<BoardListDTO> getBoardNotice() {
+    public List<BoardListDTO> getBoardNotice(BoardList category, int limit) {
         return jpaQueryFactory.select(Projections.constructor(BoardListDTO.class,board.id,
             board.title,
             board.category,
@@ -43,9 +43,9 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
             board.user.uuid,
             jpaQueryFactory.select(boardLove.count()).from(boardLove).where(boardLove.id.eq(board.id))
         )).from(board)
-        .where(board.category.eq(BoardList.valueOf("NOTICE")))
+        .where(board.category.eq(category))
         .orderBy(board.id.desc())
-        .limit(3)
+        .limit(limit)
         .fetch();
     }
 

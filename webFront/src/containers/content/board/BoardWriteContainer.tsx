@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
 
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
+
 import BoardWrite from "components/main/content/board/BoardWrite";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +15,30 @@ const BoardWriteContainer: React.FC<
   RouteComponentProps<BoardWriteContainerProps>
 > = ({ location }) => {
   const [data, setData] = useState<string>("");
+  const [boardTag, setBoardTag] = useState<string[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useDispatch();
   const snack = useSelector((state: IRootState) => state.snackbar);
 
+  const getBoardWriteData = () => {
+    BoardAPI.getBoardTag(
+      String(
+        new URLSearchParams(location.search).get("category")?.toUpperCase()
+      )
+    )
+      .then((res: AxiosResponse) => {
+        setBoardTag(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     setData(String(new URLSearchParams(location.search).get("category") ?? ""));
+    getBoardWriteData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, data]);
 
   useEffect(() => {
@@ -34,7 +54,7 @@ const BoardWriteContainer: React.FC<
     };
   });
 
-  return <BoardWrite data={data} />;
+  return <BoardWrite data={data} boardTag={boardTag} />;
 };
 
 export default BoardWriteContainer;

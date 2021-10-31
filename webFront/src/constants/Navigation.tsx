@@ -36,6 +36,10 @@ const Navigation: INavigation[] = [
       {
         title: "이벤트",
         link: "/board?category=event"
+      },
+      {
+        title: "후원상품",
+        link: "/grid?category=donate"
       }
     ]
   },

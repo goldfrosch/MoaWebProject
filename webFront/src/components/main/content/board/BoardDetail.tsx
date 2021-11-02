@@ -7,7 +7,6 @@ interface BoardDetailProps {
   data: IBoardListData;
 }
 const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
-  console.log(data);
   return (
     <BoardDetailBlock>
       <div className="header">

@@ -5,6 +5,11 @@ export interface IGetBoards {
   query: string,
 }
 
+export interface IBoardDesc {
+  title: string,
+  context: string,
+}
+
 export interface IBoardListData {
   id: number,
   category: string,

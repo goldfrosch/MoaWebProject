@@ -13,14 +13,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { IBoard } from "modules/board/type";
+import { IBoard, IBoardDesc } from "modules/board/type";
 import history from "utils/HistoryUtils";
 import DateUtils from "utils/DateUtils";
-import DescUtils from "utils/DescUtils";
 
 export interface BoardListProps {
   board: IBoard;
   data: IBoardData;
+  desc: IBoardDesc;
   checkLogin: (link: string) => void;
   getBoardsData: () => void;
 }
@@ -28,6 +28,7 @@ export interface BoardListProps {
 const BoardList: React.FC<BoardListProps> = ({
   board,
   data,
+  desc,
   checkLogin,
   getBoardsData
 }) => {
@@ -73,8 +74,8 @@ const BoardList: React.FC<BoardListProps> = ({
     <BoardListBlock>
       <div className="main">
         <div className="header">
-          <h2 className="title">{DescUtils.SetTitle(searchData.category)}</h2>
-          <span>{DescUtils.SetContext(searchData.category)}</span>
+          <h2 className="title">{desc.title}</h2>
+          <span>{desc.context}</span>
         </div>
         <div className="option">
           <div className="search">

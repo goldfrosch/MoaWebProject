@@ -12,7 +12,8 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
-import { IBoard } from "modules/board/type";
+import { IBoard, IBoardDesc } from "modules/board/type";
+import DescUtils from "utils/DescUtils";
 
 export interface IBoardData {
   category: string;
@@ -36,6 +37,11 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });
+  const [desc, setDesc] = useState<IBoardDesc>({
+    title: "",
+    context: ""
+  });
+
   const [board, setBoard] = useState<IBoard>({
     newNotice: [],
     list: {
@@ -51,7 +57,6 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
   const checkLogin = (link: string) => {
     dispatch(setMessageClearAction());
     if (userData.nickName) {
-      console.log(link);
       history.push(link);
     } else {
       dispatch(setMessageClearAction());
@@ -86,6 +91,14 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
+    setDesc({
+      title: DescUtils.SetTitle(
+        String(new URLSearchParams(location.search).get("category") ?? "")
+      ),
+      context: DescUtils.SetContext(
+        String(new URLSearchParams(location.search).get("category") ?? "")
+      )
+    });
     getBoardsData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
@@ -93,6 +106,7 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
     <BoardList
       board={board}
       data={data}
+      desc={desc}
       checkLogin={checkLogin}
       getBoardsData={getBoardsData}
     />

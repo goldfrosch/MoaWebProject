@@ -1,11 +1,5 @@
 server:
   port: 5120
-#  servlet:
-#    context-path: /api/moa
-#    encoding:
-#      charset: UTF-8
-#      enabled: true
-#      force: true
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver

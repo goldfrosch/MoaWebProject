@@ -26,6 +26,9 @@ public class BoardComment {
     @Column(nullable = false)
     private String comment;
 
+    @Column(nullable = false)
+    private Long boardNum;
+
     @Column
     private Long parentNum;
 

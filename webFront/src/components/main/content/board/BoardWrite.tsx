@@ -20,6 +20,7 @@ import {
 } from "modules/snackbar/snackbar";
 import history from "utils/HistoryUtils";
 import DescUtils from "utils/DescUtils";
+import SwitchItem from "components/common/items/SwitchItem";
 
 interface BoardWriteProps {
   data: string;
@@ -77,6 +78,13 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
       });
   };
 
+  const handleChangeComment = () => {
+    setDatas({
+      ...datas,
+      isComment: !datas.isComment
+    });
+  };
+
   return (
     <BoardWriteBlock>
       <div className="main">
@@ -123,6 +131,11 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
           />
         </div>
         <div className="footer">
+          <div className="setting">
+            <span>댓글 여부: </span>
+            <SwitchItem onChange={handleChangeComment} />
+          </div>
+
           <Button
             theme={ThemeColor.first}
             size={ThemeSize.large}
@@ -208,7 +221,17 @@ const BoardWriteBlock = styled.div`
     & > .footer {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
+
+      & > .setting {
+        display: flex;
+        align-items: center;
+        & > span {
+          padding: 0 8px;
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
     }
   }
 `;

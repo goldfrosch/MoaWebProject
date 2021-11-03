@@ -28,10 +28,8 @@ const GlobalStyle = createGlobalStyle`
         border: 0;
         outline: 0;
     }
-    input {
-        font-family: "Noto Sans KR", sans-serif;
-    }
     * {
+        font-family: "Noto Sans KR", sans-serif;
         box-sizing: inherit;
         margin: 0;
         padding: 0; 

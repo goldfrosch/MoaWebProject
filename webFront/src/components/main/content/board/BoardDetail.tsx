@@ -30,6 +30,12 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
           __html: data?.content ? data.content : ""
         }}
       ></div>
+      <div className="footer">
+        <textarea />
+        <div className="commentOption">
+          <span>글씨 수 제한: </span>
+        </div>
+      </div>
     </BoardDetailBlock>
   );
 };
@@ -46,10 +52,15 @@ const BoardDetailBlock = styled.div`
 
     margin-bottom: 24px;
 
-    padding: 0 16px;
+    padding: 24px;
 
     display: flex;
     justify-content: space-between;
+    @media (max-width: 800px) {
+      padding: 8px;
+
+      flex-direction: column;
+    }
     & > .text {
       padding: 16px 0;
       & > .title {
@@ -90,12 +101,44 @@ const BoardDetailBlock = styled.div`
   }
   & > .board {
     width: 100%;
-    height: 360px;
-    border: 1px solid #e9e9e9;
 
     padding: 16px;
+    margin-bottom: 16px;
 
-    overflow-y: auto;
+    overflow: auto;
+  }
+  & > .footer {
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 16px 0;
+    & > textarea {
+      width: 100%;
+      height: 128px;
+
+      background-color: none;
+      border: none;
+      border-bottom: 1px solid #e9e9e9;
+      font-size: 14px;
+
+      padding: 12px;
+
+      resize: none;
+    }
+    & > .commentOption {
+      width: 100%;
+
+      display: flex;
+      justify-content: flex-end;
+
+      & > span {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+    & > .comment {
+      width: 100%;
+      border-bottom: 1px solid #e9e9e9;
+    }
   }
 `;
 export default BoardDetail;

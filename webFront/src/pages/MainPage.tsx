@@ -11,6 +11,8 @@ import BoardContainer from "containers/content/board/BoardListContainer";
 import BoardWriteContainer from "containers/content/board/BoardWriteContainer";
 import BoardDetailContainer from "containers/content/board/BoardDetailContainer";
 
+import GridContainer from "containers/content/grid/GridListContainer";
+
 const MainPage = () => {
   return (
     <BaseTemplate>
@@ -18,10 +20,12 @@ const MainPage = () => {
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/register" component={RegisterContainer} />
+        {/* 보드 형식 게시판 */}
         <Route exact path="/board" component={BoardContainer} />
         <Route exact path="/board/write" component={BoardWriteContainer} />
         <Route exact path="/board/:id" component={BoardDetailContainer} />
-
+        {/* 그리드 형식 게시판 */}
+        <Route exact path="" component={GridContainer} />
         {/* Error Page */}
         <Route component={NotFound} />
       </Switch>

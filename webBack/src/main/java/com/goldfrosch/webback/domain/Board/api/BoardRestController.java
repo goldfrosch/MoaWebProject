@@ -1,19 +1,17 @@
 package com.goldfrosch.webback.domain.Board.api;
 
+import com.goldfrosch.webback.domain.Board.application.BoardCommentService;
 import com.goldfrosch.webback.domain.Board.application.BoardService;
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
-import com.goldfrosch.webback.domain.Board.domain.BoardTag;
+import com.goldfrosch.webback.domain.Board.entity.dao.BoardCommentDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
 import com.goldfrosch.webback.domain.Board.entity.dto.BoardItemDTO;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
 import com.goldfrosch.webback.domain.Board.persistance.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.global.common.response.PagingResponse;
-import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +25,11 @@ public class BoardRestController {
 
     private final BoardService boardService;
 
+    private final BoardCommentService boardCommentService;
+
     private final BoardQueryRepository boardQueryRepository;
 
+    //보드형 리스트 관련 api
     @GetMapping("/boards")
     public PagingResponse getBoardPaging (
         @RequestParam BoardList category,
@@ -56,22 +57,23 @@ public class BoardRestController {
     }
 
     @PostMapping("/board")
-    public Boolean postBoard(@RequestBody BoardDAO board, @AuthenticationPrincipal User user) {
-        try {
-            boardService.postBoard(board, user);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void postBoard(@RequestBody BoardDAO board, @AuthenticationPrincipal User user) {
+        boardService.postBoard(board, user);
     }
 
     @DeleteMapping("/board/{id}")
-    public Boolean deleteBoardById(@PathVariable Long id) {
-        try {
-            boardService.deleteBoardById(id);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void deleteBoardById(@PathVariable Long id) {
+        boardService.deleteBoardById(id);
+    }
+
+    //보드 댓글 관련 api
+    @PostMapping("/board/comment")
+    public void postBoardComment(@RequestBody BoardCommentDAO boardComment, @AuthenticationPrincipal User user) {
+        boardCommentService.postBoardComment(boardComment, user);
+    }
+
+    @DeleteMapping("/board/comment/{id}")
+    public void deleteBoardCommentById(@PathVariable Long id) {
+        boardCommentService.deleteBoardCommentById(id);
     }
 }

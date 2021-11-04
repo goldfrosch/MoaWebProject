@@ -24,6 +24,20 @@ export interface IBoardListData {
   uuid: string,
 }
 
+export interface IBoardDetailData {
+  id: number,
+  category: string,
+  count: number,
+  content?: string,
+  createdDate: Date,
+  isLove: number,
+  nickName: string,
+  prefix: string,
+  rank: number,
+  title: string,
+  uuid: string,
+}
+
 export interface IBoardData {
   category: string,
   content: string,

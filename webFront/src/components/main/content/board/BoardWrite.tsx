@@ -156,9 +156,6 @@ const BoardWriteBlock = styled.div`
   justify-content: center;
 
   @media (max-width: 800px) {
-    height: 160vh;
-  }
-  @media (max-height: 600px) {
     height: 180vh;
   }
 
@@ -214,7 +211,7 @@ const BoardWriteBlock = styled.div`
           padding-left: 8px;
         }
       }
-      @media (max-height: 780px) {
+      @media (max-width: 800px) {
         margin-bottom: 15%;
       }
     }

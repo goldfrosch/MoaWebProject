@@ -1,12 +1,15 @@
-import { IBoardListData } from "modules/board/type";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import DateUtils from "utils/DateUtils";
 
+import { IBoardListData } from "modules/board/type";
+import Button from "components/common/items/Button";
+import { ThemeColor, ThemeSize } from "styles/Pallete";
 interface BoardDetailProps {
   data: IBoardListData;
 }
 const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
+  const [comment, setComment] = useState<string>("");
   return (
     <BoardDetailBlock>
       <div className="header">
@@ -31,9 +34,15 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
         }}
       ></div>
       <div className="footer">
-        <textarea />
+        <textarea
+          value={comment}
+          onChange={(e: any) => setComment(e.target.value)}
+          placeholder="댓글을 작성해주세요"
+        />
         <div className="commentOption">
-          <span>글씨 수 제한: </span>
+          <Button theme={ThemeColor.first} size={ThemeSize.large}>
+            댓글 작성
+          </Button>
         </div>
       </div>
     </BoardDetailBlock>
@@ -128,17 +137,22 @@ const BoardDetailBlock = styled.div`
       width: 100%;
 
       display: flex;
+      align-items: flex-end;
       justify-content: flex-end;
 
       & > span {
         font-size: 14px;
         font-weight: 500;
+        padding-right: 12px;
+        padding-bottom: 5px;
       }
     }
     & > .comment {
       width: 100%;
       border-bottom: 1px solid #e9e9e9;
     }
+  }
+  & > .commentList {
   }
 `;
 export default BoardDetail;

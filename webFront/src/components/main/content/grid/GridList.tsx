@@ -10,6 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Skeleton from "@mui/material/Skeleton";
 
 import { IGridData } from "containers/content/grid/GridListContainer";
 
@@ -155,6 +156,7 @@ const GridList: React.FC<GridListProps> = ({
         <div className="content">
           {[...Array(option.page)].map((_, key) => (
             <div className="item" key={key}>
+              <div style={{ width: "100%", height: 190 }} />
               <span>123</span>
             </div>
           ))}
@@ -162,7 +164,14 @@ const GridList: React.FC<GridListProps> = ({
           {option.isLoading &&
             [...Array(10)].map((_, key) => (
               <div className="item" key={key}>
-                <span>457</span>
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height={190}
+                  animation="wave"
+                />
+                <Skeleton width="100%" />
+                <Skeleton width="60%" />
               </div>
             ))}
           <div ref={target} />
@@ -229,14 +238,18 @@ const GridListBlock = styled.div`
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, auto));
       grid-gap: 16px;
-
+      @media (max-width: 800px) {
+        grid-template-columns: repeat(auto-fill, minmax(240px, auto));
+      }
       .item {
         height: auto;
         border: 1px solid #d7d7d7;
         border-radius: 8px;
 
+        padding: 2.5% 5%;
+
         display: flex;
-        align-items: center;
+        flex-direction: column;
         justify-content: center;
       }
     }

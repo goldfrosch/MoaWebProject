@@ -12,6 +12,7 @@ import BoardWriteContainer from "containers/content/board/BoardWriteContainer";
 import BoardDetailContainer from "containers/content/board/BoardDetailContainer";
 
 import GridContainer from "containers/content/grid/GridListContainer";
+import GridWriteContainer from "containers/content/grid/GridWriteContainer";
 
 const MainPage = () => {
   return (
@@ -25,7 +26,8 @@ const MainPage = () => {
         <Route exact path="/board/write" component={BoardWriteContainer} />
         <Route exact path="/board/:id" component={BoardDetailContainer} />
         {/* 그리드 형식 게시판 */}
-        <Route exact path="" component={GridContainer} />
+        <Route exact path="/grid" component={GridContainer} />
+        <Route exact path="/grid/write" component={GridWriteContainer} />
         {/* Error Page */}
         <Route component={NotFound} />
       </Switch>

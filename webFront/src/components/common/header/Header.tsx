@@ -181,7 +181,7 @@ type HeaderBlockProps = {
   toggle: boolean;
 };
 const HeaderBlock = styled.header<HeaderBlockProps>`
-  height: 10vh;
+  height: 100px;
   background-color: ${Palette.header};
   color: white;
 
@@ -190,9 +190,12 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
   justify-content: space-between;
 
   overflow-x: hidden;
+  @media (max-width: 800px) {
+    height: 80px;
+  }
   & > .logo {
-    width: 160px;
-    height: 100%;
+    width: 150px;
+    height: 100px;
     background-color: #e9e9e9;
     color: black;
 
@@ -201,11 +204,12 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     justify-content: center;
     @media (max-width: 800px) {
       width: 120px;
+      height: 80px;
     }
     z-index: 100;
   }
   & > .navLink {
-    height: 10vh;
+    height: 80px;
 
     display: flex;
     align-items: center;
@@ -276,11 +280,11 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     }
     @media (max-width: 800px) {
       width: 100%;
-      height: 90vh;
+      height: calc(100vh - 80px);
       background-color: ${Palette.header};
 
       position: absolute;
-      top: 10vh;
+      top: 80px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;

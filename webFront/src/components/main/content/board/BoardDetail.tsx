@@ -41,7 +41,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
         />
         <div className="commentOption">
           <Button theme={ThemeColor.first} size={ThemeSize.large}>
-            댓글 작성
+            작성
           </Button>
         </div>
       </div>

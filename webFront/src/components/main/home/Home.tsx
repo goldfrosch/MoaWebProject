@@ -1,13 +1,15 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 
-import test1 from "assets/test/test1.jpg";
+import { Link } from "react-router-dom";
+
 import test2 from "assets/test/test2.png";
-import test3 from "assets/test/test3.jpg";
+
 import BoardItem from "components/common/items/BoardItem";
 import Button from "components/common/items/Button";
+
 import { ThemeColor, ThemeSize } from "styles/Pallete";
-import { Link } from "react-router-dom";
+
 import HistoryUtils from "utils/HistoryUtils";
 
 interface HomeProps {}
@@ -20,13 +22,7 @@ const Home: React.FC<HomeProps> = () => {
       <div className="carousel">
         <div className="slider" ref={CarouselRef}>
           <div className="slide">
-            <img src={test1} alt="" />
-          </div>
-          <div className="slide">
             <img src={test2} alt="" />
-          </div>
-          <div className="slide">
-            <img src={test3} alt="" />
           </div>
         </div>
       </div>
@@ -133,7 +129,7 @@ const Home: React.FC<HomeProps> = () => {
 const HomeBlock = styled.div`
   & > .carousel {
     width: 100%;
-    height: 40vh;
+    height: 40%;
 
     overflow: hidden;
     & > .slider {
@@ -146,7 +142,7 @@ const HomeBlock = styled.div`
         height: 100%;
         & > img {
           width: 100%;
-          height: 40vh;
+          height: 100%;
         }
       }
     }

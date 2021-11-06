@@ -26,7 +26,7 @@ interface ILoadingProps {
   isEnd: boolean;
 }
 
-const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
+const fakeFetch = () => new Promise(res => setTimeout(res, 5000));
 
 const GridList: React.FC<GridListProps> = ({
   data,
@@ -40,7 +40,7 @@ const GridList: React.FC<GridListProps> = ({
   });
 
   const [option, setOption] = useState<ILoadingProps>({
-    page: 1,
+    page: 0,
     isLoading: false,
     isEnd: false
   });
@@ -60,7 +60,7 @@ const GridList: React.FC<GridListProps> = ({
     await fakeFetch();
     setOption(prev => ({
       ...prev,
-      page: prev.page + 10,
+      page: prev.page + 12,
       isLoading: false
     }));
   };
@@ -162,7 +162,7 @@ const GridList: React.FC<GridListProps> = ({
           ))}
 
           {option.isLoading &&
-            [...Array(10)].map((_, key) => (
+            [...Array(12)].map((_, key) => (
               <div className="item" key={key}>
                 <Skeleton
                   variant="rectangular"

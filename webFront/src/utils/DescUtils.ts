@@ -1,7 +1,7 @@
 import DescData from "constants/DescData";
 
 class DescUtils {
-  SetTitle(category: string) {
+  SetBoardTitle(category: string) {
     switch(category) {
       case 'notice':
         return DescData['notice'].title;
@@ -26,7 +26,7 @@ class DescUtils {
     }
   }
 
-  SetContext(category: string) {
+  SetBoardContext(category: string) {
     switch(category) {
       case 'notice':
         return DescData['notice'].context;

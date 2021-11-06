@@ -76,7 +76,6 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
     })
       .then((res: AxiosResponse) => {
         setBoard(res.data);
-        console.log(res.data);
       })
       .catch(error => {
         console.log(error);
@@ -93,10 +92,10 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
     setDesc({
-      title: DescUtils.SetTitle(
+      title: DescUtils.SetBoardTitle(
         String(new URLSearchParams(location.search).get("category") ?? "")
       ),
-      context: DescUtils.SetContext(
+      context: DescUtils.SetBoardContext(
         String(new URLSearchParams(location.search).get("category") ?? "")
       )
     });

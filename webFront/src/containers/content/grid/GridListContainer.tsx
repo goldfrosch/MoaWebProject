@@ -82,10 +82,10 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
     // setDesc({
-    //   title: DescUtils.SetTitle(
+    //   title: DescUtils.SetBoardTitle(
     //     String(new URLSearchParams(location.search).get("category") ?? "")
     //   ),
-    //   context: DescUtils.SetContext(
+    //   context: DescUtils.SetBoardContext(
     //     String(new URLSearchParams(location.search).get("category") ?? "")
     //   )
     // });

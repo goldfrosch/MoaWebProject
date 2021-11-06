@@ -22,11 +22,11 @@ import history from "utils/HistoryUtils";
 import DescUtils from "utils/DescUtils";
 import SwitchItem from "components/common/items/SwitchItem";
 
-interface BoardWriteProps {
+interface GridWriteProps {
   data: string;
   boardTag: string[];
 }
-const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
+const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
   const dispatch = useDispatch();
 
   const [datas, setDatas] = useState<IBoardData>({
@@ -98,7 +98,7 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
   };
 
   return (
-    <BoardWriteBlock>
+    <GridWriteBlock>
       <div className="main">
         <div className="header">
           <h2 className="title">글 작성하기</h2>
@@ -157,11 +157,11 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
           </Button>
         </div>
       </div>
-    </BoardWriteBlock>
+    </GridWriteBlock>
   );
 };
 
-const BoardWriteBlock = styled.div`
+const GridWriteBlock = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -245,4 +245,4 @@ const BoardWriteBlock = styled.div`
   }
 `;
 
-export default BoardWrite;
+export default GridWrite;

@@ -16,6 +16,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -40,7 +43,7 @@ public class BoardRestController {
         @RequestParam(required = false, defaultValue = "") String query
     ){
         PagingResponse pagingResponse = new PagingResponse(
-                boardQueryRepository.getBoardList(category, 3),
+                boardQueryRepository.getBoardList(BoardList.NOTICE, 3),
                 boardQueryRepository.getBoardFindbyCategory(category, page, size, type, query)
         );
 
@@ -49,7 +52,7 @@ public class BoardRestController {
 
     //특정 보드 데이터 가져오기
     @GetMapping("/boards/{id}")
-    public BoardItemDTO getBoardById(@PathVariable Long id) {
+    public BoardItemDTO getBoardById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
         return boardQueryRepository.getBoardById(id);
     }
 

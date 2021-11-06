@@ -121,7 +121,13 @@ const BoardList: React.FC<BoardListProps> = ({
         </div>
         <div className="content">
           {board.newNotice.map((data, key) => (
-            <div className="importantItem" key={key}>
+            <div
+              className="importantItem"
+              key={key}
+              onClick={() => {
+                history.push(`/board/${data.id}`);
+              }}
+            >
               <div className="profile">
                 <img src={noticePhone} alt="" />
                 <div className="title">
@@ -267,6 +273,8 @@ const BoardListBlock = styled.div`
 
         gap: 8px;
 
+        cursor: pointer;
+
         & > .profile {
           display: flex;
           align-items: center;
@@ -311,6 +319,9 @@ const BoardListBlock = styled.div`
             font-size: 12px;
           }
         }
+      }
+      & > .importantItem:hover {
+        background-color: #e0e0e0;
       }
       & > .item {
         width: 100%;
@@ -363,7 +374,7 @@ const BoardListBlock = styled.div`
         }
       }
       & > .item:hover {
-        background-color: #f6f6f6;
+        background-color: #e0e0e0;
       }
     }
 

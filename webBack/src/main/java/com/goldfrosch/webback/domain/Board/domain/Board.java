@@ -41,6 +41,9 @@ public class Board {
     @Column(nullable = false)
     private LocalDateTime modifiedDate;
 
+    @Column
+    private String thumbnail;
+
     @Column(nullable = false)
     private Boolean isComment;
 

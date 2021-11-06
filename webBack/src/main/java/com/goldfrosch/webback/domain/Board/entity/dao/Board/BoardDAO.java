@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.domain.Board.entity.dao;
+package com.goldfrosch.webback.domain.Board.entity.dao.Board;
 
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
 

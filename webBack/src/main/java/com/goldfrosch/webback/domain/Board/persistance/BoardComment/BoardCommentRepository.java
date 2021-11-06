@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.domain.Board.persistance;
+package com.goldfrosch.webback.domain.Board.persistance.BoardComment;
 
 import com.goldfrosch.webback.domain.Board.domain.BoardComment;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import DateUtils from "utils/DateUtils";
 
-import { IBoardListData } from "modules/board/type";
+import { IBoardDetailData } from "modules/board/type";
 import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 interface BoardDetailProps {
-  data: IBoardListData;
+  data: IBoardDetailData;
 }
 const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
   const [comment, setComment] = useState<string>("");
@@ -30,7 +30,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
       <div
         className="board"
         dangerouslySetInnerHTML={{
-          __html: data?.content ? data.content : ""
+          __html: data.content
         }}
       ></div>
       <div className="footer">

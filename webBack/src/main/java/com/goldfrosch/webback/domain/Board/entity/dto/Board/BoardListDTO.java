@@ -1,4 +1,4 @@
-package com.goldfrosch.webback.domain.Board.entity.dto;
+package com.goldfrosch.webback.domain.Board.entity.dto.Board;
 
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.querydsl.core.annotations.QueryProjection;
@@ -7,9 +7,10 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+
 @Getter
 @Setter
-public class BoardItemDTO {
+public class BoardListDTO {
     private Long id;
 
     private String title;
@@ -18,7 +19,7 @@ public class BoardItemDTO {
 
     private String prefix;
 
-    private String content;
+    private String thumbnail;
 
     private LocalDateTime createdDate;
 
@@ -33,24 +34,24 @@ public class BoardItemDTO {
     private Long isLove;
 
     @QueryProjection
-    public BoardItemDTO(
+    public BoardListDTO(
             Long id,
             String title,
             BoardList category,
             String prefix,
-            String content,
+            String thumbnail,
             LocalDateTime createdDate,
             int count,
             String nickName,
             int rank,
             String uuid,
             Long isLove
-    ) {
+            ) {
         this.id = id;
         this.title = title;
         this.category = category;
         this.prefix = prefix;
-        this.content = content;
+        this.thumbnail = thumbnail;
         this.createdDate = createdDate;
         this.count = count;
         this.nickName = nickName;

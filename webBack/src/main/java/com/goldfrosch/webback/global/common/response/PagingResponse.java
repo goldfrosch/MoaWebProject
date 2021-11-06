@@ -1,6 +1,6 @@
 package com.goldfrosch.webback.global.common.response;
 
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
+import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardListDTO;
 import com.querydsl.core.QueryResults;
 import lombok.*;
 

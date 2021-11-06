@@ -14,13 +14,13 @@ export interface IBoardListData {
   id: number,
   category: string,
   count: number,
-  content?: string,
   createdDate: Date,
   isLove: number,
   nickName: string,
   prefix: string,
   rank: number,
   title: string,
+  thumbnail: string,
   uuid: string,
 }
 
@@ -28,7 +28,7 @@ export interface IBoardDetailData {
   id: number,
   category: string,
   count: number,
-  content?: string,
+  content: string,
   createdDate: Date,
   isLove: number,
   nickName: string,

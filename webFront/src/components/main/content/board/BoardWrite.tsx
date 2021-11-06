@@ -56,18 +56,30 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
 
   const handleSave = () => {
     dispatch(setMessageClearAction());
-    console.log({
-      ...datas,
-      category: data.toUpperCase(),
-      content: contents
-    });
-    BoardAPI.postBoard({
-      ...datas,
-      category: data.toUpperCase(),
-      content: contents
-    })
+    if (datas.title === "") {
+      return dispatch(setMessageErrorAction("제목이 비어있습니다"));
+    } else if (contents === "") {
+      return dispatch(setMessageErrorAction("내용이 비어있습니다"));
+    }
+
+    let formData = new FormData();
+
+    formData.append(
+      "data",
+      new Blob(
+        [
+          JSON.stringify({
+            ...datas,
+            category: data.toUpperCase(),
+            content: contents
+          })
+        ],
+        { type: "application/json" }
+      )
+    );
+    BoardAPI.postBoard(formData)
       .then((res: AxiosResponse) => {
-        if (res.data) {
+        if (res.status === 200) {
           dispatch(setMessageSuccessAction("성공적으로 작성했습니다"));
           history.goBack();
         }
@@ -132,7 +144,7 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
         </div>
         <div className="footer">
           <div className="setting">
-            <span>댓글 여부: </span>
+            <span>댓글 금지: </span>
             <SwitchItem onChange={handleChangeComment} />
           </div>
 

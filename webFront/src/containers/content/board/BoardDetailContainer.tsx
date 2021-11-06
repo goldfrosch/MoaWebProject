@@ -4,7 +4,7 @@ import BoardDetail from "components/main/content/board/BoardDetail";
 
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
-import { IBoardListData } from "modules/board/type";
+import { IBoardDetailData } from "modules/board/type";
 
 export interface match<P> {
   params: P;
@@ -25,7 +25,7 @@ export interface MatchParams {
 const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   match
 }) => {
-  const [data, setData] = useState<IBoardListData>({
+  const [data, setData] = useState<IBoardDetailData>({
     id: 0,
     category: "",
     count: 0,
@@ -43,7 +43,6 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     BoardAPI.getBoard(match.params.id)
       .then((res: AxiosResponse) => {
         setData(res.data);
-        console.log(res.data);
       })
       .catch(error => {
         console.log(error);

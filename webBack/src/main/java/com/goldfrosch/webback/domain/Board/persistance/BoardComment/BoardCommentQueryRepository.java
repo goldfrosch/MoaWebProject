@@ -1,9 +1,6 @@
-package com.goldfrosch.webback.domain.Board.persistance;
+package com.goldfrosch.webback.domain.Board.persistance.BoardComment;
 
 import com.goldfrosch.webback.domain.Board.domain.Board;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardCommentDTO;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;

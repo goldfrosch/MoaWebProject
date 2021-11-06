@@ -1,10 +1,10 @@
-package com.goldfrosch.webback.domain.Board.persistance;
+package com.goldfrosch.webback.domain.Board.persistance.Board;
 
 import com.goldfrosch.webback.domain.Board.domain.Board;
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardItemDTO;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardListDTO;
+import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardItemDTO;
+import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardListDTO;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -31,11 +31,12 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
         return jpaQueryFactory.select(boardTag.tag).from(boardTag).where(boardTag.category.eq(category)).fetch();
     }
 
-    public List<BoardListDTO> getBoardNotice(BoardList category, int limit) {
+    public List<BoardListDTO> getBoardList(BoardList category, int limit) {
         return jpaQueryFactory.select(Projections.constructor(BoardListDTO.class,board.id,
             board.title,
             board.category,
             board.prefix,
+            board.thumbnail,
             board.createdDate,
             board.count,
             board.user.nickName,
@@ -56,6 +57,7 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
                     board.title,
                     board.category,
                     board.prefix,
+                    board.thumbnail,
                     board.createdDate,
                     board.count,
                     board.user.nickName,
@@ -78,6 +80,7 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
                     board.title,
                     board.category,
                     board.prefix,
+                    board.thumbnail,
                     board.createdDate,
                     board.count,
                     board.user.nickName,

@@ -1,5 +1,5 @@
 import axios from "api/defaultClient";
-import { IGetBoards, IBoardData } from "modules/board/type";
+import { IGetBoards } from "modules/board/type";
 
 export const getBoards = (data: IGetBoards) => {
   return axios.get(
@@ -15,6 +15,6 @@ export const getBoardTag = (category: string) => {
   return axios.get(`/board/tags/${category}`);
 };
 
-export const postBoard = (data: IBoardData) => {
+export const postBoard = (data: any) => {
   return axios.post(`/board`, data);
 };

@@ -1,8 +1,8 @@
 package com.goldfrosch.webback.domain.Board.application;
 
 import com.goldfrosch.webback.domain.Board.domain.BoardComment;
-import com.goldfrosch.webback.domain.Board.entity.dao.BoardCommentDAO;
-import com.goldfrosch.webback.domain.Board.persistance.BoardCommentRepository;
+import com.goldfrosch.webback.domain.Board.entity.dao.BoardComment.BoardCommentDAO;
+import com.goldfrosch.webback.domain.Board.persistance.BoardComment.BoardCommentRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

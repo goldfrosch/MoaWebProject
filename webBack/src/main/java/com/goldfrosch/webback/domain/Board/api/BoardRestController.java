@@ -7,7 +7,10 @@ import com.goldfrosch.webback.domain.Board.entity.dao.BoardComment.BoardCommentD
 import com.goldfrosch.webback.domain.Board.entity.dao.Board.BoardDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
 import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardItemDTO;
+import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentDTO;
+import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentItem;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
+import com.goldfrosch.webback.domain.Board.persistance.BoardComment.BoardCommentQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.global.common.response.PagingResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +19,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -32,6 +35,8 @@ public class BoardRestController {
     private final BoardCommentService boardCommentService;
 
     private final BoardQueryRepository boardQueryRepository;
+
+    private final BoardCommentQueryRepository boardCommentQueryRepository;
 
     //보드형 리스트 관련 api
     @GetMapping("/boards")
@@ -52,7 +57,7 @@ public class BoardRestController {
 
     //특정 보드 데이터 가져오기
     @GetMapping("/boards/{id}")
-    public BoardItemDTO getBoardById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+    public BoardItemDTO getBoardById(@PathVariable Long id) {
         return boardQueryRepository.getBoardById(id);
     }
 
@@ -69,7 +74,6 @@ public class BoardRestController {
             @RequestPart(value = "data") BoardDAO board,
             @AuthenticationPrincipal User user
     ) {
-        log.info(String.valueOf(board));
         boardService.postBoard(board, file, user);
     }
 
@@ -80,6 +84,25 @@ public class BoardRestController {
     }
 
     //보드 댓글 관련 api
+    @GetMapping("/boards/comments/{id}")
+    public List<BoardCommentDTO> testComments(@PathVariable Long id) {
+        log.info(String.valueOf(id));
+        List<BoardCommentItem> comments = boardCommentQueryRepository.getCommentsByBoardId(id);
+
+        List<BoardCommentDTO> result = new ArrayList<>();
+
+        for(BoardCommentItem comment: comments) {
+            BoardCommentDTO data = new BoardCommentDTO();
+
+            data.setComments(comment);
+            data.setReplyList(boardCommentQueryRepository.getReplyList(id, comment.getId()));
+            result.add(data);
+        }
+
+        return result;
+    }
+
+
     @PostMapping("/board/comment")
     public void postBoardComment(@RequestBody BoardCommentDAO boardComment, @AuthenticationPrincipal User user) {
         boardCommentService.postBoardComment(boardComment, user);
@@ -89,10 +112,5 @@ public class BoardRestController {
     public void deleteBoardCommentById(@PathVariable Long id) {
         boardCommentService.deleteBoardCommentById(id);
     }
-
-    @PostMapping("/board/test")
-    public String test(@RequestPart MultipartFile file) {
-        log.info(String.valueOf(file.getSize()));
-        return file.getOriginalFilename();
-    }
 }
+

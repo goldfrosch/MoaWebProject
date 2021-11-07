@@ -1,6 +1,7 @@
 package com.goldfrosch.webback.domain.User.persistance;
 
 import com.goldfrosch.webback.domain.Board.domain.Board;
+import com.goldfrosch.webback.domain.User.domain.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;

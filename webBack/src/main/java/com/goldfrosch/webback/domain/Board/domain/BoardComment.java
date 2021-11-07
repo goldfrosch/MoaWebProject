@@ -1,15 +1,15 @@
 package com.goldfrosch.webback.domain.Board.domain;
 
 import com.goldfrosch.webback.domain.User.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -29,8 +29,16 @@ public class BoardComment {
     @Column(nullable = false)
     private Long boardNum;
 
-    @Column
-    private Long parentNum;
+    @Column(nullable = false)
+    private Boolean isDeleted;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private BoardComment parentId;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "parentId", orphanRemoval = true)
+    private List<BoardComment> children = new ArrayList<>();
 
     @Column
     private LocalDateTime createdDate;

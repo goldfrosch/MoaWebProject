@@ -186,15 +186,17 @@ const BoardList: React.FC<BoardListProps> = ({
             ))
           )}
         </div>
-        <div className="footer">
-          <Pagination
-            count={Math.ceil(board.list.total / board.list.limit)}
-            showFirstButton
-            showLastButton
-            page={data.page}
-            onChange={handlePageChange}
-          />
-        </div>
+        {board.list.results.length !== 0 && (
+          <div className="footer">
+            <Pagination
+              count={Math.ceil(board.list.total / board.list.limit)}
+              showFirstButton
+              showLastButton
+              page={data.page}
+              onChange={handlePageChange}
+            />
+          </div>
+        )}
       </div>
     </BoardListBlock>
   );

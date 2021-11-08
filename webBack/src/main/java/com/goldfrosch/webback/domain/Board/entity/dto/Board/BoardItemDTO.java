@@ -32,6 +32,8 @@ public class BoardItemDTO {
 
     private Long isLove;
 
+    private Boolean isComment;
+
     @QueryProjection
     public BoardItemDTO(
             Long id,
@@ -44,6 +46,7 @@ public class BoardItemDTO {
             String nickName,
             int rank,
             String uuid,
+            Boolean isComment,
             Long isLove
     ) {
         this.id = id;
@@ -56,6 +59,7 @@ public class BoardItemDTO {
         this.nickName = nickName;
         this.rank = rank;
         this.uuid = uuid;
+        this.isComment = isComment;
         this.isLove = isLove;
     }
 }

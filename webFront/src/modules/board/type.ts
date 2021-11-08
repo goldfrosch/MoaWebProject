@@ -31,7 +31,7 @@ export interface IBoardComment {
   rank: number,
   uuid: string,
   replyList: IBoardReply[],
-  isEdit?: boolean;
+  isEdit?: boolean,
 }
 
 export interface IBoardListData {
@@ -55,6 +55,7 @@ export interface IBoardDetailData {
   content: string,
   createdDate: Date,
   isLove: number,
+  isComment: boolean,
   nickName: string,
   prefix: string,
   rank: number,
@@ -92,7 +93,7 @@ export interface IBoardCommentsItem {
 
 export interface IBoardCommentsList {
   list: IBoardCommentsItem[];
-  count: number;
+  counts: number;
 }
 
 export interface IBoardDetail {

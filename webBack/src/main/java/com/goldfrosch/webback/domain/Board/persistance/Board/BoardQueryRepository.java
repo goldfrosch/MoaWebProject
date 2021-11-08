@@ -102,21 +102,24 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
 
     public BoardItemDTO getBoardById(Long number) {
         return jpaQueryFactory.select(Projections.constructor(BoardItemDTO.class,
-                        board.id,
-                        board.title,
-                        board.category,
-                        board.prefix,
-                        board.content,
-                        board.createdDate,
-                        board.count,
-                        board.user.nickName,
-                        board.user.rank,
-                        board.user.uuid,
-                        jpaQueryFactory.select(boardLove.count()).from(boardLove).where(boardLove.id.eq(board.id))
-                        )
-                )
-                .from(board)
-                .where(board.id.eq(number))
-                .fetchOne();
+            board.id,
+            board.title,
+            board.category,
+            board.prefix,
+            board.content,
+            board.createdDate,
+            board.count,
+            board.user.nickName,
+            board.user.rank,
+            board.user.uuid,board.isComment,
+            jpaQueryFactory.
+                select(boardLove.count()).
+                from(boardLove).
+                where(boardLove.id.eq(board.id))
+            )
+        )
+        .from(board)
+        .where(board.id.eq(number))
+        .fetchOne();
     }
 }

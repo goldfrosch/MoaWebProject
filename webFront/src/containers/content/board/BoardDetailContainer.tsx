@@ -30,7 +30,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   const profile = useSelector((state: IRootState) => state.auth.profile);
   const [data, setData] = useState<IBoardDetail>({
     comments: {
-      count: 0,
+      counts: 0,
       list: []
     },
     detail: {
@@ -39,6 +39,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
       count: 0,
       content: "",
       createdDate: new Date(),
+      isComment: true,
       isLove: 0,
       nickName: "",
       prefix: "",

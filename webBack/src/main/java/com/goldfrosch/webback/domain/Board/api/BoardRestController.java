@@ -6,8 +6,9 @@ import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardComment.BoardCommentDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.Board.BoardDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
-import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardItemDTO;
+import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardDetailDTO;
 import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentDTO;
+import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentList;
 import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentItem;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
 import com.goldfrosch.webback.domain.Board.persistance.BoardComment.BoardCommentQueryRepository;
@@ -20,9 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Slf4j
@@ -57,8 +56,13 @@ public class BoardRestController {
 
     //특정 보드 데이터 가져오기
     @GetMapping("/boards/{id}")
-    public BoardItemDTO getBoardById(@PathVariable Long id) {
-        return boardQueryRepository.getBoardById(id);
+    public BoardDetailDTO getBoardById(@PathVariable Long id) {
+        BoardDetailDTO result = new BoardDetailDTO();
+
+        result.setDetail(boardQueryRepository.getBoardById(id));
+        result.setComments(boardCommentService.getBoardComments(id));
+
+        return result;
     }
 
     //보드별 태그 리스트 가져오기
@@ -84,25 +88,6 @@ public class BoardRestController {
     }
 
     //보드 댓글 관련 api
-    @GetMapping("/boards/comments/{id}")
-    public List<BoardCommentDTO> testComments(@PathVariable Long id) {
-        log.info(String.valueOf(id));
-        List<BoardCommentItem> comments = boardCommentQueryRepository.getCommentsByBoardId(id);
-
-        List<BoardCommentDTO> result = new ArrayList<>();
-
-        for(BoardCommentItem comment: comments) {
-            BoardCommentDTO data = new BoardCommentDTO();
-
-            data.setComments(comment);
-            data.setReplyList(boardCommentQueryRepository.getReplyList(id, comment.getId()));
-            result.add(data);
-        }
-
-        return result;
-    }
-
-
     @PostMapping("/board/comment")
     public void postBoardComment(@RequestBody BoardCommentDAO boardComment, @AuthenticationPrincipal User user) {
         boardCommentService.postBoardComment(boardComment, user);

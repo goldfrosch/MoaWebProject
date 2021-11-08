@@ -7,8 +7,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class BoardCommentDTO {
-    private List<BoardCommentList> list;
+public class BoardCommentList {
+    private BoardCommentItem comment;
 
-    private Long counts;
+    private List<BoardCommentItem> replyList;
 }

@@ -1,39 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DateUtils from "utils/DateUtils";
 
-import { IBoardDetailData } from "modules/board/type";
+import { IBoardDetail } from "modules/board/type";
 import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { IProfile } from "modules/auth/type";
+import BoardProfile from "components/common/items/BoardProfile";
 interface BoardDetailProps {
-  data: IBoardDetailData;
+  data: IBoardDetail;
+  profile: IProfile;
 }
-const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
+const BoardDetail: React.FC<BoardDetailProps> = ({ data, profile }) => {
+  const [datas, setDatas] = useState<IBoardDetail>({ ...data });
   const [comment, setComment] = useState<string>("");
+
+  useEffect(() => {
+    setDatas({ ...data });
+  }, [data]);
+
   return (
     <BoardDetailBlock>
       <div className="header">
         <div className="text">
           <span className="prefix">
-            {data.prefix !== "" ? <>[ {data.prefix} ]</> : data.prefix}
+            {datas.detail.prefix !== "" ? (
+              <>[ {datas.detail.prefix} ]</>
+            ) : (
+              datas.detail.prefix
+            )}
           </span>
-          <span className="title">{data.title}</span>
+          <span className="title">{datas.detail.title}</span>
         </div>
         <div className="profile">
-          <img src={`https://mc-heads.net/avatar/${data.uuid}`} alt="" />
-          <span className="nick">{data.nickName}</span>
+          <img
+            src={`https://mc-heads.net/avatar/${datas.detail.uuid}`}
+            alt=""
+          />
+          <span className="nick">{datas.detail.nickName}</span>
           <span className="time">
-            {DateUtils.getPrevTime(data.createdDate)}
+            {DateUtils.getPrevTime(datas.detail.createdDate)}
           </span>
         </div>
       </div>
       <div
         className="board"
         dangerouslySetInnerHTML={{
-          __html: data.content
+          __html: datas.detail.content
         }}
       ></div>
       <div className="footer">
+        <div className="commentsCount">
+          <span>{datas.comments.count}개의 댓글</span>
+        </div>
         <textarea
           value={comment}
           onChange={(e: any) => setComment(e.target.value)}
@@ -44,6 +63,36 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data }) => {
             작성
           </Button>
         </div>
+      </div>
+      <div className="comments">
+        {datas.comments.list.map((item, key) => (
+          <div className="item" key={key}>
+            <div className="profile">
+              <BoardProfile
+                nickName={item.comment.nickName}
+                uuid={item.comment.uuid}
+                createdDate={item.comment.createdDate}
+              />
+              {item.comment.uuid === profile.uuid && (
+                <div>
+                  <Button theme={ThemeColor.first} size={ThemeSize.small}>
+                    수정
+                  </Button>
+                  <span> </span>
+                  <Button theme={ThemeColor.first} size={ThemeSize.small}>
+                    삭제
+                  </Button>
+                </div>
+              )}
+            </div>
+            <textarea defaultValue={item.comment.comment} disabled={true} />
+            {item.replyList.length > 0 && (
+              <div className="replyList">
+                <span>답글보기</span>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </BoardDetailBlock>
   );
@@ -120,6 +169,13 @@ const BoardDetailBlock = styled.div`
     width: 100%;
     border-top: 1px solid #e9e9e9;
     padding: 16px 0;
+    & > .commentsCount {
+      margin-bottom: 8px;
+      & > span {
+        font-weight: 500;
+        padding-left: 8px;
+      }
+    }
     & > textarea {
       width: 100%;
       height: 128px;
@@ -147,12 +203,37 @@ const BoardDetailBlock = styled.div`
         padding-bottom: 5px;
       }
     }
-    & > .comment {
-      width: 100%;
-      border-bottom: 1px solid #e9e9e9;
-    }
   }
-  & > .commentList {
+  & > .comments {
+    width: 100%;
+    & > .item {
+      & > .profile {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      & > textarea {
+        width: 100%;
+
+        border: 2px solid #e9e9e9;
+        border-radius: 8px;
+
+        padding: 8px;
+
+        resize: none;
+      }
+      & > textarea:disabled {
+        background-color: white;
+      }
+
+      & > .replyList {
+        padding-left: 8px;
+        & > span {
+          color: #979797;
+          cursor: pointer;
+        }
+      }
+    }
   }
 `;
 export default BoardDetail;

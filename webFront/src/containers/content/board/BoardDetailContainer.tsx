@@ -4,7 +4,9 @@ import BoardDetail from "components/main/content/board/BoardDetail";
 
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
-import { IBoardDetailData } from "modules/board/type";
+import { IBoardDetail } from "modules/board/type";
+import { useSelector } from "react-redux";
+import { IRootState } from "modules";
 
 export interface match<P> {
   params: P;
@@ -25,18 +27,25 @@ export interface MatchParams {
 const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   match
 }) => {
-  const [data, setData] = useState<IBoardDetailData>({
-    id: 0,
-    category: "",
-    count: 0,
-    content: "",
-    createdDate: new Date(),
-    isLove: 0,
-    nickName: "",
-    prefix: "",
-    rank: 0,
-    title: "",
-    uuid: ""
+  const profile = useSelector((state: IRootState) => state.auth.profile);
+  const [data, setData] = useState<IBoardDetail>({
+    comments: {
+      count: 0,
+      list: []
+    },
+    detail: {
+      id: 0,
+      category: "",
+      count: 0,
+      content: "",
+      createdDate: new Date(),
+      isLove: 0,
+      nickName: "",
+      prefix: "",
+      rank: 0,
+      title: "",
+      uuid: ""
+    }
   });
 
   useEffect(() => {
@@ -48,7 +57,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
         console.log(error);
       });
   }, [match.params.id]);
-  return <BoardDetail data={data} />;
+  return <BoardDetail data={data} profile={profile} />;
 };
 
 export default BoardDetailContainer;

@@ -10,6 +10,30 @@ export interface IBoardDesc {
   context: string,
 }
 
+export interface IBoardReply {
+  id: number,
+  comment: string,
+  boardNum: number,
+  parentNum: null,
+  createdDate: Date,
+  nickName: string,
+  rank: number,
+  uuid: string,
+}
+
+export interface IBoardComment {
+  id: number,
+  comment: string,
+  boardNum: number,
+  parentNum: null,
+  createdDate: Date,
+  nickName: string,
+  rank: number,
+  uuid: string,
+  replyList: IBoardReply[],
+  isEdit?: boolean;
+}
+
 export interface IBoardListData {
   id: number,
   category: string,
@@ -58,4 +82,20 @@ export interface IBoardList {
 export interface IBoard {
   newNotice: IBoardListData[],
   list: IBoardList,
+}
+
+export interface IBoardCommentsItem {
+  comment: IBoardComment;
+  isShowReply?: boolean;
+  replyList: IBoardComment[];
+}
+
+export interface IBoardCommentsList {
+  list: IBoardCommentsItem[];
+  count: number;
+}
+
+export interface IBoardDetail {
+  comments: IBoardCommentsList,
+  detail: IBoardDetailData,
 }

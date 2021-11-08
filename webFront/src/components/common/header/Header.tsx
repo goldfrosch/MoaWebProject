@@ -333,7 +333,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     & > .navLink:hover {
       width: 100%;
       //수동으로... 메뉴 갯수에따라 늘어나야함... ;^;
-      height: 70vh;
+      height: 90vh;
       background-color: ${Palette.header};
 
       position: absolute;
@@ -345,6 +345,21 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     }
   }
 
+  @media (min-width: 1080px) {
+    & > .navLink:hover {
+      width: 100%;
+      //수동으로... 메뉴 갯수에따라 늘어나야함... ;^;
+      height: 70vh;
+      background-color: ${Palette.header};
+
+      position: absolute;
+      & > li {
+        & > .subMenu {
+          display: block;
+        }
+      }
+    }
+  }
   & > .burger {
     display: none;
     cursor: pointer;

@@ -30,6 +30,12 @@ public class BoardCommentQueryRepository extends QuerydslRepositorySupport {
             fetchOne();
     }
 
+    public Long getCommentsCountByBoardId(Long id) {
+        return jpaQueryFactory.selectFrom(boardComment)
+                .where(boardComment.boardNum.eq(id))
+                .fetchCount();
+    }
+
     public List<BoardCommentItem> getCommentsByBoardId(Long id) {
         return jpaQueryFactory.select(Projections.constructor(BoardCommentItem.class,
                 boardComment.id,
@@ -43,6 +49,7 @@ public class BoardCommentQueryRepository extends QuerydslRepositorySupport {
             )
         ).from(boardComment)
         .where(boardComment.boardNum.eq(id))
+        .where(boardComment.parentId.isNull())
         .orderBy(boardComment.createdDate.desc())
         .fetch();
     }

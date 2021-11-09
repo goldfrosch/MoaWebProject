@@ -152,7 +152,9 @@ const BoardList: React.FC<BoardListProps> = ({
             </div>
           ))}
           {board.list.results.length === 0 ? (
-            <p style={{ color: "#797979" }}>게시글들이 존재하지 않습니다</p>
+            <p style={{ color: "#797979", padding: "24px 0" }}>
+              게시글들이 존재하지 않습니다
+            </p>
           ) : (
             board.list.results.map((data, key) => (
               <div

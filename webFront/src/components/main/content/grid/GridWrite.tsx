@@ -21,6 +21,7 @@ import {
 import history from "utils/HistoryUtils";
 import DescUtils from "utils/DescUtils";
 import SwitchItem from "components/common/items/SwitchItem";
+import DragDrop from "components/common/items/DragDrop";
 
 interface GridWriteProps {
   data: string;
@@ -101,11 +102,14 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
     <GridWriteBlock>
       <div className="main">
         <div className="header">
-          <h2 className="title">글 작성하기</h2>
+          <h2 className="title">
+            글 작성하기.{" "}
+            <span style={{ color: "black", fontSize: "12px" }}>
+              {DescUtils.SetBoardTitle(data)}
+            </span>
+          </h2>
+          <DragDrop />
           <div className="option">
-            <select className="category" disabled>
-              <option>{DescUtils.SetBoardTitle(data)}</option>
-            </select>
             <select
               className="tag"
               onChange={(e: any) =>
@@ -119,8 +123,6 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="option">
             <input
               placeholder="제목을 입력해주세요"
               value={datas.title}
@@ -163,7 +165,7 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
 
 const GridWriteBlock = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 180vh;
   display: flex;
   justify-content: center;
 
@@ -181,7 +183,7 @@ const GridWriteBlock = styled.div`
 
     position: relative;
     & > .header {
-      height: 20vh;
+      height: 80vh;
       color: #797979;
 
       padding: 16px 0;
@@ -192,8 +194,8 @@ const GridWriteBlock = styled.div`
       & > .title {
         color: ${Palette.primary};
 
-        font-size: 24px;
-        font-weight: 700;
+        font-size: 20px;
+        font-weight: 600;
       }
       & > .option {
         display: flex;

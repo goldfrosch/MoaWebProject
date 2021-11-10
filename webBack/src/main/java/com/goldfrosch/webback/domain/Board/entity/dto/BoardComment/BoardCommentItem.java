@@ -13,6 +13,8 @@ public class BoardCommentItem {
 
     private String comment;
 
+    private Boolean isDeleted;
+
     private Long boardNum;
 
     private Long parentNum;
@@ -29,6 +31,7 @@ public class BoardCommentItem {
     public BoardCommentItem(
             Long id,
             String comment,
+            Boolean isDeleted,
             Long boardNum,
             Long parentNum,
             LocalDateTime createdDate,
@@ -38,6 +41,7 @@ public class BoardCommentItem {
     ) {
         this.id = id;
         this.comment = comment;
+        this.isDeleted = isDeleted;
         this.boardNum = boardNum;
         this.parentNum = parentNum;
         this.createdDate = createdDate;

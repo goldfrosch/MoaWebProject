@@ -31,6 +31,7 @@ export interface IBoardComment {
   rank: number,
   uuid: string,
   replyList: IBoardReply[],
+  isDeleted: boolean,
   isEdit?: boolean,
 }
 
@@ -99,4 +100,11 @@ export interface IBoardCommentsList {
 export interface IBoardDetail {
   comments: IBoardCommentsList,
   detail: IBoardDetailData,
+}
+
+//댓글관련
+export interface IComment {
+  boardNum: number,
+  comment: string,
+  parentNum: number | null,
 }

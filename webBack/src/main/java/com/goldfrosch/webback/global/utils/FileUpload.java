@@ -8,7 +8,7 @@ import java.io.File;
 @Slf4j
 public class FileUpload {
     public static String uploadImage(MultipartFile file, String location){
-        final String path =  "C:/Users/user/Documents/GitHub/MoaWebProject/webBack/src/main/file";
+        final String path =  "file";
 
         File newFile = new File(path+location);
 

@@ -13,6 +13,7 @@ import BoardDetailContainer from "containers/content/board/BoardDetailContainer"
 
 import GridContainer from "containers/content/grid/GridListContainer";
 import GridWriteContainer from "containers/content/grid/GridWriteContainer";
+import NotForbidden from "components/common/template/NotForbidden";
 
 const MainPage = () => {
   return (
@@ -29,6 +30,7 @@ const MainPage = () => {
         <Route exact path="/grid" component={GridContainer} />
         <Route exact path="/grid/write" component={GridWriteContainer} />
         {/* Error Page */}
+        <Route exact path="/forbidden" component={NotForbidden} />
         <Route component={NotFound} />
       </Switch>
     </BaseTemplate>

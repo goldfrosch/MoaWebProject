@@ -82,6 +82,7 @@ public class BoardRestController {
     }
 
     //보드 데이터 제거
+    @CrossOrigin("*")
     @DeleteMapping("/board/{id}")
     public void deleteBoardById(@PathVariable Long id) {
         boardService.deleteBoardById(id);
@@ -93,6 +94,7 @@ public class BoardRestController {
         boardCommentService.postBoardComment(boardComment, user);
     }
 
+    @CrossOrigin("*")
     @DeleteMapping("/board/comment/{id}")
     public void deleteBoardCommentById(@PathVariable Long id) {
         boardCommentService.deleteBoardCommentById(id);

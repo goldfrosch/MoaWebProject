@@ -4,6 +4,7 @@ import BoardDetail from "components/main/content/board/BoardDetail";
 
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
+
 import { IBoardDetail } from "modules/board/type";
 import { useSelector } from "react-redux";
 import { IRootState } from "modules";
@@ -49,6 +50,18 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     }
   });
 
+  const deleteComment = (id: number) => {
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      BoardAPI.deleteComment(id)
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   useEffect(() => {
     BoardAPI.getBoard(match.params.id)
       .then((res: AxiosResponse) => {
@@ -58,7 +71,9 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
         console.log(error);
       });
   }, [match.params.id]);
-  return <BoardDetail data={data} profile={profile} />;
+  return (
+    <BoardDetail data={data} profile={profile} deleteComment={deleteComment} />
+  );
 };
 
 export default BoardDetailContainer;

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +59,7 @@ public class BoardCommentService {
 
     @Transactional
     public void deleteBoardCommentById(Long id) {
-        boardCommentRepository.deleteById(id);
+        Optional<BoardComment> comment = boardCommentRepository.findById(id);
+        comment.get().setIsDeleted(true);
     }
 }

@@ -137,7 +137,7 @@ const BoardList: React.FC<BoardListProps> = ({
                   <span className="title">{data.title}</span>
                   <div className="info">
                     <img
-                      src={`https://mc-heads.net/avatar/${data.uuid}`}
+                      src={`https://crafatar.com/renders/head/${data.uuid}`}
                       alt=""
                     />
                     <span className="nick">{data.nickName}</span>
@@ -173,7 +173,7 @@ const BoardList: React.FC<BoardListProps> = ({
                   </div>
                   <div className="info">
                     <img
-                      src={`https://mc-heads.net/avatar/${data.uuid}`}
+                      src={`https://crafatar.com/renders/head/${data.uuid}`}
                       alt=""
                     />
                     <span className="nick">{data.nickName}</span>

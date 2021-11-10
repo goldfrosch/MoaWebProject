@@ -20,7 +20,7 @@ const BoardProfile: React.FC<IBoardProfile> = ({
       <Avatar />
       <div className="profile">
         <div className="nick">
-          <img src={`https://mc-heads.net/avatar/${uuid}`} alt="" />
+          <img src={`https://crafatar.com/renders/head/${uuid}`} alt="" />
           <span>{nickName}</span>
         </div>
         <div className="time">{DateUtils.getPrevTime(createdDate)}</div>
@@ -38,8 +38,8 @@ const BoardProfileBlock = styled.div`
       display: flex;
       align-items: center;
       & > img {
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
         margin-left: 8px;
       }
       & > span {

@@ -22,8 +22,10 @@ import java.util.List;
 public class JwtTokenProvider {
     private String secretKey = "secret";
 
-    // 토큰 유효시간 30분
-    private long tokenValidTime = 30 * 60 * 1000L;
+    // 토큰 유효시간 평생으로
+    // Refresh 토큰으로 계속 주기적으로 가져와줘야 하나
+    // 현재 기간 문제로 인해서 우선적으로는 평생을 기간으로 잡는다
+    private long tokenValidTime = 1000L * 60 * 60 * 24 * 365;
 
     private final UserDetailsService userDetailsService;
 

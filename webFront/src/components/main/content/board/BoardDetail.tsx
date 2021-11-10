@@ -7,11 +7,18 @@ import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 import BoardProfile from "components/common/items/BoardProfile";
+
 interface BoardDetailProps {
   data: IBoardDetail;
   profile: IProfile;
+  deleteComment: (id: number) => void;
 }
-const BoardDetail: React.FC<BoardDetailProps> = ({ data, profile }) => {
+
+const BoardDetail: React.FC<BoardDetailProps> = ({
+  data,
+  profile,
+  deleteComment
+}) => {
   const [datas, setDatas] = useState<IBoardDetail>({ ...data });
   const [comment, setComment] = useState<string>("");
 
@@ -34,7 +41,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data, profile }) => {
         </div>
         <div className="profile">
           <img
-            src={`https://mc-heads.net/avatar/${datas.detail.uuid}`}
+            src={`https://crafatar.com/renders/head/${datas.detail.uuid}`}
             alt=""
           />
           <span className="nick">{datas.detail.nickName}</span>
@@ -71,24 +78,49 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data, profile }) => {
           {datas.comments.list.map((item, key) => (
             <div className="item" key={key}>
               <div className="profile">
-                <BoardProfile
-                  nickName={item.comment.nickName}
-                  uuid={item.comment.uuid}
-                  createdDate={item.comment.createdDate}
-                />
-                {item.comment.uuid === profile.uuid && (
-                  <div>
-                    <Button theme={ThemeColor.first} size={ThemeSize.small}>
-                      수정
-                    </Button>
-                    <span> </span>
-                    <Button theme={ThemeColor.first} size={ThemeSize.small}>
-                      삭제
-                    </Button>
-                  </div>
+                {item.comment.isDeleted ? (
+                  <BoardProfile
+                    nickName={"삭제됨"}
+                    uuid={"7b216089b1f644a4ac76bf711009df0e"}
+                    createdDate={item.comment.createdDate}
+                  />
+                ) : (
+                  <>
+                    <BoardProfile
+                      nickName={item.comment.nickName}
+                      uuid={item.comment.uuid}
+                      createdDate={item.comment.createdDate}
+                    />
+                    <div>
+                      {item.comment.uuid === profile.uuid && (
+                        <Button theme={ThemeColor.first} size={ThemeSize.small}>
+                          수정
+                        </Button>
+                      )}
+                      <span> </span>
+                      {(item.comment.uuid === profile.uuid ||
+                        profile.rank >= 5) && (
+                        <Button
+                          theme={ThemeColor.first}
+                          size={ThemeSize.small}
+                          onClick={() => deleteComment(item.comment.id)}
+                        >
+                          삭제
+                        </Button>
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
-              <textarea defaultValue={item.comment.comment} disabled={true} />
+              {item.comment.isDeleted ? (
+                <textarea
+                  value="삭제된 게시글 입니다"
+                  disabled={true}
+                  style={{ color: "gray" }}
+                />
+              ) : (
+                <textarea defaultValue={item.comment.comment} disabled={true} />
+              )}
               {item.replyList.length > 0 && (
                 <div className="replyList">
                   <span>답글보기</span>
@@ -101,31 +133,55 @@ const BoardDetail: React.FC<BoardDetailProps> = ({ data, profile }) => {
                           justifyContent: "space-between"
                         }}
                       >
-                        <BoardProfile
-                          nickName={reply.nickName}
-                          uuid={reply.uuid}
-                          createdDate={reply.createdDate}
-                        />
-                        {reply.uuid === profile.uuid && (
-                          <div>
-                            <Button
-                              theme={ThemeColor.first}
-                              size={ThemeSize.small}
-                            >
-                              수정
-                            </Button>
-                            <span> </span>
-                            <Button
-                              theme={ThemeColor.first}
-                              size={ThemeSize.small}
-                            >
-                              삭제
-                            </Button>
-                          </div>
+                        {reply.isDeleted ? (
+                          <BoardProfile
+                            nickName={"삭제됨"}
+                            uuid={"7b216089b1f644a4ac76bf711009df0e"}
+                            createdDate={item.comment.createdDate}
+                          />
+                        ) : (
+                          <>
+                            <BoardProfile
+                              nickName={reply.nickName}
+                              uuid={reply.uuid}
+                              createdDate={reply.createdDate}
+                            />
+                            <div>
+                              {reply.uuid === profile.uuid && (
+                                <Button
+                                  theme={ThemeColor.first}
+                                  size={ThemeSize.small}
+                                >
+                                  수정
+                                </Button>
+                              )}
+                              <span> </span>
+                              {(reply.uuid === profile.uuid ||
+                                profile.rank >= 5) && (
+                                <Button
+                                  theme={ThemeColor.first}
+                                  size={ThemeSize.small}
+                                  onClick={() => deleteComment(reply.id)}
+                                >
+                                  삭제
+                                </Button>
+                              )}
+                            </div>
+                          </>
                         )}
                       </div>
-
-                      <textarea defaultValue={reply.comment} disabled={true} />
+                      {reply.isDeleted ? (
+                        <textarea
+                          defaultValue={"삭제된 댓글 입니다"}
+                          disabled={!reply.isEdit}
+                          style={{ color: "gray" }}
+                        />
+                      ) : (
+                        <textarea
+                          defaultValue={reply.comment}
+                          disabled={true}
+                        />
+                      )}
                     </div>
                   ))}
                 </div>
@@ -174,7 +230,7 @@ const BoardDetailBlock = styled.div`
       padding: 16px 0;
       & > .title {
         font-weight: 600;
-        font-size: 20px;
+        font-size: 32px;
         color: #787878;
 
         padding: 0 8px;
@@ -189,8 +245,8 @@ const BoardDetailBlock = styled.div`
 
       padding: 16px 4px;
       & > img {
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
       }
       & > .nick {
         font-size: 12px;

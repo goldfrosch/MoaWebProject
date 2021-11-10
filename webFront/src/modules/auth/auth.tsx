@@ -116,10 +116,24 @@ function* profileSaga(action: ReturnType<typeof authGetProfileAction>) {
   }
 }
 
+function* logoutSaga(action: ReturnType<typeof authLogoutAction>) {
+  try {
+    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem("CURRENT_USER");
+
+    yield put(setMessageSuccessAction("성공적으로 로그아웃했습니다"));
+
+    history.push("/");
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function* AuthSaga() {
   yield takeEvery(AUTH_REGISTER, registerSaga);
   yield takeEvery(AUTH_LOGIN, loginSaga);
   yield takeEvery(AUTH_GET_PROFILE, profileSaga);
+  yield takeEvery(AUTH_LOGOUT, logoutSaga);
 }
 
 const initialState: IAuthState = {
@@ -142,9 +156,6 @@ export default function auth(
     case AUTH_LOGIN_SUCCESS:
       return { ...state };
     case AUTH_LOGOUT:
-      delete axios.defaults.headers.common["Authorization"];
-      localStorage.removeItem("CURRENT_USER");
-      history.push("/");
       return initialState;
     case AUTH_GET_PROFILE_SUCCESS:
       return { ...state, profile: { ...action.data } };

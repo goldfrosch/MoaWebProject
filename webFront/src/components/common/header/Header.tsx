@@ -17,6 +17,8 @@ import IconButton from "@mui/material/IconButton";
 
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import { useDispatch } from "react-redux";
+import { authLogoutAction } from "modules/auth/auth";
 
 interface HeaderProps {
   profile: IProfile;
@@ -28,6 +30,13 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
   const [data, setData] = useState<IProfile>({ ...profile });
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const dispatch = useDispatch();
+
+  //로그아웃
+  const logout = () => {
+    dispatch(authLogoutAction());
+  };
 
   //프로필 관련 메뉴
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -148,7 +157,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                     </ListItemIcon>
                     개인 설정
                   </MenuItem>
-                  <MenuItem>
+                  <MenuItem onClick={logout}>
                     <ListItemIcon>
                       <Logout fontSize="small" />
                     </ListItemIcon>

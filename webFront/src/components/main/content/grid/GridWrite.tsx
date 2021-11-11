@@ -21,7 +21,12 @@ import {
 import history from "utils/HistoryUtils";
 import DescUtils from "utils/DescUtils";
 import SwitchItem from "components/common/items/SwitchItem";
-import DragDrop from "components/common/items/DragDrop";
+
+interface IFileData {
+  file: File | null;
+  preview: string;
+  name: string;
+}
 
 interface GridWriteProps {
   data: string;
@@ -38,6 +43,11 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
     title: ""
   });
   const [contents, setContents] = useState("");
+  const [fileData, setFileData] = useState<IFileData>({
+    file: null,
+    preview: "",
+    name: ""
+  });
 
   const Option = {
     buttonList: [
@@ -55,6 +65,13 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
     ]
   };
 
+  const handleChangeComment = () => {
+    setDatas({
+      ...datas,
+      isComment: !datas.isComment
+    });
+  };
+
   const handleSave = () => {
     dispatch(setMessageClearAction());
     if (datas.title === "") {
@@ -65,6 +82,10 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
 
     let formData = new FormData();
 
+    if (!fileData.file) {
+      return alert("썸네일에 사용할 이미지를 첨부해주세요");
+    }
+    formData.append("file", fileData.file);
     formData.append(
       "data",
       new Blob(
@@ -91,13 +112,6 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
       });
   };
 
-  const handleChangeComment = () => {
-    setDatas({
-      ...datas,
-      isComment: !datas.isComment
-    });
-  };
-
   return (
     <GridWriteBlock>
       <div className="main">
@@ -108,7 +122,18 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
               {DescUtils.SetBoardTitle(data)}
             </span>
           </h2>
-          <DragDrop />
+          <div className="files">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e: any) => {
+                setFileData({
+                  ...fileData,
+                  file: e.target.files[0]
+                });
+              }}
+            />
+          </div>
           <div className="option">
             <select
               className="tag"
@@ -196,6 +221,20 @@ const GridWriteBlock = styled.div`
 
         font-size: 20px;
         font-weight: 600;
+      }
+      & > .files {
+        width: 40%;
+
+        border: 2px solid #a9a9a9;
+        border-radius: 4px;
+
+        padding: 4px;
+        & > input {
+          width: 220px;
+        }
+        @media (max-width: 800px) {
+          width: 100%;
+        }
       }
       & > .option {
         display: flex;

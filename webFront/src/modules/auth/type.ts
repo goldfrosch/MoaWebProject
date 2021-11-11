@@ -12,6 +12,7 @@ export interface IUserRegister {
   email: string,
   password: string,
   nickName: string,
+  uuid: string,
   birthday: Date,
   gender: string,
   age: number,

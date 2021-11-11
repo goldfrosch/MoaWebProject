@@ -15,6 +15,8 @@ public class RegisterDAO {
 
     private String nickName;
 
+    private String uuid;
+
     private LocalDateTime birthday;
 
     private Gender gender;

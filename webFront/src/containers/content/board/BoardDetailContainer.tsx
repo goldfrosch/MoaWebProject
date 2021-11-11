@@ -8,6 +8,7 @@ import * as BoardAPI from "api/board";
 import { IBoardDetail } from "modules/board/type";
 import { useSelector } from "react-redux";
 import { IRootState } from "modules";
+import HistoryUtils from "utils/HistoryUtils";
 
 export interface match<P> {
   params: P;
@@ -69,6 +70,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
       })
       .catch(error => {
         console.log(error);
+        HistoryUtils.goBack();
       });
   }, [match.params.id]);
   return (

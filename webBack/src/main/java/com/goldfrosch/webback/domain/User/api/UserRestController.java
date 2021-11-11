@@ -51,6 +51,7 @@ public class UserRestController {
                 .email(user.getEmail())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .nickName(user.getNickName())
+                .uuid(user.getUuid())
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
                 .age(user.getAge())

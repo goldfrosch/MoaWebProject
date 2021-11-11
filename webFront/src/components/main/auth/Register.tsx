@@ -52,6 +52,7 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
     email: "",
     password: "",
     nickName: "",
+    uuid: "",
     birthday: new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
@@ -233,6 +234,20 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
           <input
             value={data.nickName}
             onChange={e => setData({ ...data, nickName: e.target.value })}
+          />
+          <div className="option">
+            <span>UUID</span>
+            <Button
+              theme={ThemeColor.second}
+              size={ThemeSize.middle}
+              onClick={checkNickname}
+            >
+              중복확인
+            </Button>
+          </div>
+          <input
+            value={data.uuid}
+            onChange={e => setData({ ...data, uuid: e.target.value })}
           />
           <div className="option">
             <span>비밀번호</span>

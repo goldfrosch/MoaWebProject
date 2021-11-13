@@ -13,9 +13,8 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
-import { IBoard } from "modules/board/type";
-// import { IBoardDesc } from "modules/board/type";
-// import DescUtils from "utils/DescUtils";
+import { IBoard, IBoardDesc } from "modules/board/type";
+import DescUtils from "utils/DescUtils";
 
 export interface IGridData {
   category: string;
@@ -51,10 +50,10 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     }
   });
 
-  // const [desc, setDesc] = useState<IBoardDesc>({
-  //   title: "",
-  //   context: ""
-  // });
+  const [desc, setDesc] = useState<IBoardDesc>({
+    title: "",
+    context: ""
+  });
 
   const checkLogin = (link: string) => {
     dispatch(setMessageClearAction());
@@ -67,17 +66,18 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     }
   };
 
-  const getGridsData = () => {
+  const getGridsData = (page?: number) => {
     BoardAPI.getBoards({
       category: String(
         new URLSearchParams(location.search).get("category") ?? ""
       ).toUpperCase(),
-      page: 1,
+      page: page || 1,
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     })
       .then((res: AxiosResponse) => {
         setBoard(res.data);
+        console.log(res.data);
       })
       .catch(error => {
         console.log(error);
@@ -93,21 +93,22 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
-    // setDesc({
-    //   title: DescUtils.SetBoardTitle(
-    //     String(new URLSearchParams(location.search).get("category") ?? "")
-    //   ),
-    //   context: DescUtils.SetBoardContext(
-    //     String(new URLSearchParams(location.search).get("category") ?? "")
-    //   )
-    // });
-    getGridsData();
+    setDesc({
+      title: DescUtils.SetBoardTitle(
+        String(new URLSearchParams(location.search).get("category") ?? "")
+      ),
+      context: DescUtils.SetBoardContext(
+        String(new URLSearchParams(location.search).get("category") ?? "")
+      )
+    });
+    getGridsData(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
   return (
     <GridList
       board={board}
       data={data}
+      desc={desc}
       checkLogin={checkLogin}
       getGridsData={getGridsData}
     />

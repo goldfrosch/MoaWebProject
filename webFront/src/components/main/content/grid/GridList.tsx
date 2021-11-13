@@ -13,26 +13,26 @@ import Select from "@mui/material/Select";
 import Skeleton from "@mui/material/Skeleton";
 
 import { IGridData } from "containers/content/grid/GridListContainer";
-import { IBoard } from "modules/board/type";
+import { IBoard, IBoardDesc } from "modules/board/type";
+import { setTimeout } from "timers";
+
+import history from "utils/HistoryUtils";
+import BoardProfile from "components/common/items/BoardProfile";
 
 interface GridListProps {
   board: IBoard;
   data: IGridData;
+  desc: IBoardDesc;
   checkLogin: (link: string) => void;
-  getGridsData: () => void;
+  getGridsData: (page?: number) => void;
 }
 
-interface ILoadingProps {
-  page: number;
-  isLoading: boolean;
-  isEnd: boolean;
-}
-
-const fakeFetch = () => new Promise(res => setTimeout(res, 5000));
+const fakeFetch = () => new Promise(res => setTimeout(res, 3000));
 
 const GridList: React.FC<GridListProps> = ({
   board,
   data,
+  desc,
   checkLogin,
   getGridsData
 }) => {
@@ -40,12 +40,6 @@ const GridList: React.FC<GridListProps> = ({
   const [searchData, setSearchData] = useState<IGridData>({
     ...data,
     type: "NICKNAME"
-  });
-
-  const [option, setOption] = useState<ILoadingProps>({
-    page: 0,
-    isLoading: false,
-    isEnd: false
   });
 
   /* 타겟 엘리먼트 */
@@ -59,13 +53,7 @@ const GridList: React.FC<GridListProps> = ({
   };
 
   const fetchItems = async () => {
-    setOption(prev => ({ ...prev, isLoading: true }));
     await fakeFetch();
-    setOption(prev => ({
-      ...prev,
-      page: prev.page + 12,
-      isLoading: false
-    }));
   };
 
   /* 인터섹션 callback */
@@ -85,10 +73,9 @@ const GridList: React.FC<GridListProps> = ({
   //검색 후 API 로딩
   const handleSubmit = (e: React.ChangeEvent<unknown>) => {
     e.preventDefault();
-    // history.push(
-    //   `/board?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
-    // );
-    getGridsData();
+    history.push(
+      `/grid?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
+    );
   };
 
   const handleWriteGrid = () => {
@@ -103,6 +90,7 @@ const GridList: React.FC<GridListProps> = ({
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersect, options);
     observer.observe(target.current);
+    console.log(board);
     return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -111,8 +99,8 @@ const GridList: React.FC<GridListProps> = ({
     <GridListBlock>
       <div className="main">
         <div className="header">
-          {/* <h2 className="title">{desc.title}</h2>
-          <span>{desc.context}</span> */}
+          <h2 className="title">{desc.title}</h2>
+          <span>{desc.context}</span>
         </div>
         <div className="option">
           <div className="search">
@@ -157,16 +145,33 @@ const GridList: React.FC<GridListProps> = ({
           </div>
         </div>
         <div className="content">
-          {[...Array(option.page)].map((_, key) => (
+          {board.list.results.map((data, key) => (
             <div className="item" key={key}>
-              <img src={`http://13.125.232.145/images/`} alt="" />
-              <div style={{ width: "100%", height: 190 }} />
-              <span>123</span>
+              <img
+                src={`http://13.125.232.145/images/${data.thumbnail}`}
+                alt=""
+              />
+              <span
+                style={{
+                  padding: "6px",
+                  color: "#424242",
+                  fontSize: "16px",
+                  fontWeight: 500
+                }}
+              >
+                {data.prefix !== "" && [data.prefix]}
+                {data.title}
+              </span>
+              <BoardProfile
+                nickName={data.nickName}
+                uuid={data.uuid}
+                createdDate={data.createdDate}
+              />
             </div>
           ))}
 
-          {option.isLoading &&
-            [...Array(12)].map((_, key) => (
+          {/* {option.isLoading &&
+            [...Array(10)].map((_, key) => (
               <div className="item" key={key}>
                 <Skeleton
                   variant="rectangular"
@@ -177,7 +182,7 @@ const GridList: React.FC<GridListProps> = ({
                 <Skeleton width="100%" />
                 <Skeleton width="60%" />
               </div>
-            ))}
+            ))} */}
           <div ref={target} />
         </div>
       </div>
@@ -240,12 +245,13 @@ const GridListBlock = styled.div`
     }
     & > .content {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+      grid-template-columns: repeat(auto-fill, minmax(240px, auto));
       grid-gap: 16px;
       @media (max-width: 800px) {
-        grid-template-columns: repeat(auto-fill, minmax(240px, auto));
+        grid-template-columns: repeat(auto-fill, minmax(180px, auto));
       }
       .item {
+        width: 100%;
         height: auto;
         border: 1px solid #d7d7d7;
         border-radius: 8px;
@@ -255,6 +261,12 @@ const GridListBlock = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
+
+        & > img {
+          width: 90%;
+          height: auto;
+          object-fit: cover;
+        }
       }
     }
   }

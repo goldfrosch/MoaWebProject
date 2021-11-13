@@ -103,7 +103,6 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
     })
       .then((res: AxiosResponse) => {
         setBoard(res.data);
-        console.log(res.data);
       })
       .catch(error => {
         console.log(error);

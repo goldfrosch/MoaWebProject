@@ -12,15 +12,26 @@ interface BoardDetailProps {
   data: IBoardDetail;
   profile: IProfile;
   deleteComment: (id: number) => void;
+  postComment: (content: string, parentNum: number) => void;
 }
 
 const BoardDetail: React.FC<BoardDetailProps> = ({
   data,
   profile,
-  deleteComment
+  deleteComment,
+  postComment
 }) => {
   const [datas, setDatas] = useState<IBoardDetail>({ ...data });
   const [comment, setComment] = useState<string>("");
+
+  const seeReplyList = (id: number) => {
+    let dataList: IBoardDetail = datas;
+
+    dataList.comments.list[id].isShowReply =
+      !dataList.comments.list[id].isShowReply;
+
+    setDatas(dataList);
+  };
 
   useEffect(() => {
     setDatas({ ...data });
@@ -69,7 +80,11 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                 placeholder="댓글을 작성해주세요"
               />
               <div className="commentOption">
-                <Button theme={ThemeColor.first} size={ThemeSize.large}>
+                <Button
+                  theme={ThemeColor.first}
+                  size={ThemeSize.large}
+                  onClick={() => postComment(comment, 0)}
+                >
                   작성
                 </Button>
               </div>
@@ -131,67 +146,70 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                   )}
                   {item.replyList.length > 0 && (
                     <div className="replyList">
-                      <span>답글보기</span>
-                      {item.replyList.map((reply, index) => (
-                        <div className="reply" key={index}>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "flex-end",
-                              justifyContent: "space-between"
-                            }}
-                          >
+                      <span onClick={() => seeReplyList(item.comment.id)}>
+                        답글보기
+                      </span>
+                      {item.isShowReply === true &&
+                        item.replyList.map((reply, index) => (
+                          <div className="reply" key={index}>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "flex-end",
+                                justifyContent: "space-between"
+                              }}
+                            >
+                              {reply.isDeleted ? (
+                                <BoardProfile
+                                  nickName={"삭제됨"}
+                                  uuid={"7b216089b1f644a4ac76bf711009df0e"}
+                                  createdDate={item.comment.createdDate}
+                                />
+                              ) : (
+                                <>
+                                  <BoardProfile
+                                    nickName={reply.nickName}
+                                    uuid={reply.uuid}
+                                    createdDate={reply.createdDate}
+                                  />
+                                  <div>
+                                    {reply.uuid === profile.uuid && (
+                                      <Button
+                                        theme={ThemeColor.first}
+                                        size={ThemeSize.small}
+                                      >
+                                        수정
+                                      </Button>
+                                    )}
+                                    <span> </span>
+                                    {(reply.uuid === profile.uuid ||
+                                      profile.rank >= 5) && (
+                                      <Button
+                                        theme={ThemeColor.first}
+                                        size={ThemeSize.small}
+                                        onClick={() => deleteComment(reply.id)}
+                                      >
+                                        삭제
+                                      </Button>
+                                    )}
+                                  </div>
+                                </>
+                              )}
+                            </div>
                             {reply.isDeleted ? (
-                              <BoardProfile
-                                nickName={"삭제됨"}
-                                uuid={"7b216089b1f644a4ac76bf711009df0e"}
-                                createdDate={item.comment.createdDate}
+                              <textarea
+                                defaultValue={"삭제된 댓글 입니다"}
+                                disabled={!reply.isEdit}
+                                style={{ color: "gray" }}
                               />
                             ) : (
-                              <>
-                                <BoardProfile
-                                  nickName={reply.nickName}
-                                  uuid={reply.uuid}
-                                  createdDate={reply.createdDate}
-                                />
-                                <div>
-                                  {reply.uuid === profile.uuid && (
-                                    <Button
-                                      theme={ThemeColor.first}
-                                      size={ThemeSize.small}
-                                    >
-                                      수정
-                                    </Button>
-                                  )}
-                                  <span> </span>
-                                  {(reply.uuid === profile.uuid ||
-                                    profile.rank >= 5) && (
-                                    <Button
-                                      theme={ThemeColor.first}
-                                      size={ThemeSize.small}
-                                      onClick={() => deleteComment(reply.id)}
-                                    >
-                                      삭제
-                                    </Button>
-                                  )}
-                                </div>
-                              </>
+                              <textarea
+                                defaultValue={reply.comment}
+                                disabled={true}
+                              />
                             )}
                           </div>
-                          {reply.isDeleted ? (
-                            <textarea
-                              defaultValue={"삭제된 댓글 입니다"}
-                              disabled={!reply.isEdit}
-                              style={{ color: "gray" }}
-                            />
-                          ) : (
-                            <textarea
-                              defaultValue={reply.comment}
-                              disabled={true}
-                            />
-                          )}
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   )}
                 </div>

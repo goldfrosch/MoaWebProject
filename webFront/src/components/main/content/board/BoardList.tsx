@@ -58,7 +58,7 @@ const BoardList: React.FC<BoardListProps> = ({
 
   //페이지네이션 관련
   const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
-    // e.preventDefault();
+    e.preventDefault();
     history.push(
       `/board?page=${value}&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
     );

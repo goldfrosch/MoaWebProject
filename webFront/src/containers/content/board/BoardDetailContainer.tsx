@@ -5,7 +5,7 @@ import BoardDetail from "components/main/content/board/BoardDetail";
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
 
-import { IBoardDetail } from "modules/board/type";
+import { IBoardDetail, IComment } from "modules/board/type";
 import { useSelector } from "react-redux";
 import { IRootState } from "modules";
 import HistoryUtils from "utils/HistoryUtils";
@@ -51,6 +51,24 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     }
   });
 
+  const postComment = (comment: string, parentNum: number) => {
+    if (window.confirm("댓글을 등록하시겠습니까?")) {
+      let data: IComment = {
+        boardNum: match.params.id,
+        comment: comment,
+        parentNum: parentNum
+      };
+      BoardAPI.postComment(data)
+        .then(() => {
+          alert("성공적으로 등록되었습니다");
+          window.location.reload();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   const deleteComment = (id: number) => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       BoardAPI.deleteComment(id)
@@ -67,6 +85,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     BoardAPI.getBoard(match.params.id)
       .then((res: AxiosResponse) => {
         setData(res.data);
+        console.log(res.data);
       })
       .catch(error => {
         console.log(error);
@@ -74,7 +93,12 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
       });
   }, [match.params.id]);
   return (
-    <BoardDetail data={data} profile={profile} deleteComment={deleteComment} />
+    <BoardDetail
+      data={data}
+      profile={profile}
+      deleteComment={deleteComment}
+      postComment={postComment}
+    />
   );
 };
 

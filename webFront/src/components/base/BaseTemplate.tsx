@@ -35,9 +35,6 @@ const BaseTemplateBlock = styled.div`
       @media (max-width: 1080px) {
         width: 90%;
       }
-      @media (max-width: 800px) {
-        width: 100%;
-      }
     }
   }
 `;

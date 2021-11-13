@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
 import test2 from "assets/test/test2.png";
+import Slick from "components/common/items/Slick";
 
 import BoardItem from "components/common/items/BoardItem";
 import Button from "components/common/items/Button";
@@ -12,20 +13,26 @@ import { ThemeColor, ThemeSize } from "styles/Pallete";
 
 import HistoryUtils from "utils/HistoryUtils";
 
+// const settings = {
+//   dots: true,
+//   infinite: true,
+//   speed: 500,
+//   slidesToShow: 1,
+//   slidesToScroll: 1
+// };
+
 interface HomeProps {}
-
 const Home: React.FC<HomeProps> = () => {
-  const CarouselRef = useRef<any>(null);
-
   return (
     <HomeBlock>
-      <div className="carousel">
-        <div className="slider" ref={CarouselRef}>
-          <div className="slide">
-            <img src={test2} alt="" />
-          </div>
-        </div>
-      </div>
+      <Slick>
+        <SliderItem>
+          <img src={test2} alt="" />
+        </SliderItem>
+        <SliderItem>
+          <img src={test2} alt="" />
+        </SliderItem>
+      </Slick>
       <div className="items">
         <BoardItem>
           <div className="borderHead">
@@ -127,26 +134,6 @@ const Home: React.FC<HomeProps> = () => {
 };
 
 const HomeBlock = styled.div`
-  & > .carousel {
-    width: 100%;
-    height: 40%;
-
-    overflow: hidden;
-    & > .slider {
-      margin: 0;
-
-      display: flex;
-      align-items: center;
-      & > .slide {
-        min-width: 100%;
-        height: 100%;
-        & > img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-  }
   & > .items {
     width: 100%;
 
@@ -162,4 +149,11 @@ const HomeBlock = styled.div`
   }
 `;
 
+const SliderItem = styled.div`
+  width: 100%;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+`;
 export default Home;

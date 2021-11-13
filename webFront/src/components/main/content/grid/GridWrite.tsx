@@ -135,6 +135,9 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
             />
           </div>
           <div className="option">
+            <select className="category" disabled>
+              <option>{DescUtils.SetBoardTitle(data)}</option>
+            </select>
             <select
               className="tag"
               onChange={(e: any) =>
@@ -148,6 +151,8 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="option">
             <input
               placeholder="제목을 입력해주세요"
               value={datas.title}
@@ -229,6 +234,7 @@ const GridWriteBlock = styled.div`
         border-radius: 4px;
 
         padding: 4px;
+        margin: 8px 0;
         & > input {
           width: 220px;
         }

@@ -4,13 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.UUID;
 
 @Slf4j
 public class FileUpload {
     public static String uploadImage(MultipartFile file, String location){
-        final String path =  "/file";
+        final String path =  "/var/www/file/";
 
-        File newFile = new File(path+location);
+        UUID random = UUID.randomUUID();
+        File newFile = new File(path+location,random + "_" + file.getOriginalFilename());
 
         //지정된 곳에 디렉터리가 없을경우에
         if(!newFile.isDirectory()){
@@ -19,7 +21,7 @@ public class FileUpload {
         }
         try{
             file.transferTo(newFile);
-            return path + location;
+            return location + "/" + random + "_" + file.getOriginalFilename();
         }catch(Exception e){
             log.info(String.valueOf(e));
             return "";

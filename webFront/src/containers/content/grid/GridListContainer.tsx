@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
 
-// import { AxiosResponse } from "axios";
-// import * as BoardAPI from "api/board";
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
 
 import GridList from "components/main/content/grid/GridList";
 
@@ -13,6 +13,7 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
+import { IBoard } from "modules/board/type";
 // import { IBoardDesc } from "modules/board/type";
 // import DescUtils from "utils/DescUtils";
 
@@ -38,6 +39,17 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });
+  const [board, setBoard] = useState<IBoard>({
+    newNotice: [],
+    list: {
+      empty: true,
+      limit: 10,
+      offset: 0,
+      total: 0,
+
+      results: []
+    }
+  });
 
   // const [desc, setDesc] = useState<IBoardDesc>({
   //   title: "",
@@ -56,20 +68,20 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   };
 
   const getGridsData = () => {
-    // BoardAPI.getBoards({
-    //   category: String(
-    //     new URLSearchParams(location.search).get("category") ?? ""
-    //   ).toUpperCase(),
-    //   page: 1,
-    //   type: String(new URLSearchParams(location.search).get("type") ?? ""),
-    //   query: String(new URLSearchParams(location.search).get("query") ?? "")
-    // })
-    //   .then((res: AxiosResponse) => {
-    //     setBoard(res.data);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    BoardAPI.getBoards({
+      category: String(
+        new URLSearchParams(location.search).get("category") ?? ""
+      ).toUpperCase(),
+      page: 1,
+      type: String(new URLSearchParams(location.search).get("type") ?? ""),
+      query: String(new URLSearchParams(location.search).get("query") ?? "")
+    })
+      .then((res: AxiosResponse) => {
+        setBoard(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -93,7 +105,12 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
   return (
-    <GridList data={data} checkLogin={checkLogin} getGridsData={getGridsData} />
+    <GridList
+      board={board}
+      data={data}
+      checkLogin={checkLogin}
+      getGridsData={getGridsData}
+    />
   );
 };
 

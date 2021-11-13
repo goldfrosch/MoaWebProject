@@ -35,8 +35,6 @@ public class BoardRestController {
 
     private final BoardQueryRepository boardQueryRepository;
 
-    private final BoardCommentQueryRepository boardCommentQueryRepository;
-
     //보드형 리스트 관련 api
     @GetMapping("/boards")
     public PagingResponse getBoardPaging (

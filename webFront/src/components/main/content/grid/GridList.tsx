@@ -13,8 +13,10 @@ import Select from "@mui/material/Select";
 import Skeleton from "@mui/material/Skeleton";
 
 import { IGridData } from "containers/content/grid/GridListContainer";
+import { IBoard } from "modules/board/type";
 
 interface GridListProps {
+  board: IBoard;
   data: IGridData;
   checkLogin: (link: string) => void;
   getGridsData: () => void;
@@ -29,6 +31,7 @@ interface ILoadingProps {
 const fakeFetch = () => new Promise(res => setTimeout(res, 5000));
 
 const GridList: React.FC<GridListProps> = ({
+  board,
   data,
   checkLogin,
   getGridsData
@@ -156,6 +159,7 @@ const GridList: React.FC<GridListProps> = ({
         <div className="content">
           {[...Array(option.page)].map((_, key) => (
             <div className="item" key={key}>
+              <img src={`http://13.125.232.145/images/`} alt="" />
               <div style={{ width: "100%", height: 190 }} />
               <span>123</span>
             </div>

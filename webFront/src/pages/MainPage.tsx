@@ -1,8 +1,6 @@
 import BaseTemplate from "components/base/BaseTemplate";
 import { Route, Switch } from "react-router";
 
-import NotFound from "components/common/template/NotFound";
-
 import HomeContainer from "containers/home/HomeContainer";
 import LoginContainer from "containers/auth/LoginContainer";
 import RegisterContainer from "containers/auth/RegisterContainer";
@@ -14,6 +12,7 @@ import BoardDetailContainer from "containers/content/board/BoardDetailContainer"
 import GridContainer from "containers/content/grid/GridListContainer";
 import GridWriteContainer from "containers/content/grid/GridWriteContainer";
 import NotForbidden from "components/common/template/NotForbidden";
+import NotFound from "components/common/template/NotFound";
 
 const MainPage = () => {
   return (
@@ -31,7 +30,7 @@ const MainPage = () => {
         <Route exact path="/grid/write" component={GridWriteContainer} />
         {/* Error Page */}
         <Route exact path="/forbidden" component={NotForbidden} />
-        <Route component={NotFound} />
+        <Route path={"*"} component={NotFound} />
       </Switch>
     </BaseTemplate>
   );

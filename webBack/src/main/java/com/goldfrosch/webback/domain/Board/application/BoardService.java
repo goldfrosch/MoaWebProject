@@ -23,7 +23,6 @@ public class BoardService {
     //Transactional 만 쓰면 롤백이 안되고 (rollbackFor = Exception.class)를 붙이면 롤백 예외처리가 실행된다.
     @Transactional
     public void postBoard(BoardDAO board, MultipartFile file, User user) {
-        FileUpload.uploadImage(file, "/" + user.getUuid() + "/image");
         Board newBoard = Board.builder()
                 .user(user)
                 .category(board.getCategory())
@@ -32,7 +31,7 @@ public class BoardService {
                 .modifiedDate(LocalDateTime.now())
                 .isComment(board.getIsComment())
                 .prefix(board.getPrefix())
-                .thumbnail("/file/" + user.getUuid() + "/image/" + file.getOriginalFilename())
+                .thumbnail(FileUpload.uploadImage(file, user.getUuid()))
                 .title(board.getTitle())
                 .build();
         boardRepository.save(newBoard);

@@ -75,14 +75,20 @@ public class UserRestController {
     }
 
     //중복 유저 이메일 찾기
-    @GetMapping("/findEmail")
+    @GetMapping("/find/email")
     public String findEmail(@RequestParam String email) {
         return userQueryRepository.findOverlapEmail(email);
     }
 
     //중복 유저 닉네임 찾기
-    @GetMapping("/findNickname")
+    @GetMapping("/find/nickname")
     public String findNickname(@RequestParam String nickName) {
         return userQueryRepository.findOverlapNickName(nickName);
+    }
+
+    @GetMapping("/find/uuid")
+    public String findUuid(@RequestParam String uuid) {
+        log.info(userQueryRepository.findOverlapUUID(uuid));
+        return userQueryRepository.findOverlapUUID(uuid);
     }
 }

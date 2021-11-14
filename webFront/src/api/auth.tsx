@@ -14,9 +14,13 @@ export const userProfile = () => {
 };
 
 export const findEmail = (data: string) => {
-  return axios.get(`findEmail?email=${data}`);
+  return axios.get(`/find/email?email=${data}`);
 };
 
 export const findNickname = (data: string) => {
-  return axios.get(`findNickname?nickName=${data}`);
+  return axios.get(`/find/nickname?nickName=${data}`);
+};
+
+export const findUUID = (data: string) => {
+  return axios.get(`find/uuid?uuid=${data}`);
 };

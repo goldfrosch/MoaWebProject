@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router";
 import HomeContainer from "containers/home/HomeContainer";
 import LoginContainer from "containers/auth/LoginContainer";
 import RegisterContainer from "containers/auth/RegisterContainer";
+import UserInfoContainer from "containers/auth/UserInfoContainer";
 
 import BoardContainer from "containers/content/board/BoardListContainer";
 import BoardWriteContainer from "containers/content/board/BoardWriteContainer";
@@ -21,6 +22,7 @@ const MainPage = () => {
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/register" component={RegisterContainer} />
+        <Route exact path="/profile" component={UserInfoContainer} />
         {/* 보드 형식 게시판 */}
         <Route exact path="/board" component={BoardContainer} />
         <Route exact path="/board/write" component={BoardWriteContainer} />

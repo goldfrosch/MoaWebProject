@@ -8,14 +8,14 @@ import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { IUserLogin } from "modules/auth/type";
 
-import Input from "@mui/material/Input";
-
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import Input from "@mui/material/Input";
 
 interface LoginProps {
   LoginAction: (data: IUserLogin) => void;
@@ -24,7 +24,7 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ LoginAction }) => {
   const [data, setData] = useState<IUserLogin>({
     email: "",
-    password: "",
+    password: ""
   });
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const loginKakao = () => {
@@ -51,7 +51,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
             onChange={(e: any) =>
               setData({
                 ...data,
-                email: e.target.value,
+                email: e.target.value
               })
             }
           />
@@ -68,7 +68,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
             onChange={(e: any) =>
               setData({
                 ...data,
-                password: e.target.value,
+                password: e.target.value
               })
             }
             endAdornment={
@@ -86,7 +86,13 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
         </FormControl>
         <span style={{ color: "#444444", fontWeight: 300 }}>
           비밀번호를 잊어먹으셨습니까?
-          <Link to="/register" style={{ color: "#d8538a" }}>
+          <Link
+            to="/login"
+            style={{ color: "#d8538a" }}
+            onClick={() => {
+              alert("현재 정책상으로 준비중입니다");
+            }}
+          >
             {" "}
             찾기
           </Link>

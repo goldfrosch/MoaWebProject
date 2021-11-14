@@ -19,6 +19,9 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { authLogoutAction } from "modules/auth/auth";
+import history from "utils/HistoryUtils";
+
+import "font/font.css";
 
 interface HeaderProps {
   profile: IProfile;
@@ -96,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
           {data.email !== "" ? (
             <>
               <span className="profile">
-                <Link to={"/login"} onClick={() => handleMenu(false)}>
+                <Link to={"/profile"} onClick={() => handleMenu(false)}>
                   {data.nickName ? "개인 설정" : "로그인이 필요합니다"}
                 </Link>
               </span>
@@ -151,7 +154,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                     <span>{data.nickName}</span>
                   </MenuItem>
                   <Divider />
-                  <MenuItem>
+                  <MenuItem onClick={() => history.push("/profile")}>
                     <ListItemIcon>
                       <Settings fontSize="small" />
                     </ListItemIcon>
@@ -191,8 +194,9 @@ type HeaderBlockProps = {
 };
 const HeaderBlock = styled.header<HeaderBlockProps>`
   height: 100px;
-  background-color: ${Palette.header};
-  color: white;
+  background-color: white;
+  color: ${Palette.header};
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   display: flex;
   align-items: center;
@@ -230,7 +234,9 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       position: relative;
       margin: 4px;
 
-      font-size: 16px;
+      font-size: 20px;
+      font-family: "A18";
+
       @media (min-width: 1080px) {
         width: 100px;
         margin: 16px;
@@ -246,6 +252,10 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
         & > li {
           padding: 8px 0;
           font-size: 12px;
+
+          font-family: "Jua", sans-serif;
+          font-weight: 600;
+
           @media (min-width: 1080px) {
             font-size: 16px;
           }
@@ -290,7 +300,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     @media (max-width: 800px) {
       width: 100%;
       height: calc(100vh - 80px);
-      background-color: ${Palette.header};
+      background-color: white;
 
       position: absolute;
       top: 80px;
@@ -302,7 +312,8 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
 
       & > li {
         width: 100%;
-        background-color: ${Palette.header};
+        background-color: white;
+        color: ${Palette.header};
         border-bottom: 1px solid #e2e2e2;
 
         margin: 0;
@@ -342,8 +353,10 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     & > .navLink:hover {
       width: 100%;
       //수동으로... 메뉴 갯수에따라 늘어나야함... ;^;
-      height: 90vh;
-      background-color: ${Palette.header};
+      height: 60vh;
+      background-color: white;
+      color: ${Palette.header};
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
       position: absolute;
       & > li {
@@ -359,7 +372,6 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       width: 100%;
       //수동으로... 메뉴 갯수에따라 늘어나야함... ;^;
       height: 70vh;
-      background-color: ${Palette.header};
 
       position: absolute;
       & > li {
@@ -377,7 +389,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     & > div {
       width: 25px;
       height: 3px;
-      background-color: white;
+      background-color: ${Palette.header};
 
       margin: 5px;
       transition: all 0.3s ease;

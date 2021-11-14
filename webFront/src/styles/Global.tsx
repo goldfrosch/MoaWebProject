@@ -23,6 +23,10 @@ const GlobalStyle = createGlobalStyle`
                 background-color: #adb5bd;
             }
         }
+        @font-face {
+            font-family: "JEJUHALLASAN";
+            src: url("../font/JEJUHALLASAN.woff");
+        }
     }
     button {
         border: 0;

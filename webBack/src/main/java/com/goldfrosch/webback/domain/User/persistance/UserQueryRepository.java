@@ -29,4 +29,10 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                 .where(user.nickName.like(nickName))
                 .fetchOne();
     }
+
+    public String findOverlapUUID(String uuid) {
+        return jpaQueryFactory.select(user.uuid).from(user)
+                .where(user.uuid.like(uuid))
+                .fetchOne();
+    }
 }

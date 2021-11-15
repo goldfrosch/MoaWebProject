@@ -16,6 +16,7 @@ import { IGridData } from "containers/content/grid/GridListContainer";
 import { IBoard, IBoardDesc } from "modules/board/type";
 import { setTimeout } from "timers";
 
+import Thumbnail from "assets/image/thumbnail.jpg";
 import history from "utils/HistoryUtils";
 import BoardProfile from "components/common/items/BoardProfile";
 
@@ -90,7 +91,6 @@ const GridList: React.FC<GridListProps> = ({
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersect, options);
     observer.observe(target.current);
-    console.log(board);
     return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -148,7 +148,12 @@ const GridList: React.FC<GridListProps> = ({
           {board.list.results.map((data, key) => (
             <div className="item" key={key}>
               <img
-                src={`http://13.125.232.145/images/${data.thumbnail}`}
+                src={
+                  data.thumbnail !== ""
+                    ? `http://15.164.18.220/images/${data.thumbnail}`
+                    : Thumbnail
+                }
+                style={{ width: "100%" }}
                 alt=""
               />
               <span
@@ -156,7 +161,8 @@ const GridList: React.FC<GridListProps> = ({
                   padding: "6px",
                   color: "#424242",
                   fontSize: "16px",
-                  fontWeight: 500
+                  fontWeight: 500,
+                  fontFamily: "A17"
                 }}
               >
                 {data.prefix !== "" && [data.prefix]}
@@ -204,18 +210,22 @@ const GridListBlock = styled.div`
     display: flex;
     flex-direction: column;
     & > .header {
-      height: 18vh;
       color: #797979;
+      border-bottom: 1px solid #e9e9e9;
+
+      padding: 24px 0;
 
       @media (max-width: 800px) {
         padding: 16px;
       }
 
       & > .title {
-        color: ${Palette.primary};
+        color: ${Palette.header};
 
         font-size: 24px;
         font-weight: 700;
+
+        padding-bottom: 8px;
       }
     }
     & > .option {
@@ -253,6 +263,8 @@ const GridListBlock = styled.div`
       .item {
         width: 100%;
         height: auto;
+        background-color: white;
+
         border: 1px solid #d7d7d7;
         border-radius: 8px;
 

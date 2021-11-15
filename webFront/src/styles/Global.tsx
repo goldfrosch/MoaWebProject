@@ -1,9 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 import { Palette } from "./Pallete";
 
+import "font/font.css";
+
 const GlobalStyle = createGlobalStyle`
     body {
-        font-family: "Noto Sans KR", sans-serif;
         box-sizing: border-box;
 
         min-width: 280px;
@@ -23,17 +24,13 @@ const GlobalStyle = createGlobalStyle`
                 background-color: #adb5bd;
             }
         }
-        @font-face {
-            font-family: "JEJUHALLASAN";
-            src: url("../font/JEJUHALLASAN.woff");
-        }
     }
     button {
         border: 0;
         outline: 0;
     }
     * {
-        font-family: "Noto Sans KR", sans-serif;
+        font-family: "A13";
         box-sizing: inherit;
         margin: 0;
         padding: 0; 

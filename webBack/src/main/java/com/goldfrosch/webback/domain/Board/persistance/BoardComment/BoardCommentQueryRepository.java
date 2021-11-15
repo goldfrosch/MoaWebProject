@@ -26,7 +26,7 @@ public class BoardCommentQueryRepository extends QuerydslRepositorySupport {
     public BoardComment getCommentByBoardId(Long id) {
         return jpaQueryFactory.
             selectFrom(boardComment).
-            where(boardComment.boardNum.eq(id)).
+            where(boardComment.id.eq(id)).
             fetchOne();
     }
 

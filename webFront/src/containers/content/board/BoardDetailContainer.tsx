@@ -8,7 +8,7 @@ import * as BoardAPI from "api/board";
 import { IBoardDetail, IComment } from "modules/board/type";
 import { useSelector } from "react-redux";
 import { IRootState } from "modules";
-import HistoryUtils from "utils/HistoryUtils";
+import history from "utils/HistoryUtils";
 
 export interface match<P> {
   params: P;
@@ -52,12 +52,14 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   });
 
   const postComment = (comment: string, parentNum: number) => {
+    if (comment === "") return alert("댓글이 비어있습니다");
     if (window.confirm("댓글을 등록하시겠습니까?")) {
       let data: IComment = {
         boardNum: match.params.id,
         comment: comment,
         parentNum: parentNum
       };
+      console.log(parentNum);
       BoardAPI.postComment(data)
         .then(() => {
           alert("성공적으로 등록되었습니다");
@@ -73,7 +75,14 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       BoardAPI.deleteComment(id)
         .then(() => {
-          window.location.reload();
+          BoardAPI.getBoard(match.params.id)
+            .then((res: AxiosResponse) => {
+              setData(res.data);
+            })
+            .catch(error => {
+              console.log(error);
+              history.goBack();
+            });
         })
         .catch(error => {
           console.log(error);
@@ -85,11 +94,10 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     BoardAPI.getBoard(match.params.id)
       .then((res: AxiosResponse) => {
         setData(res.data);
-        console.log(res.data);
       })
       .catch(error => {
         console.log(error);
-        HistoryUtils.goBack();
+        history.goBack();
       });
   }, [match.params.id]);
   return (

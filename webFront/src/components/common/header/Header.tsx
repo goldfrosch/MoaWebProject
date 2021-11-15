@@ -253,7 +253,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
           padding: 8px 0;
           font-size: 12px;
 
-          font-family: "Jua", sans-serif;
+          font-family: "A16";
           font-weight: 600;
 
           @media (min-width: 1080px) {
@@ -353,7 +353,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     & > .navLink:hover {
       width: 100%;
       //수동으로... 메뉴 갯수에따라 늘어나야함... ;^;
-      height: 60vh;
+      height: 70vh;
       background-color: white;
       color: ${Palette.header};
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -371,7 +371,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
     & > .navLink:hover {
       width: 100%;
       //수동으로... 메뉴 갯수에따라 늘어나야함... ;^;
-      height: 70vh;
+      height: 80vh;
 
       position: absolute;
       & > li {

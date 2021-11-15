@@ -13,14 +13,6 @@ import { ThemeColor, ThemeSize } from "styles/Pallete";
 
 import HistoryUtils from "utils/HistoryUtils";
 
-// const settings = {
-//   dots: true,
-//   infinite: true,
-//   speed: 500,
-//   slidesToShow: 1,
-//   slidesToScroll: 1
-// };
-
 interface HomeProps {}
 const Home: React.FC<HomeProps> = () => {
   return (
@@ -152,7 +144,7 @@ const HomeBlock = styled.div`
 const SliderItem = styled.div`
   width: 100%;
   img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
   }
 `;

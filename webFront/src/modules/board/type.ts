@@ -90,6 +90,7 @@ export interface IBoardCommentsItem {
   comment: IBoardComment;
   isShowReply?: boolean;
   replyList: IBoardComment[];
+  replyComment?: string;
 }
 
 export interface IBoardCommentsList {

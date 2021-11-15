@@ -30,7 +30,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
     dataList.comments.list[id].isShowReply =
       !dataList.comments.list[id].isShowReply;
 
-    setDatas(dataList);
+    setDatas({ ...dataList });
   };
 
   useEffect(() => {
@@ -144,13 +144,11 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                       disabled={true}
                     />
                   )}
-                  {item.replyList.length > 0 && (
-                    <div className="replyList">
-                      <span onClick={() => seeReplyList(item.comment.id)}>
-                        답글보기
-                      </span>
-                      {item.isShowReply === true &&
-                        item.replyList.map((reply, index) => (
+                  <div className="replyList">
+                    <span onClick={() => seeReplyList(key)}>답글보기</span>
+                    {item.isShowReply === true && (
+                      <>
+                        {item.replyList.map((reply, index) => (
                           <div className="reply" key={index}>
                             <div
                               style={{
@@ -210,8 +208,60 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                             )}
                           </div>
                         ))}
-                    </div>
-                  )}
+                        <div
+                          style={{
+                            marginTop: "16px",
+                            marginBottom: "4px",
+                            paddingLeft: "24px"
+                          }}
+                        >
+                          <textarea
+                            style={{ margin: "8px 0" }}
+                            value={datas.comments.list[key].replyComment || ""}
+                            onChange={(e: any) => {
+                              let replyItem = datas.comments.list;
+                              replyItem[key].replyComment = e.target.value;
+                              setDatas({
+                                ...datas,
+                                comments: {
+                                  ...datas.comments,
+                                  list: [...replyItem]
+                                }
+                              });
+                            }}
+                          />
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "flex-end"
+                            }}
+                          >
+                            <span style={{ paddingRight: "8px" }}>
+                              새 답글 달기:
+                            </span>
+                            <Button
+                              theme={ThemeColor.first}
+                              size={ThemeSize.small}
+                              onClick={() =>
+                                postComment(
+                                  datas.comments.list[key].replyComment !==
+                                    undefined
+                                    ? String(
+                                        datas.comments.list[key].replyComment
+                                      )
+                                    : "",
+                                  item.comment.id
+                                )
+                              }
+                            >
+                              등록
+                            </Button>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -250,6 +300,21 @@ const BoardDetailBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  textarea {
+    width: 100%;
+
+    border: 2px solid #e9e9e9;
+    border-radius: 8px;
+
+    padding: 8px;
+
+    resize: none;
+  }
+  textarea:disabled {
+    background-color: white;
+  }
+
   & > .header {
     width: 100%;
     border-bottom: 1px solid #e9e9e9;
@@ -358,19 +423,6 @@ const BoardDetailBlock = styled.div`
         align-items: center;
         justify-content: space-between;
       }
-      & > textarea {
-        width: 100%;
-
-        border: 2px solid #e9e9e9;
-        border-radius: 8px;
-
-        padding: 8px;
-
-        resize: none;
-      }
-      & > textarea:disabled {
-        background-color: white;
-      }
 
       & > .replyList {
         padding-left: 8px;
@@ -380,19 +432,6 @@ const BoardDetailBlock = styled.div`
         }
         & > .reply {
           padding-left: 24px;
-          & > textarea {
-            width: 100%;
-
-            border: 2px solid #e9e9e9;
-            border-radius: 8px;
-
-            padding: 8px;
-
-            resize: none;
-          }
-          & > textarea:disabled {
-            background-color: white;
-          }
         }
       }
     }

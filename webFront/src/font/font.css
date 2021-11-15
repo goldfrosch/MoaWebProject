@@ -1,4 +1,40 @@
 @font-face {
+  font-family: "A10";
+  src: url("./list/A10.TTF");
+}
+@font-face {
+  font-family: "A11";
+  src: url("./list/A11.TTF");
+}
+@font-face {
+  font-family: "A12";
+  src: url("./list/A12.TTF");
+}
+@font-face {
+  font-family: "A13";
+  src: url("./list/A13.TTF");
+}
+@font-face {
+  font-family: "A14";
+  src: url("./list/A14.TTF");
+}
+@font-face {
+  font-family: "A15";
+  src: url("./list/A15.TTF");
+}
+@font-face {
+  font-family: "A16";
+  src: url("./list/A16.TTF");
+}
+@font-face {
+  font-family: "A17";
+  src: url("./list/A17.TTF");
+}
+@font-face {
   font-family: "A18";
-  src: url("A18.woff2");
+  src: url("./list/A18.TTF");
+}
+@font-face {
+  font-family: "A19";
+  src: url("./list/A19.TTF");
 }

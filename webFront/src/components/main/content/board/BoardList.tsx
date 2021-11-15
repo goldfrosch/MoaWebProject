@@ -218,18 +218,22 @@ const BoardListBlock = styled.div`
     display: flex;
     flex-direction: column;
     & > .header {
-      height: 18vh;
       color: #797979;
+      border-bottom: 1px solid #e9e9e9;
+
+      padding: 24px 0;
 
       @media (max-width: 800px) {
         padding: 16px;
       }
 
       & > .title {
-        color: ${Palette.primary};
+        color: ${Palette.header};
 
         font-size: 24px;
         font-weight: 700;
+
+        padding-bottom: 8px;
       }
     }
     & > .option {

@@ -90,7 +90,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
             to="/login"
             style={{ color: "#d8538a" }}
             onClick={() => {
-              alert("현재 정책상으로 준비중입니다");
+              alert("준비중인 시스템입니다!");
             }}
           >
             {" "}

@@ -7,9 +7,12 @@ import Avatar from "@mui/material/Avatar";
 
 import Button from "components/common/items/Button";
 import ModalForm from "components/common/template/ModalForm";
+import { IProfile } from "modules/auth/type";
 
-interface UserInfoProps {}
-const UserInfo: React.FC<UserInfoProps> = () => {
+interface UserInfoProps {
+  data: IProfile;
+}
+const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const toggleModal = () => {
     if (!isModal) {
@@ -20,6 +23,7 @@ const UserInfo: React.FC<UserInfoProps> = () => {
     }
     setIsModal(!isModal);
   };
+
   return (
     <>
       {isModal && (
@@ -63,15 +67,15 @@ const UserInfo: React.FC<UserInfoProps> = () => {
           </div>
           <div className="list">
             <span>이메일</span>
-            <input disabled />
+            <input defaultValue={data.email} disabled />
           </div>
           <div className="list">
             <span>닉네임</span>
-            <input />
+            <input defaultValue={data.nickName ? data.nickName : ""} disabled />
           </div>
           <div className="list">
             <span>UUID</span>
-            <input />
+            <input defaultValue={data.uuid ? data.uuid : ""} disabled />
           </div>
           <div className="list">
             <span>비밀번호</span>
@@ -151,6 +155,7 @@ const ModalContent = styled.div`
       justify-content: flex-start;
 
       margin: 8px 0;
+
       & > span {
         padding-right: 8px;
       }
@@ -163,6 +168,18 @@ const ModalContent = styled.div`
 
         padding-left: 8px;
         font-size: 18px;
+      }
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        & > span {
+          margin: 8px 0;
+        }
+        & > input {
+          width: 80%;
+          margin-left: 8px;
+        }
       }
     }
   }

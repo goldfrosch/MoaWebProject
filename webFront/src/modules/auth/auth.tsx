@@ -94,8 +94,7 @@ function* loginSaga(action: ReturnType<typeof authLoginAction>) {
 
     history.push("/");
   } catch (e) {
-    let error: any = e;
-    yield put(setMessageErrorAction(error.response.data.message));
+    yield put(setMessageErrorAction("계정을 다시 확인해주세요"));
   }
 }
 

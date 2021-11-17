@@ -31,9 +31,15 @@ const BaseTemplateBlock = styled.div`
     display: flex;
     justify-content: center;
     & > .main {
-      width: 80%;
+      width: 100%;
+      max-width: 1000px;
       @media (max-width: 1080px) {
-        width: 90%;
+        max-width: 90%;
+        min-width: 750px;
+      }
+      @media (max-width: 768px) {
+        max-width: 100%;
+        min-width: 100%;
       }
     }
   }

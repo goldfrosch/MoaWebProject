@@ -3,7 +3,6 @@ HELP.md
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
-!src/main/resources/application.yml
 !**/src/test/**/build/
 
 ### STS ###
@@ -25,7 +24,6 @@ bin/
 *.ipr
 out/
 !**/src/main/**/out/
-!**/src/main/resource/application.yml
 !**/src/test/**/out/
 
 ### NetBeans ###
@@ -37,3 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/application.yml

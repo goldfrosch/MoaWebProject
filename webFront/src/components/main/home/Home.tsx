@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
-import test2 from "assets/test/test2.png";
 import Slick from "components/common/items/Slick";
 
 import BoardItem from "components/common/items/BoardItem";
@@ -12,18 +11,23 @@ import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 
 import HistoryUtils from "utils/HistoryUtils";
+import { IBanners } from "modules/banner/type";
 
-interface HomeProps {}
-const Home: React.FC<HomeProps> = () => {
+interface HomeProps {
+  data: IBanners[];
+}
+
+const Home: React.FC<HomeProps> = ({ data }) => {
   return (
     <HomeBlock>
       <Slick>
-        <SliderItem>
-          <img src={test2} alt="" />
-        </SliderItem>
-        <SliderItem>
-          <img src={test2} alt="" />
-        </SliderItem>
+        {data.map((item, key) => (
+          <SliderItem key={key}>
+            <Link to={item.link}>
+              <img src={`http://moasv.co.kr/images/${item.banner}`} alt="" />
+            </Link>
+          </SliderItem>
+        ))}
       </Slick>
       <div className="items">
         <BoardItem>

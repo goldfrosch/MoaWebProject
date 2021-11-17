@@ -7,6 +7,8 @@ import { Palette } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 import Navigation from "constants/Navigation";
 
+import Logo from "assets/image/Logo.png";
+
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -76,7 +78,9 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
   return (
     <HeaderBlock toggle={burgerToggle}>
       <div className="logo" onClick={() => handleMenu(false)}>
-        <Link to="/">로고 위치</Link>
+        <Link to="/">
+          <img src={Logo} alt="" />
+        </Link>
       </div>
       <ul className={burgerToggle ? "navLink viewNav" : "navLink"}>
         {Navigation.map((data, key) => (
@@ -209,12 +213,19 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
   & > .logo {
     width: 150px;
     height: 100px;
-    background-color: #e9e9e9;
-    color: black;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    img {
+      width: 90%;
+      height: auto;
+
+      object-fit: contain;
+      object-position: center;
+    }
+
     @media (max-width: 800px) {
       width: 120px;
       height: 80px;

@@ -7,11 +7,7 @@ import com.goldfrosch.webback.domain.Board.entity.dao.BoardComment.BoardCommentD
 import com.goldfrosch.webback.domain.Board.entity.dao.Board.BoardDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
 import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardDetailDTO;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentDTO;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentList;
-import com.goldfrosch.webback.domain.Board.entity.dto.BoardComment.BoardCommentItem;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
-import com.goldfrosch.webback.domain.Board.persistance.BoardComment.BoardCommentQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.global.common.response.PagingResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +16,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

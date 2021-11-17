@@ -20,6 +20,11 @@ import Thumbnail from "assets/image/thumbnail.jpg";
 import history from "utils/HistoryUtils";
 import BoardProfile from "components/common/items/BoardProfile";
 
+interface IntersectionOption {
+  isStop: boolean;
+  isLoading: boolean;
+}
+
 interface GridListProps {
   board: IBoard;
   data: IGridData;
@@ -28,7 +33,7 @@ interface GridListProps {
   getGridsData: (page?: number) => void;
 }
 
-const fakeFetch = () => new Promise(res => setTimeout(res, 3000));
+const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
 const GridList: React.FC<GridListProps> = ({
   board,
@@ -42,6 +47,10 @@ const GridList: React.FC<GridListProps> = ({
     ...data,
     type: "NICKNAME"
   });
+  const [isStop, setIsStop] = useState<IntersectionOption>({
+    isStop: false,
+    isLoading: true
+  });
 
   /* 타겟 엘리먼트 */
   const target = useRef<any>(null);
@@ -54,6 +63,14 @@ const GridList: React.FC<GridListProps> = ({
   };
 
   const fetchItems = async () => {
+    if (board.list.limit + board.list.offset <= board.list.total) {
+      getGridsData();
+    } else {
+      setIsStop({
+        ...isStop,
+        isStop: true
+      });
+    }
     await fakeFetch();
   };
 
@@ -61,7 +78,15 @@ const GridList: React.FC<GridListProps> = ({
   const onIntersect = async ([entry]: any, observer: any) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
+      setIsStop({
+        ...isStop,
+        isLoading: true
+      });
       await fetchItems();
+      setIsStop({
+        ...isStop,
+        isLoading: false
+      });
       observer.observe(entry.target);
     }
   };
@@ -86,6 +111,7 @@ const GridList: React.FC<GridListProps> = ({
   //처음에 useEffect로 컴포넌트 마운트 시 실행
   useEffect(() => {
     fetchItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -175,8 +201,7 @@ const GridList: React.FC<GridListProps> = ({
               />
             </div>
           ))}
-
-          {/* {option.isLoading &&
+          {isStop.isLoading &&
             [...Array(10)].map((_, key) => (
               <div className="item" key={key}>
                 <Skeleton
@@ -188,8 +213,8 @@ const GridList: React.FC<GridListProps> = ({
                 <Skeleton width="100%" />
                 <Skeleton width="60%" />
               </div>
-            ))} */}
-          <div ref={target} />
+            ))}
+          {!isStop.isStop && <div ref={target} />}
         </div>
       </div>
     </GridListBlock>

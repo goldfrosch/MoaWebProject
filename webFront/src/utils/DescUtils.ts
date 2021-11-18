@@ -9,6 +9,8 @@ class DescUtils {
         return DescData['update'].title;
       case 'event':
         return DescData['event'].title;
+      case 'donate':
+        return DescData['donate'].title;
       case 'free':
         return DescData['free'].title;
       case 'photo':
@@ -34,6 +36,8 @@ class DescUtils {
         return DescData['update'].context;
       case 'event':
         return DescData['event'].context;
+      case 'donate':
+        return DescData['donate'].context;
       case 'free':
         return DescData['free'].context;
       case 'photo':

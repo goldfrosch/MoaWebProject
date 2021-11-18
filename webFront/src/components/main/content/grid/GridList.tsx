@@ -280,10 +280,11 @@ const GridListBlock = styled.div`
     }
     & > .content {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, auto));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       grid-gap: 16px;
+
       @media (max-width: 800px) {
-        grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       }
       .item {
         width: 100%;

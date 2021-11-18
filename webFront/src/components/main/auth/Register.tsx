@@ -291,7 +291,9 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
           </div>
           <div className="content">
             <div className="option">
-              <span>이메일</span>
+              <span>
+                이메일 <span style={{ color: "red" }}>*</span>
+              </span>
               <Button
                 theme={ThemeColor.second}
                 size={ThemeSize.middle}
@@ -305,7 +307,9 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
               onChange={e => setData({ ...data, email: e.target.value })}
             />
             <div className="option">
-              <span>닉네임</span>
+              <span>
+                닉네임 <span style={{ color: "red" }}>*</span>
+              </span>
               <Button
                 theme={ThemeColor.second}
                 size={ThemeSize.middle}
@@ -334,7 +338,9 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
               disabled
             />
             <div className="option">
-              <span>비밀번호</span>
+              <span>
+                비밀번호 <span style={{ color: "red" }}>*</span>
+              </span>
             </div>
             <input
               type="password"
@@ -342,7 +348,9 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
               onChange={e => setData({ ...data, password: e.target.value })}
             />
             <div className="option">
-              <span>비밀번호 재입력</span>
+              <span>
+                비밀번호 재입력 <span style={{ color: "red" }}>*</span>
+              </span>
             </div>
             <input
               type="password"
@@ -449,7 +457,6 @@ const RegisterBlock = styled.div`
 
   & > .registerForm {
     width: 440px;
-    height: 75vh;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 24px;
@@ -480,7 +487,7 @@ const RegisterBlock = styled.div`
       & > .option {
         width: 100%;
 
-        margin: 0 4px;
+        margin: 4px;
 
         display: flex;
         align-items: center;

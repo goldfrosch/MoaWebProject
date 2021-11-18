@@ -21,4 +21,6 @@ public class Banner {
     private String banner;
 
     private String link;
+
+    private int orderNum;
 }

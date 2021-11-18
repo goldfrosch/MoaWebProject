@@ -19,6 +19,9 @@ public class FileUpload {
             //디렉토리를 새로 만들어냅니다
             newFile.mkdirs();
         }
+        if(file.equals(null)) {
+            return "";
+        }
         try{
             file.transferTo(newFile);
             return location + "/" + random + "_" + file.getOriginalFilename();

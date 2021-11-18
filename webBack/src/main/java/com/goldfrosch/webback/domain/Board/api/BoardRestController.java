@@ -5,6 +5,7 @@ import com.goldfrosch.webback.domain.Board.application.BoardService;
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardComment.BoardCommentDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.Board.BoardDAO;
+import com.goldfrosch.webback.domain.Board.entity.dao.BoardComment.BoardCommentUpdateDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
 import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardDetailDTO;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
@@ -85,6 +86,12 @@ public class BoardRestController {
     @PostMapping("/board/comment")
     public void postBoardComment(@RequestBody BoardCommentDAO boardComment, @AuthenticationPrincipal User user) {
         boardCommentService.postBoardComment(boardComment, user);
+    }
+
+    @CrossOrigin("*")
+    @PutMapping("/board/comment")
+    public void updateBoardComment(@RequestBody BoardCommentUpdateDAO comments) {
+        boardCommentService.updateBoardCommentById(comments.getId(), comments.getContext());
     }
 
     @CrossOrigin("*")

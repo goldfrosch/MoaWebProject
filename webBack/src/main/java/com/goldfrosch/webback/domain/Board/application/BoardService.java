@@ -30,7 +30,7 @@ public class BoardService {
                 .modifiedDate(LocalDateTime.now())
                 .isComment(board.getIsComment())
                 .prefix(board.getPrefix())
-                .thumbnail(FileUpload.uploadImage(file, user.getUuid()))
+                .thumbnail(file == null ? "" : FileUpload.uploadImage(file, user.getUuid()))
                 .title(board.getTitle())
                 .build();
         boardRepository.save(newBoard);

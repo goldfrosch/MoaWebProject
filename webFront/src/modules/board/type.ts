@@ -10,17 +10,6 @@ export interface IBoardDesc {
   context: string,
 }
 
-export interface IBoardReply {
-  id: number,
-  comment: string,
-  boardNum: number,
-  parentNum: null,
-  createdDate: Date,
-  nickName: string,
-  rank: number,
-  uuid: string,
-}
-
 export interface IBoardComment {
   id: number,
   comment: string,
@@ -108,4 +97,20 @@ export interface IComment {
   boardNum: number,
   comment: string,
   parentNum: number | null,
+}
+
+export interface IBoardReply {
+  id: number,
+  comment: string,
+  boardNum: number,
+  parentNum: null,
+  createdDate: Date,
+  nickName: string,
+  rank: number,
+  uuid: string,
+}
+
+export interface ICommentUpdate {
+  id: number,
+  context: string,
 }

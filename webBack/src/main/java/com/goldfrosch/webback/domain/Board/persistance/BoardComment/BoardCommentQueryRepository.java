@@ -73,4 +73,11 @@ public class BoardCommentQueryRepository extends QuerydslRepositorySupport {
             .orderBy(boardComment.createdDate.desc())
             .fetch();
     }
+
+    public void updateComment(Long id, String context) {
+        update(boardComment)
+        .set(boardComment.comment, context)
+        .where(boardComment.id.eq(id))
+        .execute();
+    }
 }

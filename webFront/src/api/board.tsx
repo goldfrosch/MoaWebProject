@@ -1,5 +1,5 @@
 import axios from "api/defaultClient";
-import { IComment, IGetBoards } from "modules/board/type";
+import { IComment, ICommentUpdate, IGetBoards } from "modules/board/type";
 
 export const getBoards = (data: IGetBoards) => {
   return axios.get(
@@ -21,6 +21,10 @@ export const postBoard = (data: any) => {
 
 export const postComment = (data: IComment) => {
   return axios.post("/board/comment", data);
+};
+
+export const putComment = (data: ICommentUpdate) => {
+  return axios.put("/board/comment", data);
 };
 
 export const deleteComment = (id: number) => {

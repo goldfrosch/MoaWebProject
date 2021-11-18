@@ -60,6 +60,11 @@ public class BoardCommentService {
     }
 
     @Transactional
+    public void updateBoardCommentById(Long id, String context) {
+        boardCommentQueryRepository.updateComment(id, context);
+    }
+
+    @Transactional
     public void deleteBoardCommentById(Long id) {
         Optional<BoardComment> comment = boardCommentRepository.findById(id);
         comment.get().setIsDeleted(true);

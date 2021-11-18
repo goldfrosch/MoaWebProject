@@ -17,6 +17,10 @@ const DescData = {
     title: "이벤트",
     context: "서버 내의 진행 중인 이벤트를 확인 가능합니다"
   },
+  donate: {
+    title: "후원상품",
+    context: "서버의 후원상품을 확인 가능합니다"
+  },
 
   free: {
     title: "자유게시판",

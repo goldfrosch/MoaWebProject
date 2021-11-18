@@ -295,6 +295,9 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
 };
 
 const BoardDetailBlock = styled.div`
+  height: 100%;
+  min-height: 90vh;
+
   padding: 32px 0;
 
   display: flex;

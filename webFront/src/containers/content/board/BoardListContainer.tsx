@@ -62,13 +62,21 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
   const checkLogin = (link: string) => {
     dispatch(setMessageClearAction());
     if (userData.nickName) {
-      if (data.category === "notice" || "event" || "update" || "donate") {
+      console.log(data.category);
+      if (
+        data.category === "notice" ||
+        data.category === "event" ||
+        data.category === "update" ||
+        data.category === "donate"
+      ) {
         if (userData.rank > 4) {
           history.push(link);
         } else {
           dispatch(setMessageWarningAction("권한이 부족합니다"));
         }
       } else {
+        console.log(userData.rank);
+
         if (userData.rank > 0) {
           history.push(link);
         } else {

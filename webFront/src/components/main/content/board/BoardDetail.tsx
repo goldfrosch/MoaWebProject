@@ -6,7 +6,8 @@ import { IBoardDetail } from "modules/board/type";
 import Button from "components/common/items/Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
-import BoardProfile from "components/common/items/BoardProfile";
+
+import Comment from "components/common/items/Comment";
 
 interface BoardDetailProps {
   data: IBoardDetail;
@@ -91,6 +92,27 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
             </div>
           )}
           {datas.detail.isComment ? (
+            datas.comments.list.map((item, key) => (
+              <Comment
+                item={item}
+                profile={profile}
+                deleteComment={deleteComment}
+                key={key}
+              />
+            ))
+          ) : (
+            <div
+              className="footer"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                color: "#979797"
+              }}
+            >
+              <span>댓글 기능을 중지한 게시글입니다</span>
+            </div>
+          )}
+          {/* {datas.detail.isComment ? (
             <div className="comments">
               {datas.comments.list.map((item, key) => (
                 <div className="item" key={key}>
@@ -276,7 +298,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
             >
               <span>댓글 기능을 중지한 게시글입니다</span>
             </div>
-          )}
+          )} */}
         </>
       ) : (
         <div

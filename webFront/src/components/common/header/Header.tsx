@@ -248,6 +248,8 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
       font-size: 20px;
       font-family: "A18";
 
+      cursor: pointer;
+
       @media (min-width: 1080px) {
         width: 100px;
         margin: 16px;
@@ -266,6 +268,8 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
 
           font-family: "A16";
           font-weight: 600;
+
+          cursor: pointer;
 
           @media (min-width: 1080px) {
             font-size: 16px;

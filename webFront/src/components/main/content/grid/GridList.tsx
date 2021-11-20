@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
+
 import Button from "components/common/items/Button";
 import Search from "components/common/items/Search";
 
@@ -13,7 +16,7 @@ import Select from "@mui/material/Select";
 import Skeleton from "@mui/material/Skeleton";
 
 import { IGridData } from "containers/content/grid/GridListContainer";
-import { IBoard, IBoardDesc } from "modules/board/type";
+import { IBoardDesc, IBoardListData } from "modules/board/type";
 import { setTimeout } from "timers";
 
 import Thumbnail from "assets/image/thumbnail.jpg";
@@ -26,27 +29,21 @@ interface IntersectionOption {
 }
 
 interface GridListProps {
-  board: IBoard;
   data: IGridData;
   desc: IBoardDesc;
   checkLogin: (link: string) => void;
-  getGridsData: (page?: number) => void;
 }
 
 const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
-const GridList: React.FC<GridListProps> = ({
-  board,
-  data,
-  desc,
-  checkLogin,
-  getGridsData
-}) => {
+const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
+  const [page, setPage] = useState<number>(1);
   //검색 데이터
   const [searchData, setSearchData] = useState<IGridData>({
     ...data,
     type: "NICKNAME"
   });
+  const [list, setList] = useState<IBoardListData[]>([]);
   const [isStop, setIsStop] = useState<IntersectionOption>({
     isStop: false,
     isLoading: true
@@ -63,14 +60,40 @@ const GridList: React.FC<GridListProps> = ({
   };
 
   const fetchItems = async () => {
-    if (board.list.limit + board.list.offset <= board.list.total) {
-      getGridsData();
-    } else {
+    if (!isStop.isStop) {
       setIsStop({
         ...isStop,
-        isStop: true
+        isLoading: true
       });
+      BoardAPI.getBoards({
+        category: data.category,
+        page: page,
+        type: data.type,
+        query: data.query
+      })
+        .then((res: AxiosResponse) => {
+          console.log(res.data.list);
+          if (!res.data.list.empty) {
+            setPage(page + 1);
+            let lists = [...list];
+            lists.push(...res.data.list.results);
+            setList([...lists]);
+            setIsStop({
+              ...isStop,
+              isLoading: false
+            });
+          } else {
+            setIsStop({
+              ...isStop,
+              isStop: true
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
+
     await fakeFetch();
   };
 
@@ -78,15 +101,7 @@ const GridList: React.FC<GridListProps> = ({
   const onIntersect = async ([entry]: any, observer: any) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      setIsStop({
-        ...isStop,
-        isLoading: true
-      });
       await fetchItems();
-      setIsStop({
-        ...isStop,
-        isLoading: false
-      });
       observer.observe(entry.target);
     }
   };
@@ -171,7 +186,7 @@ const GridList: React.FC<GridListProps> = ({
           </div>
         </div>
         <div className="content">
-          {board.list.results.map((data, key) => (
+          {list.map((data, key) => (
             <div className="item" key={key}>
               <img
                 src={
@@ -188,7 +203,8 @@ const GridList: React.FC<GridListProps> = ({
                   color: "#424242",
                   fontSize: "16px",
                   fontWeight: 500,
-                  fontFamily: "A17"
+                  fontFamily: "A17",
+                  textOverflow: "ellipsis"
                 }}
               >
                 {data.prefix !== "" && [data.prefix]}
@@ -202,6 +218,7 @@ const GridList: React.FC<GridListProps> = ({
             </div>
           ))}
           {isStop.isLoading &&
+            !isStop.isStop &&
             [...Array(10)].map((_, key) => (
               <div className="item" key={key}>
                 <Skeleton

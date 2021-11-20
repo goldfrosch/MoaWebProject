@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
 
-import { AxiosResponse } from "axios";
-import * as BoardAPI from "api/board";
-
 import GridList from "components/main/content/grid/GridList";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -13,14 +10,18 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
-import { IBoard, IBoardDesc } from "modules/board/type";
+import { IBoardDesc } from "modules/board/type";
 import DescUtils from "utils/DescUtils";
 
 export interface IGridData {
   category: string;
-  page: number;
   type: string;
   query: string;
+}
+
+export interface IGridStatus {
+  isLoading: boolean;
+  isDone: boolean;
 }
 
 interface GridContainerProps {}
@@ -33,23 +34,10 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   const [data, setData] = useState<IGridData>({
     category: String(
       new URLSearchParams(location.search).get("category") ?? ""
-    ),
-    page: 1,
+    ).toUpperCase(),
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });
-  const [board, setBoard] = useState<IBoard>({
-    newNotice: [],
-    list: {
-      empty: true,
-      limit: 10,
-      offset: 0,
-      total: 0,
-
-      results: []
-    }
-  });
-
   const [desc, setDesc] = useState<IBoardDesc>({
     title: "",
     context: ""
@@ -66,29 +54,11 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     }
   };
 
-  const getGridsData = (page?: number) => {
-    BoardAPI.getBoards({
-      category: String(
-        new URLSearchParams(location.search).get("category") ?? ""
-      ).toUpperCase(),
-      page: page || 1,
-      type: String(new URLSearchParams(location.search).get("type") ?? ""),
-      query: String(new URLSearchParams(location.search).get("query") ?? "")
-    })
-      .then((res: AxiosResponse) => {
-        setBoard(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
     setData({
       category: String(
         new URLSearchParams(location.search).get("category") ?? ""
       ),
-      page: 1,
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
@@ -100,18 +70,9 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
         String(new URLSearchParams(location.search).get("category") ?? "")
       )
     });
-    getGridsData(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
-  return (
-    <GridList
-      board={board}
-      data={data}
-      desc={desc}
-      checkLogin={checkLogin}
-      getGridsData={getGridsData}
-    />
-  );
+  return <GridList data={data} desc={desc} checkLogin={checkLogin} />;
 };
 
 export default GridContainer;

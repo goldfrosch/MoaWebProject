@@ -11,9 +11,7 @@ const BaseTemplate: React.FC<BaseTemplateProps> = ({ children }) => {
     <BaseTemplateBlock>
       <HeaderContainer />
       <div className="content">
-        <div className="side" />
         <div className="main">{children}</div>
-        <div className="side" />
       </div>
       <Footer />
     </BaseTemplateBlock>
@@ -32,7 +30,7 @@ const BaseTemplateBlock = styled.div`
     justify-content: center;
     & > .main {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1080px;
       @media (max-width: 1080px) {
         max-width: 90%;
         min-width: 750px;

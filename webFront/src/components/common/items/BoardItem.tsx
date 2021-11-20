@@ -10,9 +10,10 @@ const BoardItemBlock = styled.div`
   width: 100%;
   height: 100%;
   background-color: white;
-  border: 1px solid #e9e9e9;
+
   & > .borderHead {
     padding: 12px 8px;
+    border-bottom: 1px solid #e9e9e9;
 
     display: flex;
     align-items: center;
@@ -20,10 +21,10 @@ const BoardItemBlock = styled.div`
   }
   & > .borderBody {
     padding: 8px 12px;
-    border-top: 1px solid #e9e9e9;
 
     :hover {
       background-color: #f7f7f7;
+      transform: scale(1.025);
     }
   }
 `;

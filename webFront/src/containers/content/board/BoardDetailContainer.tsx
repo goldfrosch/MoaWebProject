@@ -5,7 +5,7 @@ import BoardDetail from "components/main/content/board/BoardDetail";
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
 
-import { IBoardDetail, IComment } from "modules/board/type";
+import { IBoardDetail, IComment, ICommentUpdate } from "modules/board/type";
 import { useSelector } from "react-redux";
 import { IRootState } from "modules";
 import history from "utils/HistoryUtils";
@@ -51,6 +51,17 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     }
   });
 
+  const getComment = (id: number) => {
+    BoardAPI.getBoard(id)
+      .then((res: AxiosResponse) => {
+        setData(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+        history.goBack();
+      });
+  };
+
   const postComment = (comment: string, parentNum: number) => {
     if (comment === "") return alert("댓글이 비어있습니다");
     if (window.confirm("댓글을 등록하시겠습니까?")) {
@@ -61,6 +72,24 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
       };
       console.log(parentNum);
       BoardAPI.postComment(data)
+        .then(() => {
+          alert("성공적으로 등록되었습니다");
+          window.location.reload();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
+  const putComment = (id: number, comment: string) => {
+    if (comment === "") return alert("댓글이 비어있습니다");
+    if (window.confirm("댓글을 수정하시겠습니까?")) {
+      let data: ICommentUpdate = {
+        id: id,
+        context: comment
+      };
+      BoardAPI.putComment(data)
         .then(() => {
           alert("성공적으로 등록되었습니다");
           window.location.reload();
@@ -91,14 +120,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   };
 
   useEffect(() => {
-    BoardAPI.getBoard(match.params.id)
-      .then((res: AxiosResponse) => {
-        setData(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-        history.goBack();
-      });
+    getComment(match.params.id);
   }, [match.params.id]);
   return (
     <BoardDetail
@@ -106,6 +128,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
       profile={profile}
       deleteComment={deleteComment}
       postComment={postComment}
+      putComment={putComment}
     />
   );
 };

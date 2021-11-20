@@ -137,6 +137,21 @@ const UserInfoBlock = styled.div`
       & > input:disabled {
         color: #464646;
       }
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        & > span {
+          width: 100%;
+        }
+        & > input {
+          height: 32px;
+          width: 100%;
+          padding-left: 8px;
+
+          text-overflow: ellipsis;
+        }
+      }
     }
   }
 `;
@@ -177,7 +192,7 @@ const ModalContent = styled.div`
           margin: 8px 0;
         }
         & > input {
-          width: 80%;
+          height: 32px;
           margin-left: 8px;
         }
       }

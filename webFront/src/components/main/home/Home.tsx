@@ -6,12 +6,9 @@ import { Link } from "react-router-dom";
 import Slick from "components/common/items/Slick";
 
 import BoardItem from "components/common/items/BoardItem";
-import Button from "components/common/items/Button";
-
-import { ThemeColor, ThemeSize } from "styles/Pallete";
-
-import HistoryUtils from "utils/HistoryUtils";
 import { IBanners } from "modules/banner/type";
+
+import AddIcon from "@mui/icons-material/Add";
 
 interface HomeProps {
   data: IBanners[];
@@ -33,15 +30,9 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         <BoardItem>
           <div className="borderHead">
             <span>공지사항</span>
-            <Button
-              theme={ThemeColor.second}
-              size={ThemeSize.middle}
-              onClick={() => {
-                HistoryUtils.push("/board?category=notice");
-              }}
-            >
-              더보기
-            </Button>
+            <Link to="/board?category=notice">
+              <AddIcon />
+            </Link>
           </div>
           <div className="borderBody">sadf</div>
           <div className="borderBody">sadf</div>
@@ -51,9 +42,9 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         <BoardItem>
           <div className="borderHead">
             <span>업데이트</span>
-            <Button theme={ThemeColor.second} size={ThemeSize.middle}>
-              더보기
-            </Button>
+            <Link to="/board?category=update">
+              <AddIcon />
+            </Link>
           </div>
           <div className="borderBody">sadf</div>
           <div className="borderBody">sadf</div>
@@ -63,10 +54,10 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       </div>
       <BoardItem>
         <div className="borderHead">
-          <span>자유게시판</span>
-          <Button theme={ThemeColor.second} size={ThemeSize.middle}>
-            더보기
-          </Button>
+          <span>사진게시판</span>
+          <Link to="/board?category=free">
+            <AddIcon />
+          </Link>
         </div>
         <div className="borderBody">sadf</div>
         <div className="borderBody">sadf</div>
@@ -77,9 +68,9 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         <BoardItem>
           <div className="borderHead">
             <span>sadf</span>
-            <Button theme={ThemeColor.second} size={ThemeSize.middle}>
-              더보기
-            </Button>
+            <Link to="/board?category=free">
+              <AddIcon />
+            </Link>
           </div>
           <div className="borderBody">sadf</div>
           <div className="borderBody">sadf</div>
@@ -89,34 +80,8 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         <BoardItem>
           <div className="borderHead">
             <span>sadf</span>
-            <Button theme={ThemeColor.second} size={ThemeSize.middle}>
-              더보기
-            </Button>
-          </div>
-          <div className="borderBody">sadf</div>
-          <div className="borderBody">sadf</div>
-          <div className="borderBody">sadf</div>
-          <div className="borderBody">sadf</div>
-        </BoardItem>
-        <BoardItem>
-          <div className="borderHead">
-            <span>sadf</span>
-            <Button theme={ThemeColor.second} size={ThemeSize.middle}>
-              더보기
-            </Button>
-          </div>
-          <div className="borderBody">sadf</div>
-          <div className="borderBody">sadf</div>
-          <div className="borderBody">sadf</div>
-          <div className="borderBody">sadf</div>
-        </BoardItem>
-        <BoardItem>
-          <div className="borderHead">
-            <span>sadf</span>
-            <Link to="/notice/notice">
-              <Button theme={ThemeColor.second} size={ThemeSize.middle}>
-                더보기
-              </Button>
+            <Link to="/board?category=free">
+              <AddIcon />
             </Link>
           </div>
           <div className="borderBody">sadf</div>

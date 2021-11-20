@@ -6,15 +6,26 @@ import { IBoardCommentsItem } from "modules/board/type";
 import Button from "./Button";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
+import ReplyItem from "./ReplyItem";
 
 interface CommentProps {
   item: IBoardCommentsItem;
   profile: IProfile;
   deleteComment: (id: number) => void;
+  postComment: (comment: string, parentNum: number) => void;
+  putComment: (id: number, context: string) => void;
 }
-const Comment: React.FC<CommentProps> = ({ item, profile, deleteComment }) => {
+const Comment: React.FC<CommentProps> = ({
+  item,
+  profile,
+  deleteComment,
+  postComment,
+  putComment
+}) => {
   const [edit, setEdit] = useState<boolean>(true);
+  const [context, setContext] = useState<string>("");
   const [reply, setReply] = useState<boolean>(false);
+  const [newReply, setNewReply] = useState<string>("");
   return (
     <CommentBlock>
       <div className="item">
@@ -56,7 +67,11 @@ const Comment: React.FC<CommentProps> = ({ item, profile, deleteComment }) => {
             </div>
           ) : (
             <div>
-              <Button theme={ThemeColor.first} size={ThemeSize.small}>
+              <Button
+                theme={ThemeColor.first}
+                size={ThemeSize.small}
+                onClick={() => putComment(item.comment.id, context)}
+              >
                 저장
               </Button>
               <span> </span>
@@ -77,10 +92,54 @@ const Comment: React.FC<CommentProps> = ({ item, profile, deleteComment }) => {
             style={{ color: "gray" }}
           />
         ) : (
-          <textarea defaultValue={item.comment.comment} disabled={edit} />
+          <textarea
+            defaultValue={item.comment.comment}
+            disabled={edit}
+            onChange={(e: any) => setContext(e.target.value)}
+          />
         )}
       </div>
       <span onClick={() => setReply(!reply)}>답글보기</span>
+      {reply && (
+        <div style={{ padding: "16px 0" }}>
+          {item.replyList.map((reply, index) => (
+            <ReplyItem
+              reply={reply}
+              profile={profile}
+              deleteComment={deleteComment}
+              putComment={putComment}
+              key={index}
+            />
+          ))}
+          <div style={{ width: "100%", paddingLeft: "24px" }}>
+            <textarea
+              defaultValue={
+                profile.email !== "" ? newReply : "로그인 후 댓글을 작성하세요"
+              }
+              onChange={(e: any) => setNewReply(e.target.value)}
+              disabled={profile.email !== "" ? false : true}
+            />
+          </div>
+          {profile.email !== "" && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end"
+              }}
+            >
+              <span style={{ paddingRight: "8px" }}>새 답글 달기:</span>
+              <Button
+                theme={ThemeColor.first}
+                size={ThemeSize.small}
+                onClick={() => postComment(newReply, item.comment.id)}
+              >
+                등록
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
     </CommentBlock>
   );
 };
@@ -117,6 +176,7 @@ const CommentBlock = styled.div`
   }
   textarea:disabled {
     background-color: white;
+    color: #898989;
   }
   & > span {
     color: #979797;

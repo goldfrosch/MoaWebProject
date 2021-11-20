@@ -24,8 +24,7 @@ public class JwtTokenProvider {
 
     // 토큰 유효시간 평생으로
     // Refresh 토큰으로 계속 주기적으로 가져와줘야 하나
-    // 현재 기간 문제로 인해서 우선적으로는 2시간마다 새로 로그인 해줘야함
-    private long tokenValidTime = 1000L * 60 * 2;
+    private long tokenValidTime = 1000L * 60 * 60 * 24;
 
     private final UserDetailsService userDetailsService;
 

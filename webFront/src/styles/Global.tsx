@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
         outline: 0;
     }
     * {
-        font-family: "A13";
+        font-family: "A14";
         box-sizing: inherit;
         margin: 0;
         padding: 0; 

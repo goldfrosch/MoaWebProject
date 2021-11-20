@@ -1,5 +1,6 @@
 package com.goldfrosch.webback.domain.User.api;
 
+import com.goldfrosch.webback.domain.User.application.UserService;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.domain.User.entity.dao.LoginDAO;
 import com.goldfrosch.webback.domain.User.entity.dao.RegisterDAO;
@@ -27,18 +28,11 @@ public class UserRestController {
     private final UserRepository userRepository;
 
     private final UserQueryRepository userQueryRepository;
+    private final UserService userService;
 
     @GetMapping("/profile")
     public UserDTO getUser(@AuthenticationPrincipal User user) {
-//        log.info(user.toString());
-        UserDTO getProfile = new UserDTO();
-        getProfile.setEmail(user.getEmail());
-        getProfile.setNickName(user.getNickName());
-        getProfile.setRank(user.getRank());
-        getProfile.setUuid(user.getUuid());
-        getProfile.setProfile(user.getProfile());
-
-        return getProfile;
+        return userService.getUserService(user);
     }
 
 
@@ -55,7 +49,7 @@ public class UserRestController {
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
                 .age(user.getAge())
-                .rank(0)
+                .rank(user.getUuid().equals("") ? 0 : 1)
                 .createdDate(LocalDateTime.now())
                 .roles(Collections.singletonList("ROLE_USER")) // 최초 가입시 USER 로 설정
                 .build()
@@ -88,7 +82,6 @@ public class UserRestController {
 
     @GetMapping("/find/uuid")
     public String findUuid(@RequestParam String uuid) {
-        log.info(userQueryRepository.findOverlapUUID(uuid));
         return userQueryRepository.findOverlapUUID(uuid);
     }
 }

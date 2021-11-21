@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router";
 
-import GridList from "components/main/content/grid/GridList";
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
+
+import GridList, { IScrollOption } from "components/main/content/grid/GridList";
 
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "modules";
@@ -10,7 +13,7 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
-import { IBoardDesc } from "modules/board/type";
+import { IBoardDesc, IBoardListData } from "modules/board/type";
 import DescUtils from "utils/DescUtils";
 
 export interface IGridData {
@@ -23,6 +26,8 @@ export interface IGridStatus {
   isLoading: boolean;
   isDone: boolean;
 }
+
+const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
 interface GridContainerProps {}
 const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
@@ -42,6 +47,47 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     title: "",
     context: ""
   });
+  const [list, setList] = useState<IBoardListData[]>([]);
+  const [listOption, setListOption] = useState<IScrollOption>({
+    page: 1,
+    isLoading: false,
+    isStop: false
+  });
+
+  //List 추가함수
+  const fetchItems = async (id?: number, listItem?: IBoardListData[]) => {
+    setListOption(prev => ({ ...prev, isLoading: true }));
+    await fakeFetch();
+    //기존 데이터
+    let lists: IBoardListData[] = listItem || list;
+    let listOptionData: IScrollOption = listOption;
+
+    //axios 실행
+    await BoardAPI.getBoards({
+      category: String(
+        new URLSearchParams(location.search).get("category") ?? ""
+      ).toUpperCase(),
+      page: id || listOption.page,
+      type: String(new URLSearchParams(location.search).get("type") ?? ""),
+      query: String(new URLSearchParams(location.search).get("query") ?? "")
+    })
+      .then(async (res: AxiosResponse) => {
+        if (res.data.list.empty === true) {
+          listOptionData.isLoading = false;
+          listOptionData.isStop = true;
+        } else {
+          lists.push(...res.data.list.results);
+          setList([...lists]);
+
+          listOptionData.isLoading = false;
+          listOptionData.page = listOptionData.page + 1;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    setListOption({ ...listOptionData });
+  };
 
   const checkLogin = (link: string) => {
     dispatch(setMessageClearAction());
@@ -82,9 +128,21 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
         String(new URLSearchParams(location.search).get("category") ?? "")
       )
     });
+    setList([]);
+    setListOption({ page: 1, isLoading: false, isStop: false });
+    fetchItems(1, []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
-  return <GridList data={data} desc={desc} checkLogin={checkLogin} />;
+  return (
+    <GridList
+      data={data}
+      desc={desc}
+      list={list}
+      listOption={listOption}
+      checkLogin={checkLogin}
+      fetchItems={fetchItems}
+    />
+  );
 };
 
 export default GridContainer;

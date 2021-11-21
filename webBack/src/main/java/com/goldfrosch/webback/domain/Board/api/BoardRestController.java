@@ -75,6 +75,16 @@ public class BoardRestController {
         boardService.postBoard(board, file, user);
     }
 
+    //보드 데이터 수정
+    @CrossOrigin("*")
+    @PutMapping("/board/{id}")
+    public void updateBoard(
+            @PathVariable Long id,
+            @RequestPart(value = "data") BoardDAO board
+    ) {
+        boardService.updateBoard(id, board);
+    }
+
     //보드 데이터 제거
     @CrossOrigin("*")
     @DeleteMapping("/board/{id}")

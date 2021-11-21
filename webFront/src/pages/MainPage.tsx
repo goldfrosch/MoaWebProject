@@ -15,6 +15,7 @@ import UserInfoContainer from "containers/auth/UserInfoContainer";
 import BoardContainer from "containers/content/board/BoardListContainer";
 import BoardWriteContainer from "containers/content/board/BoardWriteContainer";
 import BoardDetailContainer from "containers/content/board/BoardDetailContainer";
+import BoardEditContainer from "containers/content/board/BoardEditContainer";
 
 import GridContainer from "containers/content/grid/GridListContainer";
 import GridWriteContainer from "containers/content/grid/GridWriteContainer";
@@ -50,6 +51,7 @@ const MainPage = () => {
         <Route exact path="/board" component={BoardContainer} />
         <Route exact path="/board/write" component={BoardWriteContainer} />
         <Route exact path="/board/:id" component={BoardDetailContainer} />
+        <Route exact path="/board/edit/:id" component={BoardEditContainer} />
         {/* 그리드 형식 게시판 */}
         <Route exact path="/grid" component={GridContainer} />
         <Route exact path="/grid/write" component={GridWriteContainer} />

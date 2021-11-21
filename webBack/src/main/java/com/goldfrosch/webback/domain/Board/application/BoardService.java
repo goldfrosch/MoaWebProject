@@ -2,6 +2,7 @@ package com.goldfrosch.webback.domain.Board.application;
 
 import com.goldfrosch.webback.domain.Board.domain.Board;
 import com.goldfrosch.webback.domain.Board.entity.dao.Board.BoardDAO;
+import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.global.utils.FileUpload;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BoardQueryRepository boardQueryRepository;
 
 
     //Transactional 어노테이션이 설정된 메소드의 sql query 들이 전부 성공되어야만 실행된다.
@@ -34,6 +36,11 @@ public class BoardService {
                 .title(board.getTitle())
                 .build();
         boardRepository.save(newBoard);
+    }
+
+    @Transactional
+    public void updateBoard(Long id, BoardDAO board) {
+        boardQueryRepository.updateBoard(id, board);
     }
 
     @Transactional

@@ -2,6 +2,7 @@ package com.goldfrosch.webback.domain.Board.persistance.Board;
 
 import com.goldfrosch.webback.domain.Board.domain.Board;
 import com.goldfrosch.webback.domain.Board.domain.BoardList;
+import com.goldfrosch.webback.domain.Board.entity.dao.Board.BoardDAO;
 import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
 import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardItemDTO;
 import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardListDTO;
@@ -121,5 +122,16 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
         .from(board)
         .where(board.id.eq(number))
         .fetchOne();
+    }
+
+    public void updateBoard(Long id, BoardDAO newBoard) {
+        update(board)
+        .set(board.title, newBoard.getTitle())
+        .set(board.category, newBoard.getCategory())
+        .set(board.prefix, newBoard.getPrefix())
+        .set(board.content, newBoard.getContent())
+        .set(board.isComment, newBoard.getIsComment())
+        .where(board.id.eq(id))
+        .execute();
     }
 }

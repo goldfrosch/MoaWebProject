@@ -19,6 +19,14 @@ export const postBoard = (data: any) => {
   return axios.post(`/board`, data);
 };
 
+export const editBoard = (data: any) => {
+  return axios.put(`/board`, data);
+};
+
+export const deleteBoard = (id: number) => {
+  return axios.delete(`/board/${id}`);
+};
+
 export const postComment = (data: IComment) => {
   return axios.post("/board/comment", data);
 };

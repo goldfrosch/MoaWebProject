@@ -3,9 +3,6 @@ import styled from "styled-components";
 
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
-import { AxiosResponse } from "axios";
-import * as BoardAPI from "api/board";
-
 import Button from "components/common/items/Button";
 import Search from "components/common/items/Search";
 
@@ -17,7 +14,6 @@ import Skeleton from "@mui/material/Skeleton";
 
 import { IGridData } from "containers/content/grid/GridListContainer";
 import { IBoardDesc, IBoardListData } from "modules/board/type";
-import { setTimeout } from "timers";
 
 import Thumbnail from "assets/image/thumbnail.jpg";
 import history from "utils/HistoryUtils";
@@ -26,31 +22,32 @@ import BoardProfile from "components/common/items/BoardProfile";
 interface GridListProps {
   data: IGridData;
   desc: IBoardDesc;
+  list: IBoardListData[];
+  listOption: IScrollOption;
   checkLogin: (link: string) => void;
+  fetchItems: () => void;
 }
 
-interface IScrollOption {
+export interface IScrollOption {
   page: number;
   isLoading: boolean;
   isStop: boolean;
 }
 
-const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
-
-const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
+const GridList: React.FC<GridListProps> = ({
+  data,
+  desc,
+  list,
+  listOption,
+  checkLogin,
+  fetchItems
+}) => {
   /* 타겟 엘리먼트 */
   const target = useRef<any>(null);
   //검색 데이터
   const [searchData, setSearchData] = useState<IGridData>({
     ...data,
     type: "NICKNAME"
-  });
-  const [list, setList] = useState<IBoardListData[]>([]);
-  //
-  const [listOption, setListOption] = useState<IScrollOption>({
-    page: 1,
-    isLoading: false,
-    isStop: false
   });
 
   //검색 카테고리 변경 함수
@@ -60,9 +57,6 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
   //검색 후 API 로딩
   const handleSubmit = (e: React.ChangeEvent<unknown>) => {
     e.preventDefault();
-    setList([]);
-    setListOption(prev => ({ ...prev, page: 1 }));
-    fetchItems();
     history.push(
       `/grid?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
     );
@@ -77,39 +71,6 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
     root: null,
     rootMargins: 0,
     threshold: 0.5
-  };
-
-  //List 추가함수
-  const fetchItems = async () => {
-    setListOption(prev => ({ ...prev, isLoading: true }));
-    await fakeFetch();
-    //기존 데이터
-    let lists: IBoardListData[] = list;
-    let listOptionData: IScrollOption = listOption;
-
-    //axios 실행
-    await BoardAPI.getBoards({
-      category: data.category.toUpperCase(),
-      page: listOption.page,
-      type: data.type,
-      query: data.query
-    })
-      .then(async (res: AxiosResponse) => {
-        if (res.data.list.empty === true) {
-          listOptionData.isLoading = false;
-          listOptionData.isStop = true;
-        } else {
-          lists.push(...res.data.list.results);
-          setList([...lists]);
-
-          listOptionData.isLoading = false;
-          listOptionData.page = listOptionData.page + 1;
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    setListOption({ ...listOptionData });
   };
 
   /* 인터섹션 callback */

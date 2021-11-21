@@ -11,7 +11,7 @@ import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Button from "components/common/items/Button";
 
-import { IBoardData } from "modules/board/type";
+import { IBoardData, IBoardDetail } from "modules/board/type";
 import { useDispatch } from "react-redux";
 import {
   setMessageClearAction,
@@ -22,19 +22,19 @@ import history from "utils/HistoryUtils";
 import DescUtils from "utils/DescUtils";
 import SwitchItem from "components/common/items/SwitchItem";
 
-interface BoardWriteProps {
-  data: string;
+interface BoardEditProps {
+  data: IBoardDetail;
   boardTag: string[];
 }
-const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
+const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
   const dispatch = useDispatch();
 
   const [datas, setDatas] = useState<IBoardData>({
-    category: data,
-    content: "",
-    isComment: true,
-    prefix: "",
-    title: ""
+    category: data.detail.category,
+    content: data.detail.content,
+    isComment: data.detail.isComment,
+    prefix: data.detail.prefix,
+    title: data.detail.title
   });
   const [contents, setContents] = useState("");
 
@@ -70,23 +70,23 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
         [
           JSON.stringify({
             ...datas,
-            category: data.toUpperCase(),
+            category: datas.category.toUpperCase(),
             content: contents
           })
         ],
         { type: "application/json" }
       )
     );
-    BoardAPI.postBoard(formData)
+    BoardAPI.editBoard(formData)
       .then((res: AxiosResponse) => {
         if (res.status === 200) {
-          dispatch(setMessageSuccessAction("성공적으로 작성했습니다"));
+          dispatch(setMessageSuccessAction("성공적으로 수정했습니다"));
           history.goBack();
         }
       })
       .catch(error => {
         console.log(error);
-        dispatch(setMessageErrorAction("글 작성 중 문제가 발생했습니다"));
+        dispatch(setMessageErrorAction("글 수정 중 문제가 발생했습니다"));
       });
   };
 
@@ -97,14 +97,16 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
     });
   };
 
+  console.log(data);
+
   return (
-    <BoardWriteBlock>
+    <BoardEditBlock>
       <div className="main">
         <div className="header">
           <h2 className="title">글 작성하기</h2>
           <div className="option">
             <select className="category" disabled>
-              <option>{DescUtils.SetBoardTitle(data)}</option>
+              <option>{DescUtils.SetBoardTitle(data.detail.category)}</option>
             </select>
             <select
               className="tag"
@@ -157,18 +159,18 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
           </Button>
         </div>
       </div>
-    </BoardWriteBlock>
+    </BoardEditBlock>
   );
 };
 
-const BoardWriteBlock = styled.div`
+const BoardEditBlock = styled.div`
   width: 100%;
-  min-height: 110vh;
+  height: 110vh;
   display: flex;
   justify-content: center;
 
   @media (max-width: 800px) {
-    min-height: 180vh;
+    height: 180vh;
   }
 
   & > .main {
@@ -245,4 +247,4 @@ const BoardWriteBlock = styled.div`
   }
 `;
 
-export default BoardWrite;
+export default BoardEdit;

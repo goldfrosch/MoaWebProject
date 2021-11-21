@@ -16,6 +16,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
+import { useDispatch } from "react-redux";
+import { setMessageWarningAction } from "modules/snackbar/snackbar";
 
 interface LoginProps {
   LoginAction: (data: IUserLogin) => void;
@@ -27,11 +29,13 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
     password: ""
   });
   const [showPassword, setShowPassword] = useState<Boolean>(false);
+
+  const dispatch = useDispatch();
   const loginKakao = () => {
-    return alert("준비중인 시스템입니다!");
+    dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
   };
   const loginNaver = () => {
-    return alert("준비중인 시스템입니다!");
+    dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
   };
   return (
     <LoginForm title="Moa Server">
@@ -90,7 +94,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
             to="/login"
             style={{ color: "#d8538a" }}
             onClick={() => {
-              alert("준비중인 시스템입니다!");
+              dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
             }}
           >
             {" "}

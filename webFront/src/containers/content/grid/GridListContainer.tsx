@@ -34,7 +34,7 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   const [data, setData] = useState<IGridData>({
     category: String(
       new URLSearchParams(location.search).get("category") ?? ""
-    ).toUpperCase(),
+    ),
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });

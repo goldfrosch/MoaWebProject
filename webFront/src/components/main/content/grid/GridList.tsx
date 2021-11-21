@@ -23,35 +23,53 @@ import Thumbnail from "assets/image/thumbnail.jpg";
 import history from "utils/HistoryUtils";
 import BoardProfile from "components/common/items/BoardProfile";
 
-interface IntersectionOption {
-  isStop: boolean;
-  isLoading: boolean;
-}
-
 interface GridListProps {
   data: IGridData;
   desc: IBoardDesc;
   checkLogin: (link: string) => void;
 }
 
+interface IScrollOption {
+  page: number;
+  isLoading: boolean;
+  isStop: boolean;
+}
+
 const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
 const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
-  const [page, setPage] = useState<number>(1);
+  /* 타겟 엘리먼트 */
+  const target = useRef<any>(null);
   //검색 데이터
   const [searchData, setSearchData] = useState<IGridData>({
     ...data,
     type: "NICKNAME"
   });
   const [list, setList] = useState<IBoardListData[]>([]);
-  const [isStop, setIsStop] = useState<IntersectionOption>({
-    isStop: false,
-    isLoading: true
+  //
+  const [listOption, setListOption] = useState<IScrollOption>({
+    page: 1,
+    isLoading: true,
+    isStop: false
   });
 
-  /* 타겟 엘리먼트 */
-  const target = useRef<any>(null);
+  //검색 카테고리 변경 함수
+  const handleSearchChange = (e: any) => {
+    setSearchData({ ...searchData, query: e.target.value });
+  };
+  //검색 후 API 로딩
+  const handleSubmit = (e: React.ChangeEvent<unknown>) => {
+    e.preventDefault();
+    setList([]);
+    history.push(
+      `/grid?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
+    );
+  };
+  const handleWriteGrid = () => {
+    checkLogin("/grid/write?category=" + searchData.category);
+  };
 
+  //무한 스크롤 함수
   /* 옵저버 등록 */
   let options = {
     root: null,
@@ -59,42 +77,36 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
     threshold: 0.5
   };
 
+  //List 추가함수
   const fetchItems = async () => {
-    if (!isStop.isStop) {
-      setIsStop({
-        ...isStop,
-        isLoading: true
-      });
-      BoardAPI.getBoards({
-        category: data.category,
-        page: page,
-        type: data.type,
-        query: data.query
-      })
-        .then((res: AxiosResponse) => {
-          console.log(res.data.list);
-          if (!res.data.list.empty) {
-            setPage(page + 1);
-            let lists = [...list];
-            lists.push(...res.data.list.results);
-            setList([...lists]);
-            setIsStop({
-              ...isStop,
-              isLoading: false
-            });
-          } else {
-            setIsStop({
-              ...isStop,
-              isStop: true
-            });
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-
+    setListOption(prev => ({ ...prev, isLoading: true }));
     await fakeFetch();
+    //기존 데이터
+    let lists: IBoardListData[] = list;
+    let listOptionData: IScrollOption = listOption;
+
+    //axios 실행
+    await BoardAPI.getBoards({
+      category: data.category.toUpperCase(),
+      page: listOption.page,
+      type: data.type,
+      query: data.query
+    })
+      .then(async (res: AxiosResponse) => {
+        if (res.data.list.empty === true) {
+          listOptionData.isStop = true;
+        } else {
+          lists.push(...res.data.list.results);
+          setList([...lists]);
+
+          listOptionData.isLoading = false;
+          listOptionData.page = listOptionData.page + 1;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    setListOption({ ...listOptionData });
   };
 
   /* 인터섹션 callback */
@@ -105,29 +117,6 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
       observer.observe(entry.target);
     }
   };
-
-  //검색 카테고리 변경 함수
-  const handleSearchChange = (e: any) => {
-    setSearchData({ ...searchData, query: e.target.value });
-  };
-
-  //검색 후 API 로딩
-  const handleSubmit = (e: React.ChangeEvent<unknown>) => {
-    e.preventDefault();
-    history.push(
-      `/grid?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
-    );
-  };
-
-  const handleWriteGrid = () => {
-    checkLogin("/grid/write?category=" + searchData.category);
-  };
-
-  //처음에 useEffect로 컴포넌트 마운트 시 실행
-  useEffect(() => {
-    fetchItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersect, options);
@@ -187,7 +176,11 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
         </div>
         <div className="content">
           {list.map((data, key) => (
-            <div className="item" key={key}>
+            <div
+              className="item"
+              key={key}
+              onClick={() => history.push(`/board/${data.id}`)}
+            >
               <img
                 src={
                   data.thumbnail !== ""
@@ -217,8 +210,7 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
               />
             </div>
           ))}
-          {isStop.isLoading &&
-            !isStop.isStop &&
+          {listOption.isLoading &&
             [...Array(10)].map((_, key) => (
               <div className="item" key={key}>
                 <Skeleton
@@ -231,7 +223,7 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
                 <Skeleton width="60%" />
               </div>
             ))}
-          {!isStop.isStop && <div ref={target} />}
+          {!listOption.isStop && <div className="loading" ref={target} />}
         </div>
       </div>
     </GridListBlock>
@@ -303,7 +295,7 @@ const GridListBlock = styled.div`
       @media (max-width: 800px) {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       }
-      .item {
+      & > .item {
         width: 100%;
         height: auto;
         background-color: white;
@@ -317,11 +309,17 @@ const GridListBlock = styled.div`
         flex-direction: column;
         justify-content: center;
 
+        cursor: pointer;
+
         & > img {
           width: 90%;
           height: auto;
           object-fit: cover;
         }
+      }
+      & > .item:hover {
+        transform: scale(1.025);
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       }
     }
   }

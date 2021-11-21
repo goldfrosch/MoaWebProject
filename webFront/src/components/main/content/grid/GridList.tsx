@@ -49,7 +49,7 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
   //
   const [listOption, setListOption] = useState<IScrollOption>({
     page: 1,
-    isLoading: true,
+    isLoading: false,
     isStop: false
   });
 
@@ -61,6 +61,8 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
   const handleSubmit = (e: React.ChangeEvent<unknown>) => {
     e.preventDefault();
     setList([]);
+    setListOption(prev => ({ ...prev, page: 1 }));
+    fetchItems();
     history.push(
       `/grid?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
     );
@@ -94,6 +96,7 @@ const GridList: React.FC<GridListProps> = ({ data, desc, checkLogin }) => {
     })
       .then(async (res: AxiosResponse) => {
         if (res.data.list.empty === true) {
+          listOptionData.isLoading = false;
           listOptionData.isStop = true;
         } else {
           lists.push(...res.data.list.results);

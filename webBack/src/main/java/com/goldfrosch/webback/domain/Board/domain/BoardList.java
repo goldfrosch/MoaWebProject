@@ -15,4 +15,7 @@ public enum BoardList {
     DONE,
     OPPOSITION,
     APOLOGY,
+    TUTORIAL_MOA,
+    TUTORIAL_WSG,
+    TUTORIAL_ALL,
 }

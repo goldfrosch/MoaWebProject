@@ -45,6 +45,18 @@ const DescData = {
   canvas: {
     title: "내가 그린 기린 그림",
     context: "직접 캔버스에 그림을 그리고 자랑하는 곳!"
+  },
+  tutorial_moa: {
+    title: "튜토리얼 - 모아서버",
+    context: "모아서버의 관련 정보를 확인 가능한 곳"
+  },
+  tutorial_wsg: {
+    title: "튜토리얼 - 백설기온라인",
+    context: "백설기온라인의 관련 정보를 확인 가능한 곳"
+  },
+  tutorial_all: {
+    title: "튜토리얼 - 카페/전체",
+    context: "카페나 기본적인 관련 정보를 확인 가능한 곳"
   }
 };
 

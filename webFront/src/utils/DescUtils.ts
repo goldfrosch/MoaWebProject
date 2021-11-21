@@ -3,6 +3,12 @@ import DescData from "constants/DescData";
 class DescUtils {
   SetBoardTitle(category: string) {
     switch(category) {
+      case 'tutorial_moa':
+        return DescData['tutorial_moa'].title;
+      case 'tutorial_wsg':
+        return DescData['tutorial_wsg'].title;
+      case 'tutorial_all':
+        return DescData['tutorial_all'].title;
       case 'notice':
         return DescData['notice'].title;
       case 'update':
@@ -30,6 +36,12 @@ class DescUtils {
 
   SetBoardContext(category: string) {
     switch(category) {
+      case 'tutorial_moa':
+        return DescData['tutorial_moa'].context;
+      case 'tutorial_wsg':
+        return DescData['tutorial_wsg'].context;
+      case 'tutorial_all':
+        return DescData['tutorial_all'].context;
       case 'notice':
         return DescData['notice'].context;
       case 'update':

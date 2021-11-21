@@ -82,10 +82,9 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
 
     let formData = new FormData();
 
-    if (!fileData.file) {
-      return alert("썸네일에 사용할 이미지를 첨부해주세요");
+    if (fileData.file) {
+      formData.append("file", fileData.file);
     }
-    formData.append("file", fileData.file);
     formData.append(
       "data",
       new Blob(

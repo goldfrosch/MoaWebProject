@@ -46,7 +46,19 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   const checkLogin = (link: string) => {
     dispatch(setMessageClearAction());
     if (userData.nickName) {
-      history.push(link);
+      if (data.category === "donate") {
+        if (userData.rank > 4) {
+          history.push(link);
+        } else {
+          dispatch(setMessageWarningAction("권한이 부족합니다"));
+        }
+      } else {
+        if (userData.rank > 0) {
+          history.push(link);
+        } else {
+          dispatch(setMessageWarningAction("권한이 부족합니다"));
+        }
+      }
     } else {
       dispatch(setMessageClearAction());
       dispatch(setMessageWarningAction("로그인이 필요한 서비스입니다."));

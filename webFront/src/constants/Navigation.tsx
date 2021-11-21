@@ -14,11 +14,15 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "모아서버",
-        link: "/board?category=tutorial-moa"
+        link: "/board?category=tutorial_moa"
       },
       {
         title: "백설기온라인",
-        link: "/board?category=tutorial-wsg"
+        link: "/board?category=tutorial_wsg"
+      },
+      {
+        title: "전체 / 카페",
+        link: "/board?category=tutorial_all"
       }
     ]
   },

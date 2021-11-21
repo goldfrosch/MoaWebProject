@@ -49,7 +49,7 @@ public class UserRestController {
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
                 .age(user.getAge())
-                .rank(user.getUuid().equals("") ? 0 : 1)
+                .rank(1)
                 .createdDate(LocalDateTime.now())
                 .roles(Collections.singletonList("ROLE_USER")) // 최초 가입시 USER 로 설정
                 .build()

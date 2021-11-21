@@ -65,6 +65,34 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
           />
           {datas.detail.isComment && (
             <div className="footer">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  padding: "8px"
+                }}
+              >
+                {profile.uuid === data.detail.uuid && (
+                  <Button
+                    theme={ThemeColor.first}
+                    size={ThemeSize.middle}
+                    onClick={() => postComment(comment, 0)}
+                  >
+                    수정
+                  </Button>
+                )}
+                <span style={{ margin: "0 4px" }} />
+                {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
+                  <Button
+                    theme={ThemeColor.first}
+                    size={ThemeSize.middle}
+                    onClick={() => postComment(comment, 0)}
+                  >
+                    삭제
+                  </Button>
+                )}
+              </div>
               <div className="commentsCount">
                 <span>{datas.comments.counts}개의 댓글</span>
               </div>
@@ -79,7 +107,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                   size={ThemeSize.large}
                   onClick={() => postComment(comment, 0)}
                 >
-                  작성
+                  댓글작성
                 </Button>
               </div>
             </div>
@@ -166,8 +194,11 @@ const BoardDetailBlock = styled.div`
     & > .text {
       padding: 16px 0;
       & > .title {
+        max-width: 40%;
+        text-overflow: ellipsis;
+
         font-weight: 600;
-        font-size: 32px;
+        font-size: 24px;
         color: #787878;
 
         padding: 0 8px;

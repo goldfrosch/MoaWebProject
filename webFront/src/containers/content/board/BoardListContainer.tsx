@@ -66,7 +66,8 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
         data.category === "notice" ||
         data.category === "event" ||
         data.category === "update" ||
-        data.category === "donate"
+        data.category === "donate" ||
+        data.category.includes("tutorial")
       ) {
         if (userData.rank > 4) {
           history.push(link);

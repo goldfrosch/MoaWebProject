@@ -74,10 +74,11 @@ const GridList: React.FC<GridListProps> = ({
   };
 
   /* 인터섹션 callback */
-  const onIntersect = async ([entry]: any, observer: any) => {
+  const onIntersect = ([entry]: any, observer: any) => {
+    console.log("옵저빙 시도");
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      await fetchItems();
+      fetchItems();
       observer.observe(entry.target);
     }
   };
@@ -187,8 +188,10 @@ const GridList: React.FC<GridListProps> = ({
                 <Skeleton width="60%" />
               </div>
             ))}
-          {!listOption.isStop && <div className="loading" ref={target} />}
         </div>
+        {!listOption.isStop && (
+          <div className="loading" style={{ height: "16px" }} ref={target} />
+        )}
       </div>
     </GridListBlock>
   );

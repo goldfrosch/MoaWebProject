@@ -46,21 +46,21 @@ const BoardList: React.FC<BoardListProps> = ({
   const handleSubmit = (e: React.ChangeEvent<unknown>) => {
     e.preventDefault();
     history.push(
-      `/board?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
+      `/board?page=1&category=${data.category}&type=${searchData.type}&query=${searchData.query}`
     );
     getBoardsData();
   };
 
   //글 작성 페이지로 이동
   const handleWriteBoard = () => {
-    checkLogin("/board/write?category=" + searchData.category);
+    checkLogin("/board/write?category=" + data.category);
   };
 
   //페이지네이션 관련
   const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
     e.preventDefault();
     history.push(
-      `/board?page=${value}&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
+      `/board?page=${value}&category=${data.category}&type=${searchData.type}&query=${searchData.query}`
     );
     getBoardsData();
   };

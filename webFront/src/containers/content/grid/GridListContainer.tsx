@@ -38,7 +38,9 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
 
   const [data, setData] = useState<IGridData>({
     category: String(
-      new URLSearchParams(location.search).get("category") ?? ""
+      new URLSearchParams(location.search)
+        .get("category")
+        ?.toLocaleUpperCase() ?? ""
     ),
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
@@ -55,11 +57,11 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   });
 
   //List 추가함수
-  const fetchItems = async (id?: number, listItem?: IBoardListData[]) => {
+  const fetchItems = async () => {
     setListOption(prev => ({ ...prev, isLoading: true }));
     await fakeFetch();
     //기존 데이터
-    let lists: IBoardListData[] = listItem || list;
+    let lists: IBoardListData[] = list;
     let listOptionData: IScrollOption = listOption;
 
     //axios 실행
@@ -67,7 +69,7 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
       category: String(
         new URLSearchParams(location.search).get("category") ?? ""
       ).toUpperCase(),
-      page: id || listOption.page,
+      page: listOptionData.page,
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     })
@@ -82,11 +84,11 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
           listOptionData.isLoading = false;
           listOptionData.page = listOptionData.page + 1;
         }
+        setListOption({ ...listOption, ...listOptionData });
       })
       .catch(error => {
         console.log(error);
       });
-    setListOption({ ...listOptionData });
   };
 
   const checkLogin = (link: string) => {
@@ -113,6 +115,8 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   };
 
   useEffect(() => {
+    setList([]);
+    setListOption({ ...listOption, page: 1, isLoading: false, isStop: false });
     setData({
       category: String(
         new URLSearchParams(location.search).get("category") ?? ""
@@ -128,9 +132,8 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
         String(new URLSearchParams(location.search).get("category") ?? "")
       )
     });
-    setList([]);
-    setListOption({ page: 1, isLoading: false, isStop: false });
-    fetchItems(1, []);
+
+    fetchItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
   return (

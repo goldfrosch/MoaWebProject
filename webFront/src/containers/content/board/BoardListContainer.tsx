@@ -4,8 +4,6 @@ import { RouteComponentProps } from "react-router";
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
 
-import { useSnackbar } from "notistack";
-
 import BoardList from "components/main/content/board/BoardList";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "modules";
@@ -28,10 +26,7 @@ interface BoardContainerProps {}
 const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
   location
 }) => {
-  const { enqueueSnackbar } = useSnackbar();
-
   const userData = useSelector((state: IRootState) => state.auth.profile);
-  const snack = useSelector((state: IRootState) => state.snackbar);
   const dispatch = useDispatch();
 
   const [data, setData] = useState<IBoardData>({
@@ -137,17 +132,12 @@ const BoardContainer: React.FC<RouteComponentProps<BoardContainerProps>> = ({
   }, [location.search]);
 
   useEffect(() => {
-    if (snack.msg !== "") {
-      enqueueSnackbar(snack.msg, { variant: snack.types });
-    }
-  }, [enqueueSnackbar, snack]);
-
-  useEffect(() => {
     dispatch(setMessageClearAction());
     return () => {
       dispatch(setMessageClearAction());
     };
   });
+
   return (
     <BoardList
       board={board}

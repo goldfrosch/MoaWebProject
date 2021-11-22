@@ -21,6 +21,7 @@ import GridContainer from "containers/content/grid/GridListContainer";
 import GridWriteContainer from "containers/content/grid/GridWriteContainer";
 import NotForbidden from "components/common/template/NotForbidden";
 import NotFound from "components/common/template/NotFound";
+import Minigame from "components/main/etc/minigame/Minigame";
 
 const MainPage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -55,6 +56,8 @@ const MainPage = () => {
         {/* 그리드 형식 게시판 */}
         <Route exact path="/grid" component={GridContainer} />
         <Route exact path="/grid/write" component={GridWriteContainer} />
+        {/* MINIGAME*/}
+        <Route exact path="/etc/minigame" component={Minigame} />
         {/* Error Page */}
         <Route exact path="/forbidden" component={NotForbidden} />
         <Route path={"*"} component={NotFound} />

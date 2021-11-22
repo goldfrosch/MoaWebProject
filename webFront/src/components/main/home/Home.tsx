@@ -95,6 +95,10 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 };
 
 const HomeBlock = styled.div`
+  width: 100%;
+  @media (max-width: 768px) {
+    padding: 0 8px;
+  }
   & > .items {
     width: 100%;
 
@@ -104,7 +108,7 @@ const HomeBlock = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(40%, auto));
 
     grid-gap: 16px;
-    @media (max-width: 800px) {
+    @media (max-width: 768px) {
       grid-template-columns: repeat(auto-fill, minmax(100%, auto));
     }
   }

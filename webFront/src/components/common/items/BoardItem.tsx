@@ -19,12 +19,55 @@ const BoardItemBlock = styled.div`
     align-items: center;
     justify-content: space-between;
   }
-  & > .borderBody {
+  .borderBody {
     padding: 8px 12px;
 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > .date {
+      font-size: 12px;
+      color: #979797;
+    }
     :hover {
       background-color: #f7f7f7;
       transform: scale(1.025);
+    }
+  }
+  & > .gridBody {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    grid-gap: 16px;
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 384px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .gridItem {
+      border: 1px solid #e9e9e9;
+      border-radius: 4%;
+
+      padding: 8px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > img {
+        width: 100%;
+        flex: 1;
+        object-fit: contain;
+      }
+      & > span {
+        width: 100%;
+        height: 5%;
+
+        padding: 8px 4px;
+
+        text-overflow: ellipsis;
+      }
     }
   }
 `;

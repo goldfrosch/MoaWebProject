@@ -1,7 +1,9 @@
 package com.goldfrosch.webback.domain.Board.application;
 
 import com.goldfrosch.webback.domain.Board.domain.Board;
+import com.goldfrosch.webback.domain.Board.domain.BoardList;
 import com.goldfrosch.webback.domain.Board.entity.dao.Board.BoardDAO;
+import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardListDTO;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +39,11 @@ public class BoardService {
                 .title(board.getTitle())
                 .build();
         boardRepository.save(newBoard);
+    }
+
+    @Transactional
+    public List<BoardListDTO> getTopBoardList(BoardList category, int limit) {
+        return boardQueryRepository.getBoardList(category, limit);
     }
 
     @Transactional

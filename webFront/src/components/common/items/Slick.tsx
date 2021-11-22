@@ -37,7 +37,8 @@ const Slick: React.FC<SliderProps> = ({
       speed: speed,
       slidesToShow: 1,
       autoplay: Boolean(autoplay),
-      autoplaySpeed: typeof autoplay === "boolean" ? 3000 : autoplay
+      autoplaySpeed: typeof autoplay === "boolean" ? 3000 : autoplay,
+      arrows: false
     }),
     [autoplay, loop, speed]
   );

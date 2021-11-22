@@ -8,7 +8,6 @@ import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 
 import Comment from "components/common/items/Comment";
-import { Link } from "react-router-dom";
 
 interface BoardDetailProps {
   data: IBoardDetail;
@@ -125,32 +124,40 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
               />
             ))
           ) : (
-            <div
-              className="footer"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                color: "#979797"
-              }}
-            >
-              {/* {profile.uuid === data.detail.uuid && (
+            <div className="footer">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end"
+                }}
+              >
+                {/* {profile.uuid === data.detail.uuid && (
                   <Link to={`/board/edit${data.detail.id}`}>
                     <Button theme={ThemeColor.first} size={ThemeSize.middle}>
                       수정
                     </Button>
                   </Link>
                 )} */}
-              <span style={{ margin: "0 4px" }} />
-              {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
-                <Button
-                  theme={ThemeColor.first}
-                  size={ThemeSize.middle}
-                  onClick={deleteBoard}
-                >
-                  삭제
-                </Button>
-              )}
-              <span>댓글 기능을 중지한 게시글입니다</span>
+                <span style={{ margin: "0 4px" }} />
+                {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
+                  <Button
+                    theme={ThemeColor.first}
+                    size={ThemeSize.middle}
+                    onClick={deleteBoard}
+                  >
+                    삭제
+                  </Button>
+                )}
+              </div>
+              <span
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  color: "#979797"
+                }}
+              >
+                댓글 기능을 중지한 게시글입니다
+              </span>
             </div>
           )}
         </>

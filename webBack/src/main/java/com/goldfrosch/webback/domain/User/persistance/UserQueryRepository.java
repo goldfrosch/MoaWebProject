@@ -35,4 +35,16 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
                 .where(user.uuid.like(uuid))
                 .fetchOne();
     }
+
+    public String findOverlapPassword(Long id) {
+        return jpaQueryFactory.select(user.password).from(user)
+                .where(user.id.eq(id))
+                .fetchOne();
+    }
+    public void updatePassword(String password, Long id) {
+        update(user)
+        .set(user.password, password)
+        .where(user.id.eq(id))
+        .execute();
+    }
 }

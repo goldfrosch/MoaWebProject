@@ -12,8 +12,29 @@ import { IProfile } from "modules/auth/type";
 interface UserInfoProps {
   data: IProfile;
 }
+
+interface IPasswordEdit {
+  nowPass: string;
+  newPass: string;
+  newPassRepeat: string;
+}
+
 const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
   const [isModal, setIsModal] = useState<boolean>(false);
+  const [passwords, setPasswords] = useState<IPasswordEdit>({
+    nowPass: "",
+    newPass: "",
+    newPassRepeat: ""
+  });
+
+  const submitPassword = () => {
+    if (passwords.newPass === passwords.newPassRepeat) {
+      console.log("준비중인 시스템입니다");
+    } else {
+      alert("새 비밀번호들이 일치하지 않습니다");
+    }
+  };
+
   const toggleModal = () => {
     if (!isModal) {
       window.document.body.style.overflowY = "hidden";
@@ -32,15 +53,39 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
             <div className="list">
               <div className="item">
                 <span>기존 비밀번호: </span>
-                <input />
+                <input
+                  value={passwords.nowPass}
+                  onChange={(e: any) =>
+                    setPasswords({
+                      ...passwords,
+                      nowPass: e.target.value
+                    })
+                  }
+                />
               </div>
               <div className="item">
                 <span>새 비밀번호: </span>
-                <input />
+                <input
+                  value={passwords.newPass}
+                  onChange={(e: any) =>
+                    setPasswords({
+                      ...passwords,
+                      newPass: e.target.value
+                    })
+                  }
+                />
               </div>
               <div className="item">
                 <span>새 비밀번호 확인: </span>
-                <input />
+                <input
+                  value={passwords.newPassRepeat}
+                  onChange={(e: any) =>
+                    setPasswords({
+                      ...passwords,
+                      newPassRepeat: e.target.value
+                    })
+                  }
+                />
               </div>
             </div>
             <div
@@ -50,7 +95,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
                 justifyContent: "flex-end"
               }}
             >
-              <Button theme={ThemeColor.first} size={ThemeSize.large}>
+              <Button
+                theme={ThemeColor.first}
+                size={ThemeSize.large}
+                onClick={submitPassword}
+              >
                 변경하기
               </Button>
             </div>

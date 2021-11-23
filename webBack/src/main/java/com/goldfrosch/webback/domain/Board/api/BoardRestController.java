@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class BoardRestController {
 
     //보드 댓글 관련 api
     @PostMapping("/board/comment")
-    public void postBoardComment(@RequestBody BoardCommentDAO boardComment, @AuthenticationPrincipal User user) {
+    public void postBoardComment(@RequestBody BoardCommentDAO boardComment, @ApiIgnore @AuthenticationPrincipal User user) {
         boardCommentService.postBoardComment(boardComment, user);
     }
 

@@ -38,9 +38,7 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
 
   const [data, setData] = useState<IGridData>({
     category: String(
-      new URLSearchParams(location.search)
-        .get("category")
-        ?.toLocaleUpperCase() ?? ""
+      new URLSearchParams(location.search).get("category") ?? ""
     ),
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
@@ -66,12 +64,10 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
 
     //axios 실행
     await BoardAPI.getBoards({
-      category: String(
-        new URLSearchParams(location.search).get("category") ?? ""
-      ).toUpperCase(),
+      category: data.category.toUpperCase(),
       page: listOptionData.page,
-      type: String(new URLSearchParams(location.search).get("type") ?? ""),
-      query: String(new URLSearchParams(location.search).get("query") ?? "")
+      type: data.type,
+      query: data.query
     })
       .then(async (res: AxiosResponse) => {
         if (res.data.list.empty === true) {
@@ -134,6 +130,9 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     });
 
     fetchItems();
+
+    return () =>
+      setListOption({ ...listOption, page: 1, isLoading: false, isStop: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
   return (

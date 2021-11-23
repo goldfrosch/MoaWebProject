@@ -1,5 +1,5 @@
 import axios from "api/defaultClient";
-import { IUserLogin, IUserRegister } from "modules/auth/type";
+import { IUpdatePw, IUserLogin, IUserRegister } from "modules/auth/type";
 
 export const userRegister = (data: IUserRegister) => {
   return axios.post(`/register`, data);
@@ -23,4 +23,8 @@ export const findNickname = (data: string) => {
 
 export const findUUID = (data: string) => {
   return axios.get(`find/uuid?uuid=${data}`);
+};
+
+export const updatePassword = (data: IUpdatePw) => {
+  return axios.put("/update/pass", data);
 };

@@ -84,7 +84,7 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
       <BoardItem>
         <div className="borderHead">
           <span>사진게시판</span>
-          <Link to="/board?category=free">
+          <Link to="/grid?category=photo">
             <AddIcon />
           </Link>
         </div>

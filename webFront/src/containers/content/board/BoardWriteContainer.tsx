@@ -33,6 +33,15 @@ const BoardWriteContainer: React.FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, data]);
 
+  useEffect(() => {
+    window.onbeforeunload = function () {
+      return true;
+    };
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, []);
+
   return <BoardWrite data={data} boardTag={boardTag} />;
 };
 

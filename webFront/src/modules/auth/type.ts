@@ -8,6 +8,11 @@ import {
   authRegisterSuccessAction
 } from "./auth";
 
+export interface IUpdatePw {
+  nowPass: string,
+  newPass: string,
+}
+
 export interface IUserRegister {
   email: string,
   password: string,
@@ -30,6 +35,7 @@ export interface IProfile {
   rank: number,
   uuid: string | null,
 }
+
 export interface IAuthState {
   profile: IProfile,
 }

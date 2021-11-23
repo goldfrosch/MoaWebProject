@@ -47,9 +47,6 @@ const BoardItemBlock = styled.div`
       grid-template-columns: repeat(1, 1fr);
     }
     .gridItem {
-      border: 1px solid #e9e9e9;
-      border-radius: 4%;
-
       padding: 8px;
 
       display: flex;
@@ -68,6 +65,10 @@ const BoardItemBlock = styled.div`
 
         text-overflow: ellipsis;
       }
+    }
+    .gridItem:hover {
+      background-color: #f7f7f7;
+      transform: scale(1.025);
     }
   }
 `;

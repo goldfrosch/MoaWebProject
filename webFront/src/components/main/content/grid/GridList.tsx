@@ -75,7 +75,6 @@ const GridList: React.FC<GridListProps> = ({
 
   /* 인터섹션 callback */
   const onIntersect = ([entry]: any, observer: any) => {
-    console.log("옵저빙 시도");
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
       fetchItems();

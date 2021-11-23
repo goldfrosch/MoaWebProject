@@ -3,6 +3,7 @@ package com.goldfrosch.webback.domain.User.api;
 import com.goldfrosch.webback.domain.User.application.UserService;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.domain.User.entity.dao.LoginDAO;
+import com.goldfrosch.webback.domain.User.entity.dao.PasswordDAO;
 import com.goldfrosch.webback.domain.User.entity.dao.RegisterDAO;
 import com.goldfrosch.webback.domain.User.entity.dto.UserDTO;
 import com.goldfrosch.webback.domain.User.persistance.UserQueryRepository;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -31,7 +33,7 @@ public class UserRestController {
     private final UserService userService;
 
     @GetMapping("/profile")
-    public UserDTO getUser(@AuthenticationPrincipal User user) {
+    public UserDTO getUser(@ApiIgnore @AuthenticationPrincipal User user) {
         return userService.getUserService(user);
     }
 
@@ -83,5 +85,15 @@ public class UserRestController {
     @GetMapping("/find/uuid")
     public String findUuid(@RequestParam String uuid) {
         return userQueryRepository.findOverlapUUID(uuid);
+    }
+
+    @PutMapping("/update/pass")
+    public String updatePassword(@ApiIgnore @AuthenticationPrincipal User user, PasswordDAO pass) {
+        PasswordDAO passData = new PasswordDAO();
+
+        passData.setNowPass(passwordEncoder.encode(pass.getNowPass()));
+        passData.setNewPass(pass.getNewPass());
+
+        return userService.updateUserPassword(passData, user);
     }
 }

@@ -58,11 +58,11 @@ const GridList: React.FC<GridListProps> = ({
   const handleSubmit = (e: React.ChangeEvent<unknown>) => {
     e.preventDefault();
     history.push(
-      `/grid?page=1&category=${searchData.category}&type=${searchData.type}&query=${searchData.query}`
+      `/grid?category=${data.category}&type=${data.type}&query=${data.query}`
     );
   };
   const handleWriteGrid = () => {
-    checkLogin("/grid/write?category=" + searchData.category);
+    checkLogin("/grid/write?category=" + data.category);
   };
 
   //무한 스크롤 함수

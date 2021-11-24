@@ -55,21 +55,26 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   });
 
   //List 추가함수
-  const fetchItems = async () => {
+  const fetchItems = async (category?: string, page?: number) => {
     setListOption(prev => ({ ...prev, isLoading: true }));
     await fakeFetch();
     //기존 데이터
-    let lists: IBoardListData[] = list;
+    let lists: IBoardListData[];
+    if (page && page === 1) {
+      lists = [];
+    } else {
+      lists = list;
+    }
     let listOptionData: IScrollOption = listOption;
 
     //axios 실행
     await BoardAPI.getBoards({
-      category: data.category.toUpperCase(),
-      page: listOptionData.page,
+      category: category ? category.toUpperCase() : data.category.toUpperCase(),
+      page: page || listOptionData.page,
       type: data.type,
       query: data.query
     })
-      .then(async (res: AxiosResponse) => {
+      .then((res: AxiosResponse) => {
         if (res.data.list.empty === true) {
           listOptionData.isLoading = false;
           listOptionData.isStop = true;
@@ -129,7 +134,10 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
       )
     });
 
-    fetchItems();
+    fetchItems(
+      String(new URLSearchParams(location.search).get("category") ?? ""),
+      1
+    );
 
     return () =>
       setListOption({ ...listOption, page: 1, isLoading: false, isStop: true });

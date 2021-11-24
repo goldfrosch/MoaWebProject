@@ -101,8 +101,8 @@ public class BoardRestController {
 
     @CrossOrigin("*")
     @PutMapping("/board/comment")
-    public void updateBoardComment(@RequestBody BoardCommentUpdateDAO comments) {
-        boardCommentService.updateBoardCommentById(comments.getId(), comments.getContext());
+    public void updateBoardComment(@RequestBody BoardCommentUpdateDAO comments, @ApiIgnore @AuthenticationPrincipal User user) {
+        boardCommentService.updateBoardCommentById(comments.getId(), comments.getContext(), user);
     }
 
     @CrossOrigin("*")

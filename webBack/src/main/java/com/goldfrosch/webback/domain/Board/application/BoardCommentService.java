@@ -60,8 +60,10 @@ public class BoardCommentService {
     }
 
     @Transactional
-    public void updateBoardCommentById(Long id, String context) {
-        boardCommentQueryRepository.updateComment(id, context);
+    public void updateBoardCommentById(Long id, String context, User user) {
+        if(boardCommentRepository.findById(id).get().getUser().equals(user)) {
+            boardCommentQueryRepository.updateComment(id, context);
+        }
     }
 
     @Transactional

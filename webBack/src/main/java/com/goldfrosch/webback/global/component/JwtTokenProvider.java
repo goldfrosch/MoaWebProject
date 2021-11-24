@@ -1,9 +1,6 @@
 package com.goldfrosch.webback.global.component;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +22,7 @@ public class JwtTokenProvider {
     // 토큰 유효시간 평생으로
     // Refresh 토큰으로 계속 주기적으로 가져와줘야 하나
     private long tokenValidTime = 1000L * 60 * 60 * 24;
+    private long refreshTokenValidTime = 1000L * 60 * 60 * 24 * 14;
 
     private final UserDetailsService userDetailsService;
 
@@ -40,12 +38,21 @@ public class JwtTokenProvider {
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
         return Jwts.builder()
-                .setClaims(claims) // 정보 저장
-                .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
-                // signature 에 들어갈 secret값 세팅
-                .compact();
+            .setClaims(claims) // 정보 저장
+            .setIssuedAt(now) // 토큰 발행 시간 정보
+            .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
+            .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
+            // signature 에 들어갈 secret값 세팅
+            .compact();
+    }
+
+    public String refreshToken() {
+        Date now = new Date();
+        return Jwts.builder()
+            .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+            .setExpiration(new Date(now.getTime() + refreshTokenValidTime))
+            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .compact();
     }
 
     // JWT 토큰에서 인증 정보 조회

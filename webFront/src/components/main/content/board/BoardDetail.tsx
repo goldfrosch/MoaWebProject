@@ -189,7 +189,7 @@ const BoardDetailBlock = styled.div`
 
   textarea {
     width: 100%;
-
+    min-height: 96px;
     border: 2px solid #e9e9e9;
     border-radius: 8px;
 
@@ -278,7 +278,7 @@ const BoardDetailBlock = styled.div`
     }
     & > textarea {
       width: 100%;
-      height: 128px;
+      min-height: 144px;
 
       background-color: none;
       border: none;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router";
 
 import { AxiosResponse } from "axios";
 import * as BoardAPI from "api/board";
@@ -16,6 +15,18 @@ import {
 import { IBoardDesc, IBoardListData } from "modules/board/type";
 import DescUtils from "utils/DescUtils";
 
+interface match<P> {
+  params: P;
+  isExact: boolean;
+  path: string;
+  url: string;
+}
+
+interface RouteComponentProps<P> {
+  match: match<P>;
+  location: any;
+}
+
 export interface IGridData {
   category: string;
   type: string;
@@ -29,17 +40,19 @@ export interface IGridStatus {
 
 const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
-interface GridContainerProps {}
+interface GridContainerProps {
+  category: string;
+}
+
 const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
-  location
+  location,
+  match
 }) => {
   const userData = useSelector((state: IRootState) => state.auth.profile);
   const dispatch = useDispatch();
 
   const [data, setData] = useState<IGridData>({
-    category: String(
-      new URLSearchParams(location.search).get("category") ?? ""
-    ),
+    category: match.params.category,
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
   });
@@ -55,21 +68,23 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   });
 
   //List 추가함수
-  const fetchItems = async (category?: string, page?: number) => {
+  const fetchItems = async (page?: number) => {
     setListOption(prev => ({ ...prev, isLoading: true }));
     await fakeFetch();
     //기존 데이터
     let lists: IBoardListData[];
+
     if (page && page === 1) {
       lists = [];
     } else {
       lists = list;
     }
+
     let listOptionData: IScrollOption = listOption;
 
     //axios 실행
     await BoardAPI.getBoards({
-      category: category ? category.toUpperCase() : data.category.toUpperCase(),
+      category: match.params.category.toUpperCase(),
       page: page || listOptionData.page,
       type: data.type,
       query: data.query
@@ -84,8 +99,14 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
 
           listOptionData.isLoading = false;
           listOptionData.page = listOptionData.page + 1;
+          listOptionData.isStop = false;
         }
-        setListOption({ ...listOption, ...listOptionData });
+        setListOption(prev => ({
+          ...prev,
+          page: listOptionData.page,
+          isLoading: listOptionData.isLoading,
+          isStop: listOptionData.isStop
+        }));
       })
       .catch(error => {
         console.log(error);
@@ -119,30 +140,17 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     setList([]);
     setListOption({ ...listOption, page: 1, isLoading: false, isStop: false });
     setData({
-      category: String(
-        new URLSearchParams(location.search).get("category") ?? ""
-      ),
+      category: match.params.category,
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
     setDesc({
-      title: DescUtils.SetBoardTitle(
-        String(new URLSearchParams(location.search).get("category") ?? "")
-      ),
-      context: DescUtils.SetBoardContext(
-        String(new URLSearchParams(location.search).get("category") ?? "")
-      )
+      title: DescUtils.SetBoardTitle(match.params.category),
+      context: DescUtils.SetBoardContext(match.params.category)
     });
-
-    fetchItems(
-      String(new URLSearchParams(location.search).get("category") ?? ""),
-      1
-    );
-
-    return () =>
-      setListOption({ ...listOption, page: 1, isLoading: false, isStop: true });
+    fetchItems(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
+  }, [match.params.category, location]);
   return (
     <GridList
       data={data}

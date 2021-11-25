@@ -62,7 +62,7 @@ const GridList: React.FC<GridListProps> = ({
     );
   };
   const handleWriteGrid = () => {
-    checkLogin("/grid/write?category=" + data.category);
+    checkLogin("/grid/write?category=" + data.category.toLocaleLowerCase());
   };
 
   //무한 스크롤 함수

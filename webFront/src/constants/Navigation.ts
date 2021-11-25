@@ -43,7 +43,7 @@ const Navigation: INavigation[] = [
       },
       {
         title: "후원상품",
-        link: "/grid?category=donate"
+        link: "/grid/donate"
       }
     ]
   },
@@ -56,7 +56,7 @@ const Navigation: INavigation[] = [
       },
       {
         title: "사진게시판",
-        link: "/grid?category=photo"
+        link: "/grid/photo"
       },
       {
         title: "꿀팁게시판",
@@ -72,7 +72,7 @@ const Navigation: INavigation[] = [
       },
       {
         title: "내그기그",
-        link: "/grid?category=canvas"
+        link: "/grid/canvas"
       }
     ]
   },

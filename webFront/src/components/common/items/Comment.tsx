@@ -91,6 +91,8 @@ const Comment: React.FC<CommentProps> = ({
             disabled={true}
             style={{ color: "gray" }}
           />
+        ) : edit ? (
+          <span style={{ wordBreak: "keep-all" }}>{item.comment.comment}</span>
         ) : (
           <textarea
             defaultValue={item.comment.comment}

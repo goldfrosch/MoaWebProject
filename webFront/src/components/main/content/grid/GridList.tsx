@@ -25,13 +25,12 @@ interface GridListProps {
   list: IBoardListData[];
   listOption: IScrollOption;
   checkLogin: (link: string) => void;
-  fetchItems: () => void;
+  fetchItems: (id?: number) => void;
 }
 
 export interface IScrollOption {
   page: number;
   isLoading: boolean;
-  isStop: boolean;
 }
 
 const GridList: React.FC<GridListProps> = ({
@@ -74,7 +73,7 @@ const GridList: React.FC<GridListProps> = ({
   };
 
   /* 인터섹션 callback */
-  const onIntersect = ([entry]: any, observer: any) => {
+  const onIntersect = async ([entry]: any, observer: any) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
       fetchItems();
@@ -188,9 +187,7 @@ const GridList: React.FC<GridListProps> = ({
               </div>
             ))}
         </div>
-        {!listOption.isStop && (
-          <div className="loading" style={{ height: "16px" }} ref={target} />
-        )}
+        <div className="loading" style={{ height: "16px" }} ref={target} />
       </div>
     </GridListBlock>
   );

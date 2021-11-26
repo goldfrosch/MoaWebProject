@@ -33,11 +33,6 @@ export interface IGridData {
   query: string;
 }
 
-export interface IGridStatus {
-  isLoading: boolean;
-  isDone: boolean;
-}
-
 const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
 interface GridContainerProps {
@@ -63,54 +58,48 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
   const [list, setList] = useState<IBoardListData[]>([]);
   const [listOption, setListOption] = useState<IScrollOption>({
     page: 1,
-    isLoading: false,
-    isStop: false
+    isLoading: false
   });
 
   //List 추가함수
   const fetchItems = async (page?: number) => {
-    setListOption(prev => ({ ...prev, isLoading: true }));
+    setListOption(prev => ({ ...prev, isLoading: true, isStop: true }));
     await fakeFetch();
-    //기존 데이터
-    let lists: IBoardListData[];
-
-    if (page && page === 1) {
-      lists = [];
-    } else {
-      lists = list;
-    }
-
-    let listOptionData: IScrollOption = listOption;
 
     //axios 실행
-    await BoardAPI.getBoards({
-      category: match.params.category.toUpperCase(),
-      page: page || listOptionData.page,
-      type: data.type,
-      query: data.query
-    })
-      .then((res: AxiosResponse) => {
-        if (res.data.list.empty === true) {
-          listOptionData.isLoading = false;
-          listOptionData.isStop = true;
-        } else {
-          lists.push(...res.data.list.results);
-          setList([...lists]);
+    try {
+      const res: AxiosResponse = await BoardAPI.getBoards({
+        category: match.params.category.toUpperCase(),
+        page: page || listOption.page,
+        type: data.type,
+        query: data.query
+      });
 
-          listOptionData.isLoading = false;
-          listOptionData.page = listOptionData.page + 1;
-          listOptionData.isStop = false;
-        }
+      //기존 데이터
+      if (listOption.page === 1) {
+        setList(res.data.list.results);
+      } else {
+        setList([...list, ...res.data.list.results]);
+      }
+
+      if (res.data.list.empty) {
         setListOption(prev => ({
           ...prev,
-          page: listOptionData.page,
-          isLoading: listOptionData.isLoading,
-          isStop: listOptionData.isStop
+          page: prev.page + 1,
+          isLoading: false
         }));
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        return true;
+      } else {
+        setListOption(prev => ({
+          ...prev,
+          page: 1,
+          isLoading: false
+        }));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    return false;
   };
 
   const checkLogin = (link: string) => {
@@ -138,7 +127,7 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
 
   useEffect(() => {
     setList([]);
-    setListOption({ ...listOption, page: 1, isLoading: false, isStop: false });
+    setListOption({ page: 1, isLoading: false });
     setData({
       category: match.params.category,
       type: String(new URLSearchParams(location.search).get("type") ?? ""),

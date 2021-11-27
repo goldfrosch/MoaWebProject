@@ -10,14 +10,13 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Skeleton from "@mui/material/Skeleton";
 
 import { IGridData } from "containers/content/grid/GridListContainer";
 import { IBoardDesc, IBoardListData } from "modules/board/type";
 
-import Thumbnail from "assets/image/thumbnail.jpg";
+import Card from "components/common/items/grid/Card";
 import history from "utils/HistoryUtils";
-import BoardProfile from "components/common/items/BoardProfile";
+import CardSkeleton from "components/common/items/skeleton/CardSkeleton";
 
 interface GridListProps {
   data: IGridData;
@@ -139,53 +138,10 @@ const GridList: React.FC<GridListProps> = ({
         </div>
         <div className="content">
           {list.map((data, key) => (
-            <div
-              className="item"
-              key={key}
-              onClick={() => history.push(`/board/${data.id}`)}
-            >
-              <img
-                src={
-                  data.thumbnail !== ""
-                    ? `http://15.164.18.220/images/${data.thumbnail}`
-                    : Thumbnail
-                }
-                style={{ width: "100%" }}
-                alt=""
-              />
-              <span
-                style={{
-                  padding: "6px",
-                  color: "#424242",
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  fontFamily: "A17",
-                  textOverflow: "ellipsis"
-                }}
-              >
-                {data.prefix !== "" && [data.prefix]}
-                {data.title}
-              </span>
-              <BoardProfile
-                nickName={data.nickName}
-                uuid={data.uuid}
-                createdDate={data.createdDate}
-              />
-            </div>
+            <Card data={data} key={key} />
           ))}
           {listOption.isLoading &&
-            [...Array(10)].map((_, key) => (
-              <div className="item" key={key}>
-                <Skeleton
-                  variant="rectangular"
-                  width="100%"
-                  height={190}
-                  animation="wave"
-                />
-                <Skeleton width="100%" />
-                <Skeleton width="60%" />
-              </div>
-            ))}
+            [...Array(10)].map((_, key) => <CardSkeleton key={key} />)}
         </div>
         <div className="loading" style={{ height: "16px" }} ref={target} />
       </div>
@@ -257,32 +213,6 @@ const GridListBlock = styled.div`
 
       @media (max-width: 800px) {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      }
-      & > .item {
-        width: 100%;
-        height: auto;
-        background-color: white;
-
-        border: 1px solid #d7d7d7;
-        border-radius: 8px;
-
-        padding: 2.5% 5%;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        cursor: pointer;
-
-        & > img {
-          width: 90%;
-          height: auto;
-          object-fit: cover;
-        }
-      }
-      & > .item:hover {
-        transform: scale(1.025);
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       }
     }
   }

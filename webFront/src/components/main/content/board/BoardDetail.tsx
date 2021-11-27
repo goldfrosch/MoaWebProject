@@ -49,14 +49,16 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
               <span className="title">{datas.detail.title}</span>
             </div>
             <div className="profile">
-              <img
-                src={`https://crafatar.com/renders/head/${datas.detail.uuid}`}
-                alt=""
-              />
-              <span className="nick">{datas.detail.nickName}</span>
-              <span className="time">
-                {DateUtils.getPrevTime(datas.detail.createdDate)}
-              </span>
+              <div className="item">
+                <img
+                  src={`https://crafatar.com/renders/head/${datas.detail.uuid}`}
+                  alt=""
+                />
+                <span className="nick">{datas.detail.nickName}</span>
+                <span className="time">
+                  {DateUtils.getPrevTime(datas.detail.createdDate)}
+                </span>
+              </div>
             </div>
           </div>
           <div
@@ -234,26 +236,29 @@ const BoardDetailBlock = styled.div`
     }
     & > .profile {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
+      justify-content: space-between;
 
       padding: 16px 4px;
-      & > img {
-        width: 24px;
-        height: 24px;
-      }
-      & > .nick {
-        font-size: 12px;
-        font-weight: 500;
+      & > .item {
+        & > img {
+          width: 24px;
+          height: 24px;
+        }
+        & > .nick {
+          font-size: 12px;
+          font-weight: 500;
 
-        padding: 0 4px;
-      }
-      & > .time {
-        color: #575757;
+          padding: 0 4px;
+        }
+        & > .time {
+          color: #575757;
 
-        padding-left: 8px;
+          padding-left: 8px;
 
-        font-size: 8px;
-        font-weight: 500;
+          font-size: 8px;
+          font-weight: 500;
+        }
       }
     }
   }

@@ -22,6 +22,7 @@ const ProfileSkeletonBlock = styled.div`
   justify-content: space-between;
   & > .list {
     flex: 1;
+    padding: 4px;
   }
 `;
 

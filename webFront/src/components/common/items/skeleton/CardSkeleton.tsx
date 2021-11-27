@@ -14,6 +14,7 @@ const CardSkeleton: React.FC<ICardSkeletonProps> = () => {
         height={190}
         animation="wave"
       />
+      <Skeleton width="60%" animation="wave" />
       <ProfileSkeleton />
     </CardSkeletonBlock>
   );

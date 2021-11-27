@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
+import { AxiosResponse } from "axios";
+import * as BoardAPI from "api/board";
+
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Button from "components/common/items/Button";
+import Card from "components/common/items/grid/Card";
+import CardSkeleton from "components/common/items/skeleton/CardSkeleton";
 import Search from "components/common/items/Search";
 
 import InputLabel from "@mui/material/InputLabel";
@@ -14,49 +19,47 @@ import Select from "@mui/material/Select";
 import { IGridData } from "containers/content/grid/GridListContainer";
 import { IBoardDesc, IBoardListData } from "modules/board/type";
 
-import Card from "components/common/items/grid/Card";
 import history from "utils/HistoryUtils";
-import CardSkeleton from "components/common/items/skeleton/CardSkeleton";
 
 interface GridListProps {
   data: IGridData;
   desc: IBoardDesc;
-  list: IBoardListData[];
-  listOption: IScrollOption;
+  params: any;
+  location: any;
   checkLogin: (link: string) => void;
-  fetchItems: (id?: number) => void;
 }
 
-export interface IScrollOption {
-  page: number;
-  isLoading: boolean;
-}
+const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
 const GridList: React.FC<GridListProps> = ({
   data,
   desc,
-  list,
-  listOption,
-  checkLogin,
-  fetchItems
+  params,
+  location,
+  checkLogin
 }) => {
   /* 타겟 엘리먼트 */
+  let page = 1;
   const target = useRef<any>(null);
   //검색 데이터
   const [searchData, setSearchData] = useState<IGridData>({
     ...data,
     type: "NICKNAME"
   });
+  const [list, setList] = useState<IBoardListData[]>([]);
+  const [listOption, setListOption] = useState<boolean>(false);
+
+  const [isStop, setIsStop] = useState<boolean>(false);
 
   //검색 카테고리 변경 함수
   const handleSearchChange = (e: any) => {
     setSearchData({ ...searchData, query: e.target.value });
   };
   //검색 후 API 로딩
-  const handleSubmit = (e: React.ChangeEvent<unknown>) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     history.push(
-      `/grid?category=${data.category}&type=${data.type}&query=${data.query}`
+      `/grid/${data.category}?type=${searchData.type}&query=${searchData.query}`
     );
   };
   const handleWriteGrid = () => {
@@ -71,11 +74,51 @@ const GridList: React.FC<GridListProps> = ({
     threshold: 0.5
   };
 
+  //List 추가함수
+  const fetchItems = async (): Promise<boolean> => {
+    setListOption(true);
+    await fakeFetch();
+
+    //axios 실행
+    try {
+      const res: AxiosResponse = await BoardAPI.getBoards({
+        category: params.category.toUpperCase(),
+        page: page,
+        type: data.type,
+        query: data.query
+      });
+      //기존 데이터
+      if (page === 1) {
+        setList(res.data.list.results);
+      } else {
+        setList(prev => [...prev, ...res.data.list.results]);
+      }
+      page += 1;
+
+      setListOption(false);
+
+      if (res.data.list.empty || res.data.list.results.length < 10) {
+        return true;
+      }
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+    return false;
+  };
+
+  //리스트 초기화 함수
+  const clearList = async () => {
+    page = 1;
+    setList([]);
+    setIsStop(await fetchItems());
+  };
+
   /* 인터섹션 callback */
   const onIntersect = async ([entry]: any, observer: any) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      fetchItems();
+      setIsStop(await fetchItems());
       observer.observe(entry.target);
     }
   };
@@ -86,6 +129,11 @@ const GridList: React.FC<GridListProps> = ({
     return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    clearList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location, params]);
 
   return (
     <GridListBlock>
@@ -140,10 +188,12 @@ const GridList: React.FC<GridListProps> = ({
           {list.map((data, key) => (
             <Card data={data} key={key} />
           ))}
-          {listOption.isLoading &&
+          {listOption &&
             [...Array(10)].map((_, key) => <CardSkeleton key={key} />)}
         </div>
-        <div className="loading" style={{ height: "16px" }} ref={target} />
+        {!isStop && (
+          <div className="loading" style={{ height: "16px" }} ref={target} />
+        )}
       </div>
     </GridListBlock>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import SunEditor from "suneditor-react";
@@ -30,11 +30,11 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
   const dispatch = useDispatch();
 
   const [datas, setDatas] = useState<IBoardData>({
-    category: data.detail.category,
-    content: data.detail.content,
-    isComment: data.detail.isComment,
-    prefix: data.detail.prefix,
-    title: data.detail.title
+    category: "",
+    content: "",
+    isComment: false,
+    prefix: "",
+    title: ""
   });
   const [contents, setContents] = useState("");
 
@@ -77,7 +77,7 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
         { type: "application/json" }
       )
     );
-    BoardAPI.editBoard(formData)
+    BoardAPI.editBoard(data.detail.id, formData)
       .then((res: AxiosResponse) => {
         if (res.status === 200) {
           dispatch(setMessageSuccessAction("성공적으로 수정했습니다"));
@@ -97,7 +97,15 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
     });
   };
 
-  console.log(data);
+  useEffect(() => {
+    setDatas({
+      category: data.detail.category,
+      content: data.detail.content,
+      isComment: data.detail.isComment,
+      prefix: data.detail.prefix,
+      title: data.detail.title
+    });
+  }, [data]);
 
   return (
     <BoardEditBlock>
@@ -106,10 +114,15 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
           <h2 className="title">글 작성하기</h2>
           <div className="option">
             <select className="category" disabled>
-              <option>{DescUtils.SetBoardTitle(data.detail.category)}</option>
+              <option>
+                {DescUtils.SetBoardTitle(
+                  data.detail.category.toLocaleLowerCase()
+                )}
+              </option>
             </select>
             <select
               className="tag"
+              defaultValue={data.detail.prefix}
               onChange={(e: any) =>
                 setDatas({ ...datas, prefix: e.target.value })
               }
@@ -125,25 +138,27 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
           <div className="option">
             <input
               placeholder="제목을 입력해주세요"
-              value={datas.title}
+              defaultValue={datas.title}
               onChange={(e: any) => {
-                setDatas({ ...datas, title: e.target.value });
+                setDatas(prev => ({ ...prev, title: e.target.value }));
               }}
             />
           </div>
         </div>
-        <div>
-          <SunEditor
-            autoFocus={true}
-            lang="ko"
-            setDefaultStyle="z-index: 0"
-            width="100%"
-            height="600px"
-            defaultValue={contents}
-            onChange={setContents}
-            setOptions={Option}
-          />
-        </div>
+        {datas.content !== "" && (
+          <div>
+            <SunEditor
+              autoFocus={true}
+              lang="ko"
+              setDefaultStyle="z-index: 0"
+              width="100%"
+              height="600px"
+              defaultValue={datas.content}
+              onChange={setContents}
+              setOptions={Option}
+            />
+          </div>
+        )}
         <div className="footer">
           <div className="setting">
             <span>댓글 금지: </span>

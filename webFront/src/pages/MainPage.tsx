@@ -54,7 +54,7 @@ const MainPage = () => {
         <Route exact path="/board/:id" component={BoardDetailContainer} />
         <Route exact path="/board/edit/:id" component={BoardEditContainer} />
         {/* 그리드 형식 게시판 */}
-        <Route exact path="/grid/:category" component={GridContainer} />
+        <Route exact path="/grid" component={GridContainer} />
         <Route exact path="/grid/write" component={GridWriteContainer} />
         {/* MINIGAME*/}
         <Route exact path="/etc/minigame" component={Minigame} />

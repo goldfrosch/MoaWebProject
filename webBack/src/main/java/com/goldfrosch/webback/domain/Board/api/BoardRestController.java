@@ -96,6 +96,7 @@ public class BoardRestController {
     //보드 댓글 관련 api
     @PostMapping("/board/comment")
     public void postBoardComment(@RequestBody BoardCommentDAO boardComment, @ApiIgnore @AuthenticationPrincipal User user) {
+        log.info(boardComment.getComment());
         boardCommentService.postBoardComment(boardComment, user);
     }
 

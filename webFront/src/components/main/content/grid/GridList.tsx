@@ -24,7 +24,6 @@ import history from "utils/HistoryUtils";
 interface GridListProps {
   data: IGridData;
   desc: IBoardDesc;
-  params: any;
   location: any;
   checkLogin: (link: string) => void;
 }
@@ -34,7 +33,6 @@ const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 const GridList: React.FC<GridListProps> = ({
   data,
   desc,
-  params,
   location,
   checkLogin
 }) => {
@@ -59,7 +57,7 @@ const GridList: React.FC<GridListProps> = ({
   const handleSubmit = (e: any) => {
     e.preventDefault();
     history.push(
-      `/grid/${data.category}?type=${searchData.type}&query=${searchData.query}`
+      `/grid?category=${data.category}&type=${searchData.type}&query=${searchData.query}`
     );
   };
   const handleWriteGrid = () => {
@@ -82,7 +80,7 @@ const GridList: React.FC<GridListProps> = ({
     //axios 실행
     try {
       const res: AxiosResponse = await BoardAPI.getBoards({
-        category: params.category.toUpperCase(),
+        category: data.category.toUpperCase(),
         page: page,
         type: data.type,
         query: data.query
@@ -133,7 +131,7 @@ const GridList: React.FC<GridListProps> = ({
   useEffect(() => {
     clearList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, params]);
+  }, [location]);
 
   return (
     <GridListBlock>

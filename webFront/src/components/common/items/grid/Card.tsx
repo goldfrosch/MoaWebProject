@@ -37,6 +37,7 @@ const Card: React.FC<ICardData> = ({ data }) => {
           {data.title}
         </span>
         <BoardProfile
+          profile={data.profile}
           nickName={data.nickName}
           uuid={data.uuid}
           createdDate={data.createdDate}

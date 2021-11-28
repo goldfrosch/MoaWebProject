@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardCommentService {
@@ -61,7 +61,8 @@ public class BoardCommentService {
 
     @Transactional
     public void updateBoardCommentById(Long id, String context, User user) {
-        if(boardCommentRepository.findById(id).get().getUser().equals(user)) {
+        log.info(context);
+        if(boardCommentRepository.findById(id).get().getUser().getId() == user.getId()) {
             boardCommentQueryRepository.updateComment(id, context);
         }
     }

@@ -8,6 +8,7 @@ import { ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 
 import Comment from "components/common/items/Comment";
+import { Link } from "react-router-dom";
 
 interface BoardDetailProps {
   data: IBoardDetail;
@@ -77,13 +78,13 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                   padding: "8px"
                 }}
               >
-                {/* {profile.uuid === data.detail.uuid && (
-                  <Link to={`/board/edit${data.detail.id}`}>
+                {profile.uuid === data.detail.uuid && (
+                  <Link to={`/board/edit/${data.detail.id}`}>
                     <Button theme={ThemeColor.first} size={ThemeSize.middle}>
                       수정
                     </Button>
                   </Link>
-                )} */}
+                )}
                 <span style={{ margin: "0 4px" }} />
                 {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
                   <Button

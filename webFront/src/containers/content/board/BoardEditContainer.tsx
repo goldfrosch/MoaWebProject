@@ -53,6 +53,7 @@ const BoardEditContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     BoardAPI.getBoard(id)
       .then((res: AxiosResponse) => {
         setData(res.data);
+        getBoardTagData(res.data.detail.category);
       })
       .catch(error => {
         console.log(error);
@@ -60,8 +61,8 @@ const BoardEditContainer: React.FC<RouteComponentProps<MatchParams>> = ({
       });
   };
 
-  const getBoardTagData = () => {
-    BoardAPI.getBoardTag(data.detail.category)
+  const getBoardTagData = (tags: string) => {
+    BoardAPI.getBoardTag(tags)
       .then((res: AxiosResponse) => {
         setBoardTag(res.data);
       })
@@ -71,12 +72,8 @@ const BoardEditContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   };
 
   useEffect(() => {
-    getBoardTagData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     getData(match.params.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.id]);
   return <BoardEdit data={data} boardTag={boardTag} />;
 };

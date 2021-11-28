@@ -170,6 +170,12 @@ const BoardList: React.FC<BoardListProps> = ({
                       {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
                     </span>
                     <span className="title">{data.title}</span>
+                    {data.commentCount > 0 && (
+                      <span style={{ color: "red", fontSize: "12px" }}>
+                        {" "}
+                        [ {data.commentCount} ]
+                      </span>
+                    )}
                   </div>
                   <div className="info">
                     <img

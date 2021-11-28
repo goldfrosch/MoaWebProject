@@ -19,11 +19,15 @@ public class BoardListDTO {
 
     private String prefix;
 
+    private String profile;
+
     private String thumbnail;
 
     private LocalDateTime createdDate;
 
     private int count;
+
+    private Long commentCount;
 
     private String nickName;
 
@@ -39,9 +43,11 @@ public class BoardListDTO {
             String title,
             BoardList category,
             String prefix,
+            String profile,
             String thumbnail,
             LocalDateTime createdDate,
             int count,
+            Long commentCount,
             String nickName,
             int rank,
             String uuid,
@@ -51,9 +57,11 @@ public class BoardListDTO {
         this.title = title;
         this.category = category;
         this.prefix = prefix;
+        this.profile = profile;
         this.thumbnail = thumbnail;
         this.createdDate = createdDate;
         this.count = count;
+        this.commentCount = commentCount;
         this.nickName = nickName;
         this.rank = rank;
         this.uuid = uuid;

@@ -19,8 +19,8 @@ export const postBoard = (data: any) => {
   return axios.post(`/board`, data);
 };
 
-export const editBoard = (data: any) => {
-  return axios.put(`/board`, data);
+export const editBoard = (id: number, data: any) => {
+  return axios.put(`/board/${id}`, data);
 };
 
 export const deleteBoard = (id: number) => {

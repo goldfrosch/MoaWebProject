@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.goldfrosch.webback.domain.Board.domain.QBoard.board;
+import static com.goldfrosch.webback.domain.Board.domain.QBoardComment.boardComment;
 import static com.goldfrosch.webback.domain.Board.domain.QBoardLove.boardLove;
 import static com.goldfrosch.webback.domain.Board.domain.QBoardTag.boardTag;
 
@@ -37,9 +38,11 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
             board.title,
             board.category,
             board.prefix,
+            board.user.profile,
             board.thumbnail,
             board.createdDate,
             board.count,
+            jpaQueryFactory.select(boardComment.count()).from(boardComment).where(boardComment.boardNum.eq(board.id)),
             board.user.nickName,
             board.user.rank,
             board.user.uuid,
@@ -58,9 +61,11 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
                     board.title,
                     board.category,
                     board.prefix,
+                    board.user.profile,
                     board.thumbnail,
                     board.createdDate,
                     board.count,
+                    jpaQueryFactory.select(boardComment.count()).from(boardComment).where(boardComment.boardNum.eq(board.id)),
                     board.user.nickName,
                     board.user.rank,
                     board.user.uuid,
@@ -81,9 +86,11 @@ public class BoardQueryRepository extends QuerydslRepositorySupport {
                     board.title,
                     board.category,
                     board.prefix,
+                    board.user.profile,
                     board.thumbnail,
                     board.createdDate,
                     board.count,
+                    jpaQueryFactory.select(boardComment.count()).from(boardComment).where(boardComment.boardNum.eq(board.id)),
                     board.user.nickName,
                     board.user.rank,
                     board.user.uuid,

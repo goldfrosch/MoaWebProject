@@ -5,19 +5,26 @@ import Avatar from "@mui/material/Avatar";
 import DateUtils from "utils/DateUtils";
 
 interface IBoardProfile {
+  profile?: string;
   nickName: string;
   uuid: string;
   createdDate: Date;
 }
 
 const BoardProfile: React.FC<IBoardProfile> = ({
+  profile,
   nickName,
   uuid,
   createdDate
 }) => {
   return (
     <BoardProfileBlock>
-      <Avatar />
+      {profile ? (
+        <Avatar src={`http://moasv.co.kr/images/${profile}`} />
+      ) : (
+        <Avatar />
+      )}
+
       <div className="profile">
         <div className="nick">
           <img src={`https://crafatar.com/renders/head/${uuid}`} alt="" />

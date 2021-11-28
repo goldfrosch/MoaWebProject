@@ -134,13 +134,13 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                   justifyContent: "flex-end"
                 }}
               >
-                {/* {profile.uuid === data.detail.uuid && (
-                  <Link to={`/board/edit${data.detail.id}`}>
+                {profile.uuid === data.detail.uuid && (
+                  <Link to={`/board/edit/${data.detail.id}`}>
                     <Button theme={ThemeColor.first} size={ThemeSize.middle}>
                       수정
                     </Button>
                   </Link>
-                )} */}
+                )}
                 <span style={{ margin: "0 4px" }} />
                 {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
                   <Button

@@ -14,15 +14,16 @@ const Card: React.FC<ICardData> = ({ data }) => {
   return (
     <CardBlock onClick={() => history.push(`/board/${data.id}`)}>
       <div className="item">
-        <img
-          src={
-            data.thumbnail !== ""
-              ? `http://moasv.co.kr/images/${data.thumbnail}`
-              : Thumbnail
-          }
-          style={{ width: "100%" }}
-          alt=""
-        />
+        <div className="image">
+          <img
+            src={
+              data.thumbnail !== ""
+                ? `http://moasv.co.kr/images/${data.thumbnail}`
+                : Thumbnail
+            }
+            alt=""
+          />
+        </div>
         <span
           style={{
             padding: "6px",
@@ -35,6 +36,12 @@ const Card: React.FC<ICardData> = ({ data }) => {
         >
           {data.prefix !== "" && [data.prefix]}
           {data.title}
+          {data.commentCount > 0 && (
+            <span style={{ color: "red", fontSize: "12px" }}>
+              {" "}
+              [ {data.commentCount} ]
+            </span>
+          )}
         </span>
         <BoardProfile
           profile={data.profile}
@@ -50,7 +57,7 @@ const Card: React.FC<ICardData> = ({ data }) => {
 const CardBlock = styled.div`
   & > .item {
     width: 100%;
-    height: auto;
+    height: 100%;
     background-color: white;
 
     border: 1px solid #d7d7d7;
@@ -63,11 +70,17 @@ const CardBlock = styled.div`
     justify-content: center;
 
     cursor: pointer;
+    & > .image {
+      width: 100%;
+      height: 100%;
 
-    & > img {
-      width: 90%;
-      height: auto;
-      object-fit: cover;
+      display: flex;
+      align-items: center;
+      & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
   }
   & > .item:hover {

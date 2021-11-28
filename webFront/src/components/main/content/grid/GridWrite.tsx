@@ -124,7 +124,7 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
           <div className="files">
             <input
               type="file"
-              accept="image/*"
+              accept=".jpg, .png"
               onChange={(e: any) => {
                 setFileData({
                   ...fileData,

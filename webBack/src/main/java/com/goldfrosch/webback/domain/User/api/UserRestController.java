@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDateTime;
@@ -87,13 +88,24 @@ public class UserRestController {
         return userQueryRepository.findOverlapUUID(uuid);
     }
 
+    @CrossOrigin("*")
     @PutMapping("/update/pass")
-    public String updatePassword(@ApiIgnore @AuthenticationPrincipal User user, PasswordDAO pass) {
-        PasswordDAO passData = new PasswordDAO();
+    public String updatePassword(@ApiIgnore @AuthenticationPrincipal User user,@RequestBody PasswordDAO pass) {
+//        if (!passwordEncoder.matches(user.getPassword(), pass.getNowPass())) {
+//            throw new IllegalArgumentException("다른 비밀번호입니다.");
+//        }
+        String newPassword = passwordEncoder.encode(pass.getNewPass());
+        return userService.updateUserPassword(newPassword, user);
+    }
 
-        passData.setNowPass(passwordEncoder.encode(pass.getNowPass()));
-        passData.setNewPass(pass.getNewPass());
-
-        return userService.updateUserPassword(passData, user);
+    @CrossOrigin("*")
+    @PutMapping("/profile")
+    public String updateProfile(
+            @ApiIgnore @AuthenticationPrincipal User user,
+            @RequestPart(required = false, value = "file") MultipartFile file,
+            @RequestPart(value = "data") Boolean isDelete
+    ) {
+        log.info(file.getOriginalFilename());
+        return userService.updateUserProfile(user, file, isDelete);
     }
 }

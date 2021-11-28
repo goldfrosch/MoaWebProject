@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import * as AuthAPI from "api/auth";
+import { AxiosResponse } from "axios";
+
 import { ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Avatar from "@mui/material/Avatar";
@@ -11,6 +14,7 @@ import { IProfile } from "modules/auth/type";
 
 interface UserInfoProps {
   data: IProfile;
+  uploadProfile: (item: any) => void;
 }
 
 interface IPasswordEdit {
@@ -19,17 +23,37 @@ interface IPasswordEdit {
   newPassRepeat: string;
 }
 
-const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
+interface IFileData {
+  file: any;
+  preview: any;
+  isDeleted: boolean;
+}
+
+const UserInfo: React.FC<UserInfoProps> = ({ data, uploadProfile }) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [passwords, setPasswords] = useState<IPasswordEdit>({
     nowPass: "",
     newPass: "",
     newPassRepeat: ""
   });
+  const [profile, setProfile] = useState<IFileData>({
+    file: null,
+    preview: "",
+    isDeleted: false
+  });
 
-  const submitPassword = () => {
+  const submitPassword = async () => {
     if (passwords.newPass === passwords.newPassRepeat) {
-      console.log("준비중인 시스템입니다");
+      try {
+        const res: AxiosResponse = await AuthAPI.updatePassword({
+          newPass: passwords.newPass,
+          nowPass: passwords.nowPass
+        });
+        alert(res.data);
+        toggleModal();
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       alert("새 비밀번호들이 일치하지 않습니다");
     }
@@ -45,6 +69,34 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
     setIsModal(!isModal);
   };
 
+  const handleChangeProfileImage = (e: any) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setProfile(prev => ({
+        ...prev,
+        file: e.target.files[0],
+        preview: reader.result,
+        isDeleted: false
+      }));
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
+  const uploadFileData = async () => {
+    let formData = new FormData();
+    if (profile.file) {
+      formData.append("file", profile.file);
+    }
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(profile.isDeleted)], {
+        type: "application/json"
+      })
+    );
+    await uploadProfile(formData);
+  };
+
   return (
     <>
       {isModal && (
@@ -54,6 +106,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
               <div className="item">
                 <span>기존 비밀번호: </span>
                 <input
+                  type="password"
                   value={passwords.nowPass}
                   onChange={(e: any) =>
                     setPasswords({
@@ -66,6 +119,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
               <div className="item">
                 <span>새 비밀번호: </span>
                 <input
+                  type="password"
                   value={passwords.newPass}
                   onChange={(e: any) =>
                     setPasswords({
@@ -78,6 +132,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
               <div className="item">
                 <span>새 비밀번호 확인: </span>
                 <input
+                  type="password"
                   value={passwords.newPassRepeat}
                   onChange={(e: any) =>
                     setPasswords({
@@ -112,7 +167,25 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
         </div>
         <div className="content">
           <div className="list">
-            <Avatar sx={{ width: 64, height: 64 }} />
+            <input
+              type="file"
+              className="files"
+              id="fileUpload"
+              accept=".jpg, .png"
+              onChange={(e: any) => handleChangeProfileImage(e)}
+            />
+            <label htmlFor="fileUpload" style={{ cursor: "pointer" }}>
+              {profile.file ? (
+                <Avatar sx={{ width: 64, height: 64 }} src={profile.preview} />
+              ) : data.profile ? (
+                <Avatar
+                  sx={{ width: 64, height: 64 }}
+                  src={`http://moasv.co.kr/images/${data.profile}`}
+                />
+              ) : (
+                <Avatar sx={{ width: 64, height: 64 }} />
+              )}
+            </label>
           </div>
           <div className="list">
             <span>이메일</span>
@@ -143,7 +216,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ data }) => {
               justifyContent: "flex-end"
             }}
           >
-            <Button theme={ThemeColor.first} size={ThemeSize.large}>
+            <Button
+              theme={ThemeColor.first}
+              size={ThemeSize.large}
+              onClick={uploadFileData}
+            >
               정보 수정
             </Button>
           </div>
@@ -182,6 +259,9 @@ const UserInfoBlock = styled.div`
         height: 32px;
         width: 75%;
         padding-left: 8px;
+      }
+      & > .files {
+        display: none;
       }
       & > input:disabled {
         color: #464646;

@@ -6,15 +6,19 @@ import com.goldfrosch.webback.domain.User.entity.dto.UserDTO;
 import com.goldfrosch.webback.domain.User.persistance.UserQueryRepository;
 import com.goldfrosch.webback.domain.User.persistance.UserRepository;
 
+import com.goldfrosch.webback.global.utils.FileUpload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService{
@@ -40,13 +44,23 @@ public class UserService implements UserDetailsService{
     }
 
     @Transactional
-    public String updateUserPassword(PasswordDAO pw, User user) {
-        if(userQueryRepository.findOverlapPassword(user.getId()).equals(pw.getNowPass())) {
-            userQueryRepository.updatePassword(pw.getNewPass(), user.getId());
+    public String updateUserPassword(String pw, User user) {
+        userQueryRepository.updatePassword(pw, user.getId());
+        return "성공적으로 변경되었습니다";
+    }
 
-            return "성공적으로 변경되었습니다";
+    @Transactional
+    public String updateUserProfile(User user, MultipartFile file, Boolean isDelete) {
+        String newFileData;
+        if(isDelete) {
+            newFileData = null;
         } else {
-            return "현재 비밀번호가 다릅니다";
+            newFileData = file == null ? ""
+                    : FileUpload.uploadImage(file,
+                    "profile/" + user.getId()
+            );
         }
+        userQueryRepository.updateProfile(newFileData, user.getId());
+        return "성공적으로 반영되었습니다";
     }
 }

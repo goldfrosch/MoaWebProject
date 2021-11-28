@@ -17,7 +17,7 @@ const Card: React.FC<ICardData> = ({ data }) => {
         <img
           src={
             data.thumbnail !== ""
-              ? `http://15.164.18.220/images/${data.thumbnail}`
+              ? `http://moasv.co.kr/images/${data.thumbnail}`
               : Thumbnail
           }
           style={{ width: "100%" }}

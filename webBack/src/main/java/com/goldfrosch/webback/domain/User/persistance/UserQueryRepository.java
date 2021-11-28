@@ -47,4 +47,11 @@ public class UserQueryRepository extends QuerydslRepositorySupport {
         .where(user.id.eq(id))
         .execute();
     }
+
+    public void updateProfile(String profile, Long id) {
+        update(user)
+                .set(user.profile, profile)
+                .where(user.id.eq(id))
+                .execute();
+    }
 }

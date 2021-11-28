@@ -28,3 +28,7 @@ export const findUUID = (data: string) => {
 export const updatePassword = (data: IUpdatePw) => {
   return axios.put("/update/pass", data);
 };
+
+export const updateProfile = (data: any) => {
+  return axios.put(`/profile`, data);
+};

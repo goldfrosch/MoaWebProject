@@ -94,8 +94,8 @@ const LoginFormBlock = styled.div`
         font-weight: 300;
       }
     }
-    @media (max-width: 800px) {
-      width: 100%;
+    @media (max-width: 768px) {
+      width: 90%;
       background-color: white;
       box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
       border-radius: 12px;
@@ -119,7 +119,7 @@ const LoginFormBlock = styled.div`
         display: flex;
         justify-content: center;
 
-        padding: 16px 4px;
+        padding: 16px 0;
         .btn {
           width: 100%;
           height: 36px;
@@ -143,7 +143,7 @@ const LoginFormBlock = styled.div`
 
           padding: 16px;
           & > span {
-            font-size: 14px;
+            font-size: 12px;
             margin: 4px 0;
           }
         }

@@ -71,7 +71,7 @@ public class BoardRestController {
     public void postBoard(
             @RequestPart(required = false, value = "file") MultipartFile file,
             @RequestPart(value = "data") BoardDAO board,
-            @AuthenticationPrincipal User user
+            @ApiIgnore @AuthenticationPrincipal User user
     ) {
         boardService.postBoard(board, file, user);
     }

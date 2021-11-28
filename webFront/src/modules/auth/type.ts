@@ -9,8 +9,8 @@ import {
 } from "./auth";
 
 export interface IUpdatePw {
-  nowPass: string,
   newPass: string,
+  nowPass: string,
 }
 
 export interface IUserRegister {

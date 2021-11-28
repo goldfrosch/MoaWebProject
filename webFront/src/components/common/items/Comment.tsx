@@ -43,54 +43,55 @@ const Comment: React.FC<CommentProps> = ({
               createdDate={item.comment.createdDate}
             />
           )}
-          {edit ? (
-            <div>
-              {item.comment.uuid === profile.uuid && (
-                <Button
-                  theme={ThemeColor.first}
-                  size={ThemeSize.small}
-                  onClick={() => setEdit(!edit)}
-                >
-                  수정
-                </Button>
+          {!item.comment.isDeleted && (
+            <>
+              {edit ? (
+                <div>
+                  {item.comment.uuid === profile.uuid && (
+                    <Button
+                      theme={ThemeColor.first}
+                      size={ThemeSize.small}
+                      onClick={() => setEdit(!edit)}
+                    >
+                      수정
+                    </Button>
+                  )}
+                  <span> </span>
+                  {(item.comment.uuid === profile.uuid ||
+                    profile.rank >= 5) && (
+                    <Button
+                      theme={ThemeColor.first}
+                      size={ThemeSize.small}
+                      onClick={() => deleteComment(item.comment.id)}
+                    >
+                      삭제
+                    </Button>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <Button
+                    theme={ThemeColor.first}
+                    size={ThemeSize.small}
+                    onClick={() => putComment(item.comment.id, context)}
+                  >
+                    저장
+                  </Button>
+                  <span> </span>
+                  <Button
+                    theme={ThemeColor.first}
+                    size={ThemeSize.small}
+                    onClick={() => setEdit(!edit)}
+                  >
+                    취소
+                  </Button>
+                </div>
               )}
-              <span> </span>
-              {(item.comment.uuid === profile.uuid || profile.rank >= 5) && (
-                <Button
-                  theme={ThemeColor.first}
-                  size={ThemeSize.small}
-                  onClick={() => deleteComment(item.comment.id)}
-                >
-                  삭제
-                </Button>
-              )}
-            </div>
-          ) : (
-            <div>
-              <Button
-                theme={ThemeColor.first}
-                size={ThemeSize.small}
-                onClick={() => putComment(item.comment.id, context)}
-              >
-                저장
-              </Button>
-              <span> </span>
-              <Button
-                theme={ThemeColor.first}
-                size={ThemeSize.small}
-                onClick={() => setEdit(!edit)}
-              >
-                취소
-              </Button>
-            </div>
+            </>
           )}
         </div>
         {item.comment.isDeleted ? (
-          <textarea
-            value="삭제된 게시글 입니다"
-            disabled={true}
-            style={{ color: "gray" }}
-          />
+          <span>삭제된 게시글 입니다</span>
         ) : edit ? (
           <span style={{ wordBreak: "keep-all" }}>{item.comment.comment}</span>
         ) : (
@@ -149,6 +150,7 @@ const Comment: React.FC<CommentProps> = ({
 const CommentBlock = styled.div`
   width: 100%;
   & > .item {
+    margin: 24px 0;
     & > .profile {
       display: flex;
       align-items: center;

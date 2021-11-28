@@ -116,7 +116,13 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                   }}
                 >
                   <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-                    <Avatar />
+                    {data.profile ? (
+                      <Avatar
+                        src={`http://moasv.co.kr/images/${data.profile}`}
+                      />
+                    ) : (
+                      <Avatar />
+                    )}
                   </IconButton>
                 </Box>
                 <Menu
@@ -154,7 +160,13 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
                   <MenuItem>
-                    <Avatar />
+                    {data.profile ? (
+                      <Avatar
+                        src={`http://moasv.co.kr/images/${data.profile}`}
+                      />
+                    ) : (
+                      <Avatar />
+                    )}
                     <span>{data.nickName}</span>
                   </MenuItem>
                   <Divider />

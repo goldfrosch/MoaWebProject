@@ -46,7 +46,8 @@ public class BoardCommentQueryRepository extends QuerydslRepositorySupport {
                 boardComment.createdDate,
                 boardComment.user.nickName,
                 boardComment.user.rank,
-                boardComment.user.uuid
+                boardComment.user.uuid,
+                boardComment.user.profile
             )
         ).from(boardComment)
         .where(boardComment.boardNum.eq(id))
@@ -65,7 +66,8 @@ public class BoardCommentQueryRepository extends QuerydslRepositorySupport {
                     boardComment.createdDate,
                     boardComment.user.nickName,
                     boardComment.user.rank,
-                    boardComment.user.uuid
+                    boardComment.user.uuid,
+                    boardComment.user.profile
                 )
             ).from(boardComment)
             .where(boardComment.boardNum.eq(id))

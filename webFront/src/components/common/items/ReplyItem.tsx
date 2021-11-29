@@ -30,6 +30,7 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
         }}
       >
         <BoardProfile
+          profile={reply.profile}
           nickName={reply.nickName}
           uuid={reply.uuid}
           createdDate={reply.createdDate}
@@ -82,17 +83,21 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
           )}
         </div>
       </div>
-      <textarea
-        defaultValue={reply.comment}
-        disabled={isNotEdit}
-        onChange={(e: any) => setEditReply(e.target.value)}
-      />
+      {isNotEdit ? (
+        <div className="replyComment">
+          <span>{reply.comment}</span>
+        </div>
+      ) : (
+        <textarea
+          defaultValue={reply.comment}
+          onChange={(e: any) => setEditReply(e.target.value)}
+        />
+      )}
     </ReplyItemBlock>
   );
 };
 
 const ReplyItemBlock = styled.div`
-  padding-left: 8px;
   padding-left: 24px;
   textarea {
     width: 100%;
@@ -107,6 +112,9 @@ const ReplyItemBlock = styled.div`
   textarea:disabled {
     background-color: white;
     color: #898989;
+  }
+  .replyComment {
+    margin-bottom: 24px;
   }
 `;
 

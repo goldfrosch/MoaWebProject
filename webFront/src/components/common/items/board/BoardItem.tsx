@@ -36,7 +36,11 @@ const BoardItem: React.FC<IBoardItemProps> = ({ data, image, type }) => {
           </div>
           <div className="info">
             <img
-              src={`https://crafatar.com/renders/head/${data.uuid}`}
+              src={`https://crafatar.com/renders/head/${
+                data.uuid !== ""
+                  ? data.uuid
+                  : "ec561538-f3fd-461d-aff5-086b22154bce"
+              }`}
               alt=""
             />
             <span className="nick">{data.nickName}</span>

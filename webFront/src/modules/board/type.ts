@@ -19,6 +19,7 @@ export interface IBoardComment {
   nickName: string,
   rank: number,
   uuid: string,
+  profile: string,
   replyList: IBoardReply[],
   isDeleted: boolean,
   isEdit?: boolean,
@@ -110,6 +111,7 @@ export interface IBoardReply {
   nickName: string,
   rank: number,
   uuid: string,
+  profile: string,
 }
 
 export interface ICommentUpdate {

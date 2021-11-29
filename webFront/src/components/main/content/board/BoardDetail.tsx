@@ -52,7 +52,11 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
             <div className="profile">
               <div className="item">
                 <img
-                  src={`https://crafatar.com/renders/head/${datas.detail.uuid}`}
+                  src={`https://crafatar.com/renders/head/${
+                    datas.detail.uuid !== ""
+                      ? datas.detail.uuid
+                      : "ec561538-f3fd-461d-aff5-086b22154bce"
+                  }`}
                   alt=""
                 />
                 <span className="nick">{datas.detail.nickName}</span>
@@ -220,10 +224,10 @@ const BoardDetailBlock = styled.div`
       flex-direction: column;
     }
     & > .text {
+      width: 100%;
       padding: 16px 0;
       & > .title {
         max-width: 40%;
-        text-overflow: ellipsis;
 
         font-weight: 600;
         font-size: 24px;
@@ -233,6 +237,19 @@ const BoardDetailBlock = styled.div`
       }
       & > .prefix {
         font-size: 14px;
+      }
+      @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        & > .title {
+          max-width: 100%;
+          font-size: 4.5vw;
+
+          padding: 0;
+        }
+        & > .prefix {
+          font-size: 2vw;
+        }
       }
     }
     & > .profile {

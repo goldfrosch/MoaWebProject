@@ -27,6 +27,8 @@ public class BoardCommentItem {
 
     private String uuid;
 
+    private String profile;
+
     @QueryProjection
     public BoardCommentItem(
             Long id,
@@ -37,7 +39,8 @@ public class BoardCommentItem {
             LocalDateTime createdDate,
             String nickName,
             int rank,
-            String uuid
+            String uuid,
+            String profile
     ) {
         this.id = id;
         this.comment = comment;
@@ -48,5 +51,6 @@ public class BoardCommentItem {
         this.nickName = nickName;
         this.rank = rank;
         this.uuid = uuid;
+        this.profile = profile;
     }
 }

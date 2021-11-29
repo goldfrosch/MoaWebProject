@@ -27,7 +27,12 @@ const BoardProfile: React.FC<IBoardProfile> = ({
 
       <div className="profile">
         <div className="nick">
-          <img src={`https://crafatar.com/renders/head/${uuid}`} alt="" />
+          <img
+            src={`https://crafatar.com/renders/head/${
+              uuid !== "" ? uuid : "ec561538-f3fd-461d-aff5-086b22154bce"
+            }`}
+            alt=""
+          />
           <span>{nickName}</span>
         </div>
         <div className="time">{DateUtils.getPrevTime(createdDate)}</div>

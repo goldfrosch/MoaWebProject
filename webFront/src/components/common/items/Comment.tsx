@@ -38,6 +38,7 @@ const Comment: React.FC<CommentProps> = ({
             />
           ) : (
             <BoardProfile
+              profile={item.comment.profile}
               nickName={item.comment.nickName}
               uuid={item.comment.uuid}
               createdDate={item.comment.createdDate}
@@ -102,7 +103,9 @@ const Comment: React.FC<CommentProps> = ({
           />
         )}
       </div>
-      <span onClick={() => setReply(!reply)}>답글보기</span>
+      <span onClick={() => setReply(!reply)}>
+        답글보기{item.replyList.length > 0 && <> ({item.replyList.length}개)</>}
+      </span>
       {reply && (
         <div style={{ padding: "16px 0" }}>
           {item.replyList.map((reply, index) => (

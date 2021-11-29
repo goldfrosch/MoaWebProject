@@ -122,10 +122,12 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
           </div>
           <div className="option">
             <input
-              placeholder="제목을 입력해주세요"
+              placeholder="제목을 입력해주세요 (최대 24글자)"
               value={datas.title}
               onChange={(e: any) => {
-                setDatas({ ...datas, title: e.target.value });
+                if (datas.title.length < 24) {
+                  setDatas({ ...datas, title: e.target.value });
+                }
               }}
             />
           </div>

@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-interface BoardItemProps {}
-const BoardItem: React.FC<BoardItemProps> = ({ children }) => {
-  return <BoardItemBlock>{children}</BoardItemBlock>;
+interface HomeItemProps {}
+const HomeItem: React.FC<HomeItemProps> = ({ children }) => {
+  return <HomeItemBlock>{children}</HomeItemBlock>;
 };
 
-const BoardItemBlock = styled.div`
+const HomeItemBlock = styled.div`
   width: 100%;
   height: 100%;
   background-color: white;
@@ -77,4 +77,4 @@ const BoardItemBlock = styled.div`
   }
 `;
 
-export default BoardItem;
+export default HomeItem;

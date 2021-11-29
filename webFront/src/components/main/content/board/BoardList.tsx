@@ -4,18 +4,20 @@ import styled from "styled-components";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import noticePhone from "assets/icon/megaphone.png";
+
 import Button from "components/common/items/Button";
+import BoardItem from "components/common/items/board/BoardItem";
 import Search from "components/common/items/Search";
-import { IBoardData } from "containers/content/board/BoardListContainer";
 
 import { Pagination } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+
+import { IBoardData } from "containers/content/board/BoardListContainer";
 import { IBoard, IBoardDesc } from "modules/board/type";
 import history from "utils/HistoryUtils";
-import DateUtils from "utils/DateUtils";
 
 export interface BoardListProps {
   board: IBoard;
@@ -121,35 +123,12 @@ const BoardList: React.FC<BoardListProps> = ({
         </div>
         <div className="content">
           {board.newNotice.map((data, key) => (
-            <div
-              className="importantItem"
+            <BoardItem
+              type="important"
+              image={noticePhone}
+              data={data}
               key={key}
-              onClick={() => {
-                history.push(`/board/${data.id}`);
-              }}
-            >
-              <div className="profile">
-                <img src={noticePhone} alt="" />
-                <div className="title">
-                  <span className="prefix">
-                    {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
-                  </span>
-                  <span className="title">{data.title}</span>
-                  <div className="info">
-                    <img
-                      src={`https://crafatar.com/renders/head/${data.uuid}`}
-                      alt=""
-                    />
-                    <span className="nick">{data.nickName}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="time">
-                <span className="times">
-                  {DateUtils.getPrevTime(data.createdDate)}
-                </span>
-              </div>
-            </div>
+            />
           ))}
           {board.list.results.length === 0 ? (
             <p style={{ color: "#797979", padding: "24px 0" }}>
@@ -157,40 +136,7 @@ const BoardList: React.FC<BoardListProps> = ({
             </p>
           ) : (
             board.list.results.map((data, key) => (
-              <div
-                className="item"
-                onClick={() => {
-                  history.push(`/board/${data.id}`);
-                }}
-                key={key}
-              >
-                <div className="profile">
-                  <div className="title">
-                    <span className="prefix">
-                      {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
-                    </span>
-                    <span className="title">{data.title}</span>
-                    {data.commentCount > 0 && (
-                      <span style={{ color: "red", fontSize: "12px" }}>
-                        {" "}
-                        [ {data.commentCount} ]
-                      </span>
-                    )}
-                  </div>
-                  <div className="info">
-                    <img
-                      src={`https://crafatar.com/renders/head/${data.uuid}`}
-                      alt=""
-                    />
-                    <span className="nick">{data.nickName}</span>
-                  </div>
-                </div>
-                <div className="time">
-                  <span className="times">
-                    {DateUtils.getPrevTime(data.createdDate)}
-                  </span>
-                </div>
-              </div>
+              <BoardItem type="normal" data={data} key={key} />
             ))
           )}
         </div>
@@ -268,130 +214,13 @@ const BoardListBlock = styled.div`
       }
     }
     & > .content {
+      width: 100%;
       flex: 1;
 
       display: flex;
       flex-direction: column;
       align-items: center;
-      & > .importantItem {
-        width: 100%;
-        height: 48px;
-        background-color: #f6f6f6;
-        border-bottom: 1px solid #e7e7e7;
-
-        padding: 0 16px;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        gap: 8px;
-
-        cursor: pointer;
-
-        & > .profile {
-          display: flex;
-          align-items: center;
-          & > img {
-            width: 24px;
-            height: 24px;
-
-            margin-right: 8px;
-          }
-          & > .title {
-            & > .prefix {
-              font-size: 12px;
-              font-weight: 500;
-            }
-            & > .title {
-              padding-left: 6px;
-              font-size: 14px;
-              font-weight: 400;
-            }
-            & > .info {
-              display: flex;
-              align-items: center;
-              & > img {
-                width: 16px;
-                height: 16px;
-              }
-              & > .nick {
-                color: #464646;
-                font-size: 12px;
-                font-weight: 500;
-
-                padding-left: 6px;
-              }
-            }
-          }
-        }
-        & > .time {
-          display: flex;
-          align-items: center;
-          & > .times {
-            color: #797979;
-            font-size: 12px;
-          }
-        }
-      }
-      & > .importantItem:hover {
-        background-color: #e0e0e0;
-      }
-      & > .item {
-        width: 100%;
-        height: 56px;
-        border-bottom: 1px solid #e7e7e7;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 0 16px;
-
-        cursor: pointer;
-
-        & > .profile {
-          & > .title {
-            & > .prefix {
-              font-size: 12px;
-              font-weight: 500;
-            }
-            & > .title {
-              padding-left: 6px;
-              font-size: 14px;
-              font-weight: 400;
-            }
-          }
-          & > .info {
-            display: flex;
-            align-items: center;
-            & > img {
-              width: 16px;
-              height: 16px;
-            }
-            & > .nick {
-              color: #464646;
-              font-size: 12px;
-              font-weight: 500;
-
-              padding-left: 6px;
-            }
-          }
-        }
-        & > .time {
-          display: flex;
-          align-items: center;
-          & > .times {
-            color: #797979;
-            font-size: 12px;
-          }
-        }
-      }
-      & > .item:hover {
-        background-color: #e0e0e0;
-      }
     }
-
     & > .footer {
       height: 12vh;
 

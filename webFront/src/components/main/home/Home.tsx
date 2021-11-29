@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Slick from "components/common/items/Slick";
 
-import BoardItem from "components/common/items/BoardItem";
+import HomeItem from "components/common/items/home/HomeItem";
 import { IBanners } from "modules/banner/type";
 
 import Thumbnail from "assets/image/thumbnail.jpg";
@@ -32,7 +32,7 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
         ))}
       </Slick>
       <div className="items">
-        <BoardItem>
+        <HomeItem>
           <div className="borderHead">
             <span>공지사항</span>
             <Link to="/board?category=notice">
@@ -55,8 +55,8 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
                 빈 게시글
               </div>
             ))}
-        </BoardItem>
-        <BoardItem>
+        </HomeItem>
+        <HomeItem>
           <div className="borderHead">
             <span>업데이트</span>
             <Link to="/board?category=update">
@@ -79,9 +79,9 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
                 빈 게시글
               </div>
             ))}
-        </BoardItem>
+        </HomeItem>
       </div>
-      <BoardItem>
+      <HomeItem>
         <div className="borderHead">
           <span>사진게시판</span>
           <Link to="/grid?category=photo">
@@ -105,7 +105,7 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
             </Link>
           ))}
         </div>
-      </BoardItem>
+      </HomeItem>
     </HomeBlock>
   );
 };

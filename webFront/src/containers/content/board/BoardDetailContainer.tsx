@@ -54,6 +54,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   const deleteBoard = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       BoardAPI.deleteBoard(match.params.id);
+      history.goBack();
     }
   };
 

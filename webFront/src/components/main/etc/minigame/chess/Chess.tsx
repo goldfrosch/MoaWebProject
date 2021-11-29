@@ -438,6 +438,20 @@ const ChessBlock = styled.div`
     & > .white {
       background-color: burlywood;
     }
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 100%;
+      & > .item {
+        font-weight: 700;
+        font-size: 20px;
+        position: relative;
+
+        border: 1px solid black;
+        & > img {
+          width: 100%;
+        }
+      }
+    }
   }
 `;
 

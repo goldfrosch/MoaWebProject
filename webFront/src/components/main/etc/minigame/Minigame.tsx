@@ -44,6 +44,25 @@ const MinigameBlock = styled.div`
     align-items: center;
     justify-content: center;
   }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    & > .side {
+      width: 100%;
+      padding: 16px 10%;
+      & > ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        & > li {
+          font-size: 3vw;
+          margin: 0 8px;
+        }
+      }
+    }
+    & > .main {
+      align-items: flex-start;
+    }
+  }
 `;
 
 export default Minigame;

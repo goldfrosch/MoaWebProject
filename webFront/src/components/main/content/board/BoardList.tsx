@@ -400,7 +400,7 @@ const BoardListBlock = styled.div`
       justify-content: center;
     }
   }
-  @media (max-width: 800px) {
+  @media (max-width: 768px) {
     padding: 0;
   }
 `;

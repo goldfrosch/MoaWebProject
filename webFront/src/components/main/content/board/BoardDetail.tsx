@@ -4,11 +4,14 @@ import DateUtils from "utils/DateUtils";
 
 import { IBoardDetail } from "modules/board/type";
 import Button from "components/common/items/Button";
-import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 
 import Comment from "components/common/items/Comment";
 import { Link } from "react-router-dom";
+import OptionList from "components/common/items/optionMenu/Option";
+import OptionItem from "components/common/items/optionMenu/OptionItem";
+import OptionDivider from "components/common/items/optionMenu/OptionDivider";
 
 interface BoardDetailProps {
   data: IBoardDetail;
@@ -64,6 +67,19 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                   {DateUtils.getPrevTime(datas.detail.createdDate)}
                 </span>
               </div>
+              <OptionList>
+                <OptionItem>
+                  <span>Title</span>
+                  <span>Title</span>
+                </OptionItem>
+                <OptionDivider />
+                <OptionItem>
+                  <span>Title</span>
+                </OptionItem>
+                <OptionItem>
+                  <span>Title</span>
+                </OptionItem>
+              </OptionList>
             </div>
           </div>
           <div
@@ -197,7 +213,7 @@ const BoardDetailBlock = styled.div`
   textarea {
     width: 100%;
     min-height: 96px;
-    border: 2px solid #e9e9e9;
+    border: 2px solid ${Palette.borderGray};
     border-radius: 8px;
 
     padding: 8px;
@@ -210,7 +226,7 @@ const BoardDetailBlock = styled.div`
 
   & > .header {
     width: 100%;
-    border-bottom: 1px solid #e9e9e9;
+    border-bottom: 1px solid ${Palette.borderGray};
 
     margin-bottom: 24px;
 
@@ -224,7 +240,7 @@ const BoardDetailBlock = styled.div`
       flex-direction: column;
     }
     & > .text {
-      width: 100%;
+      width: 80%;
       padding: 16px 0;
       & > .title {
         max-width: 40%;
@@ -253,6 +269,8 @@ const BoardDetailBlock = styled.div`
       }
     }
     & > .profile {
+      width: 20%;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -290,7 +308,7 @@ const BoardDetailBlock = styled.div`
   }
   & > .footer {
     width: 100%;
-    border-top: 1px solid #e9e9e9;
+    border-top: 1px solid ${Palette.borderGray};
     padding: 16px 0;
     & > .commentsCount {
       margin-bottom: 8px;
@@ -305,7 +323,7 @@ const BoardDetailBlock = styled.div`
 
       background-color: none;
       border: none;
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid ${Palette.borderGray};
       font-size: 14px;
 
       padding: 12px;

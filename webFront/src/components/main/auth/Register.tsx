@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import * as AuthAPI from "api/auth";
 import axios from "axios";
@@ -471,7 +471,7 @@ const RegisterBlock = styled.div`
       width: 100%;
       height: 10%;
       padding: 8px;
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid ${Palette.borderGray};
 
       display: flex;
       align-items: center;

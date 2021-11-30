@@ -2,7 +2,7 @@ import { IProfile } from "modules/auth/type";
 import { IBoardReply } from "modules/board/type";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 import BoardProfile from "./BoardProfile";
 import Button from "./Button";
 
@@ -102,7 +102,7 @@ const ReplyItemBlock = styled.div`
   textarea {
     width: 100%;
 
-    border: 2px solid #e9e9e9;
+    border: 2px solid ${Palette.borderGray};
     border-radius: 8px;
 
     padding: 8px;

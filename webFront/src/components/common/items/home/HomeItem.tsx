@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Palette } from "styles/Pallete";
 
 interface HomeItemProps {}
 const HomeItem: React.FC<HomeItemProps> = ({ children }) => {
@@ -13,7 +14,7 @@ const HomeItemBlock = styled.div`
 
   & > .borderHead {
     padding: 12px 8px;
-    border-bottom: 1px solid #e9e9e9;
+    border-bottom: 1px solid ${Palette.borderGray};
 
     display: flex;
     align-items: center;

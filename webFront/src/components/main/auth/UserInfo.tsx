@@ -4,7 +4,7 @@ import styled from "styled-components";
 import * as AuthAPI from "api/auth";
 import { AxiosResponse } from "axios";
 
-import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 
 import Avatar from "@mui/material/Avatar";
 
@@ -239,7 +239,7 @@ const UserInfoBlock = styled.div`
   & > .title {
     width: 100%;
     padding: 16px 8px;
-    border-bottom: 1px solid #e9e9e9;
+    border-bottom: 1px solid ${Palette.borderGray};
     & > h2 {
       font-size: 24px;
     }

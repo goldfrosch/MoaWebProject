@@ -4,7 +4,7 @@ import styled from "styled-components";
 import BoardProfile from "components/common/items/BoardProfile";
 import { IBoardCommentsItem } from "modules/board/type";
 import Button from "./Button";
-import { ThemeColor, ThemeSize } from "styles/Pallete";
+import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 import ReplyItem from "./ReplyItem";
 
@@ -174,7 +174,7 @@ const CommentBlock = styled.div`
   textarea {
     width: 100%;
 
-    border: 2px solid #e9e9e9;
+    border: 2px solid ${Palette.borderGray};
     border-radius: 8px;
 
     padding: 8px;

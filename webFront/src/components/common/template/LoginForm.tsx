@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Palette } from "styles/Pallete";
 
 interface LoginFormProps {
   title: string;
@@ -43,7 +44,7 @@ const LoginFormBlock = styled.div`
       width: 100%;
       height: 10%;
       padding: 16px;
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid ${Palette.borderGray};
 
       display: flex;
       align-items: center;
@@ -108,7 +109,7 @@ const LoginFormBlock = styled.div`
         width: 100%;
         height: 10%;
         padding: 8px;
-        border-bottom: 1px solid #e9e9e9;
+        border-bottom: 1px solid ${Palette.borderGray};
 
         display: flex;
         align-items: center;

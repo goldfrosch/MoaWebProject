@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import SearchIcon from "assets/icon/search.svg";
+import { Palette } from "styles/Pallete";
 
 interface SearchProps {
   value: any;
@@ -48,7 +49,7 @@ const SearchBlock = styled.form`
       width: 32px;
       height: 32px;
 
-      border: 1px solid #e9e9e9;
+      border: 1px solid ${Palette.borderGray};
       border-radius: 8px;
 
       cursor: pointer;

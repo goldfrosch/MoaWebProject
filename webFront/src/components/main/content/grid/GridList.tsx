@@ -134,7 +134,7 @@ const GridList: React.FC<GridListProps> = ({ data, checkLogin }) => {
             {/* 검색 타입 */}
             <FormControl
               variant="standard"
-              sx={{ m: 1, minWidth: 60, height: 60, color: "#e9e9e9" }}
+              sx={{ m: 1, minWidth: 60, height: 60, color: Palette.borderGray }}
             >
               <InputLabel id="demo-simple-select-standard-label">
                 검색 타입
@@ -199,7 +199,7 @@ const GridListBlock = styled.div`
     flex-direction: column;
     & > .header {
       color: #797979;
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid ${Palette.borderGray};
 
       padding: 24px 0;
 

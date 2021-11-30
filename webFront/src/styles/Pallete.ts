@@ -3,6 +3,7 @@ export enum Palette {
     secondary = "#99aab5",
     header = "#2c2f33",
     white = "#ffffff",
+    borderGray = "#e9e9e9",
     lightgray = "#b8b7b7",
     black = "#23272a",
     backgroundColor = "#fbfbfb",

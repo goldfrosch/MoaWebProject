@@ -10,8 +10,6 @@ import {
   setMessageClearAction,
   setMessageWarningAction
 } from "modules/snackbar/snackbar";
-import { IBoardDesc } from "modules/board/type";
-import DescUtils from "utils/DescUtils";
 
 export interface IGridData {
   category: string;
@@ -33,10 +31,6 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
     ),
     type: String(new URLSearchParams(location.search).get("type") ?? ""),
     query: String(new URLSearchParams(location.search).get("query") ?? "")
-  });
-  const [desc, setDesc] = useState<IBoardDesc>({
-    title: "",
-    context: ""
   });
 
   const checkLogin = (link: string) => {
@@ -70,20 +64,10 @@ const GridContainer: React.FC<RouteComponentProps<GridContainerProps>> = ({
       type: String(new URLSearchParams(location.search).get("type") ?? ""),
       query: String(new URLSearchParams(location.search).get("query") ?? "")
     });
-    setDesc({
-      title: DescUtils.SetBoardTitle(data.category),
-      context: DescUtils.SetBoardContext(data.category)
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
-  return (
-    <GridList
-      data={data}
-      desc={desc}
-      location={location}
-      checkLogin={checkLogin}
-    />
-  );
+
+  return <GridList data={data} checkLogin={checkLogin} />;
 };
 
 export default GridContainer;

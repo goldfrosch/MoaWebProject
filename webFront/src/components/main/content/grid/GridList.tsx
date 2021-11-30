@@ -17,25 +17,19 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 import { IGridData } from "containers/content/grid/GridListContainer";
-import { IBoardDesc, IBoardListData } from "modules/board/type";
+import { IBoardListData } from "modules/board/type";
 
 import history from "utils/HistoryUtils";
+import DescUtils from "utils/DescUtils";
 
 interface GridListProps {
   data: IGridData;
-  desc: IBoardDesc;
-  location: any;
   checkLogin: (link: string) => void;
 }
 
 const fakeFetch = () => new Promise(res => setTimeout(res, 1000));
 
-const GridList: React.FC<GridListProps> = ({
-  data,
-  desc,
-  location,
-  checkLogin
-}) => {
+const GridList: React.FC<GridListProps> = ({ data, checkLogin }) => {
   /* 타겟 엘리먼트 */
   let page = 1;
   const target = useRef<any>(null);
@@ -46,8 +40,6 @@ const GridList: React.FC<GridListProps> = ({
   });
   const [list, setList] = useState<IBoardListData[]>([]);
   const [listOption, setListOption] = useState<boolean>(false);
-
-  const [isStop, setIsStop] = useState<boolean>(false);
 
   //검색 카테고리 변경 함수
   const handleSearchChange = (e: any) => {
@@ -109,36 +101,33 @@ const GridList: React.FC<GridListProps> = ({
   const clearList = async () => {
     page = 1;
     setList([]);
-    setIsStop(await fetchItems());
+    await fetchItems();
   };
 
   /* 인터섹션 callback */
   const onIntersect = async ([entry]: any, observer: any) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      setIsStop(await fetchItems());
-      observer.observe(entry.target);
+      if (!(await fetchItems())) {
+        observer.observe(entry.target);
+      }
     }
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersect, options);
+    clearList();
     observer.observe(target.current);
     return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    clearList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [data]);
 
   return (
     <GridListBlock>
       <div className="main">
         <div className="header">
-          <h2 className="title">{desc.title}</h2>
-          <span>{desc.context}</span>
+          <h2 className="title">{DescUtils.SetBoardTitle(data.category)}</h2>
+          <span>{DescUtils.SetBoardContext(data.category)}</span>
         </div>
         <div className="option">
           <div className="search">
@@ -189,9 +178,7 @@ const GridList: React.FC<GridListProps> = ({
           {listOption &&
             [...Array(10)].map((_, key) => <CardSkeleton key={key} />)}
         </div>
-        {!isStop && (
-          <div className="loading" style={{ height: "16px" }} ref={target} />
-        )}
+        <div className="loading" style={{ height: "16px" }} ref={target} />
       </div>
     </GridListBlock>
   );

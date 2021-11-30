@@ -21,6 +21,7 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
 }) => {
   const [isNotEdit, setIsNotEdit] = useState<boolean>(true);
   const [editReply, setEditReply] = useState<string>("");
+
   return (
     <ReplyItemBlock>
       <div
@@ -30,45 +31,57 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
           justifyContent: "space-between"
         }}
       >
-        <BoardProfile
-          profile={reply.profile}
-          nickName={reply.nickName}
-          uuid={reply.uuid}
-          createdDate={reply.createdDate}
-        />
-        <div>
-          {(reply.uuid === profile.uuid || profile.rank >= 5) && (
-            <OptionList>
-              {isNotEdit ? (
-                <>
-                  {reply.uuid === profile.uuid && (
+        {reply.isDeleted ? (
+          <BoardProfile
+            nickName={"삭제됨"}
+            uuid={"7b216089b1f644a4ac76bf711009df0e"}
+            createdDate={reply.createdDate}
+          />
+        ) : (
+          <BoardProfile
+            profile={reply.profile}
+            nickName={reply.nickName}
+            uuid={reply.uuid}
+            createdDate={reply.createdDate}
+          />
+        )}
+        {!reply.isDeleted && (
+          <div>
+            {(reply.uuid === profile.uuid || profile.rank >= 5) && (
+              <OptionList>
+                {isNotEdit ? (
+                  <>
+                    {reply.uuid === profile.uuid && (
+                      <OptionItem onClick={() => setIsNotEdit(!isNotEdit)}>
+                        <span>수정</span>
+                      </OptionItem>
+                    )}
+                    <OptionItem onClick={() => deleteComment(reply.id)}>
+                      <span>삭제</span>
+                    </OptionItem>
+                  </>
+                ) : (
+                  <>
+                    {reply.uuid === profile.uuid && (
+                      <OptionItem
+                        onClick={() => putComment(reply.id, editReply)}
+                      >
+                        <span>저장</span>
+                      </OptionItem>
+                    )}
                     <OptionItem onClick={() => setIsNotEdit(!isNotEdit)}>
-                      <span>수정</span>
+                      <span>취소</span>
                     </OptionItem>
-                  )}
-                  <OptionItem onClick={() => deleteComment(reply.id)}>
-                    <span>삭제</span>
-                  </OptionItem>
-                </>
-              ) : (
-                <>
-                  {reply.uuid === profile.uuid && (
-                    <OptionItem onClick={() => putComment(reply.id, editReply)}>
-                      <span>저장</span>
-                    </OptionItem>
-                  )}
-                  <OptionItem onClick={() => setIsNotEdit(!isNotEdit)}>
-                    <span>취소</span>
-                  </OptionItem>
-                </>
-              )}
-            </OptionList>
-          )}
-        </div>
+                  </>
+                )}
+              </OptionList>
+            )}
+          </div>
+        )}
       </div>
       {isNotEdit ? (
         <div className="replyComment">
-          <span>{reply.comment}</span>
+          <span>{reply.isDeleted ? "삭제된 댓글입니다" : reply.comment}</span>
         </div>
       ) : (
         <textarea

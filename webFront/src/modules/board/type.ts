@@ -112,6 +112,7 @@ export interface IBoardReply {
   rank: number,
   uuid: string,
   profile: string,
+  isDeleted: boolean,
 }
 
 export interface ICommentUpdate {

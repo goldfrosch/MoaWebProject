@@ -7,11 +7,10 @@ import Button from "components/common/items/Button";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 
-import Comment from "components/common/items/Comment";
+import Comment from "components/common/items/comment/Comment";
 import { Link } from "react-router-dom";
 import OptionList from "components/common/items/optionMenu/Option";
 import OptionItem from "components/common/items/optionMenu/OptionItem";
-import OptionDivider from "components/common/items/optionMenu/OptionDivider";
 
 interface BoardDetailProps {
   data: IBoardDetail;
@@ -67,19 +66,20 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                   {DateUtils.getPrevTime(datas.detail.createdDate)}
                 </span>
               </div>
-              <OptionList>
-                <OptionItem>
-                  <span>Title</span>
-                  <span>Title</span>
-                </OptionItem>
-                <OptionDivider />
-                <OptionItem>
-                  <span>Title</span>
-                </OptionItem>
-                <OptionItem>
-                  <span>Title</span>
-                </OptionItem>
-              </OptionList>
+              {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
+                <OptionList>
+                  {profile.uuid === data.detail.uuid && (
+                    <Link to={`/board/edit/${data.detail.id}`}>
+                      <OptionItem>
+                        <span>수정</span>
+                      </OptionItem>
+                    </Link>
+                  )}
+                  <OptionItem onClick={deleteBoard}>
+                    <span>삭제</span>
+                  </OptionItem>
+                </OptionList>
+              )}
             </div>
           </div>
           <div
@@ -90,32 +90,6 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
           />
           {datas.detail.isComment && (
             <div className="footer">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                  padding: "8px"
-                }}
-              >
-                {profile.uuid === data.detail.uuid && (
-                  <Link to={`/board/edit/${data.detail.id}`}>
-                    <Button theme={ThemeColor.first} size={ThemeSize.middle}>
-                      수정
-                    </Button>
-                  </Link>
-                )}
-                <span style={{ margin: "0 4px" }} />
-                {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
-                  <Button
-                    theme={ThemeColor.first}
-                    size={ThemeSize.middle}
-                    onClick={deleteBoard}
-                  >
-                    삭제
-                  </Button>
-                )}
-              </div>
               <div className="commentsCount">
                 <span>{datas.comments.counts}개의 댓글</span>
               </div>
@@ -153,25 +127,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
                   display: "flex",
                   justifyContent: "flex-end"
                 }}
-              >
-                {profile.uuid === data.detail.uuid && (
-                  <Link to={`/board/edit/${data.detail.id}`}>
-                    <Button theme={ThemeColor.first} size={ThemeSize.middle}>
-                      수정
-                    </Button>
-                  </Link>
-                )}
-                <span style={{ margin: "0 4px" }} />
-                {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
-                  <Button
-                    theme={ThemeColor.first}
-                    size={ThemeSize.middle}
-                    onClick={deleteBoard}
-                  >
-                    삭제
-                  </Button>
-                )}
-              </div>
+              ></div>
               <span
                 style={{
                   display: "flex",
@@ -240,7 +196,7 @@ const BoardDetailBlock = styled.div`
       flex-direction: column;
     }
     & > .text {
-      width: 80%;
+      flex: 1;
       padding: 16px 0;
       & > .title {
         max-width: 40%;
@@ -269,11 +225,8 @@ const BoardDetailBlock = styled.div`
       }
     }
     & > .profile {
-      width: 20%;
-
       display: flex;
       align-items: center;
-      justify-content: space-between;
 
       padding: 16px 4px;
       & > .item {
@@ -296,10 +249,14 @@ const BoardDetailBlock = styled.div`
           font-weight: 500;
         }
       }
+      @media (max-width: 768px) {
+        justify-content: space-between;
+      }
     }
   }
   & > .board {
     width: 100%;
+    min-height: 50vh;
 
     padding: 16px;
     margin-bottom: 16px;

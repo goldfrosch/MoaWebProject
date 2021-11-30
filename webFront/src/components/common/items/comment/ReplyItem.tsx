@@ -2,9 +2,10 @@ import { IProfile } from "modules/auth/type";
 import { IBoardReply } from "modules/board/type";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
-import BoardProfile from "./BoardProfile";
-import Button from "./Button";
+import { Palette } from "styles/Pallete";
+import BoardProfile from "components/common/items/BoardProfile";
+import OptionList from "../optionMenu/Option";
+import OptionItem from "../optionMenu/OptionItem";
 
 interface ReplyItemProps {
   reply: IBoardReply;
@@ -36,50 +37,32 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
           createdDate={reply.createdDate}
         />
         <div>
-          {isNotEdit ? (
-            reply.uuid === profile.uuid && (
-              <>
-                <Button
-                  theme={ThemeColor.first}
-                  size={ThemeSize.small}
-                  onClick={() => setIsNotEdit(!isNotEdit)}
-                >
-                  수정
-                </Button>
-
-                <span> </span>
-                {(reply.uuid === profile.uuid || profile.rank >= 5) && (
-                  <Button
-                    theme={ThemeColor.first}
-                    size={ThemeSize.small}
-                    onClick={() => deleteComment(reply.id)}
-                  >
-                    삭제
-                  </Button>
-                )}
-              </>
-            )
-          ) : (
-            <>
-              <Button
-                theme={ThemeColor.first}
-                size={ThemeSize.small}
-                onClick={() => putComment(reply.id, editReply)}
-              >
-                저장
-              </Button>
-
-              <span> </span>
-              {(reply.uuid === profile.uuid || profile.rank >= 5) && (
-                <Button
-                  theme={ThemeColor.first}
-                  size={ThemeSize.small}
-                  onClick={() => setIsNotEdit(!isNotEdit)}
-                >
-                  취소
-                </Button>
+          {(reply.uuid === profile.uuid || profile.rank >= 5) && (
+            <OptionList>
+              {isNotEdit ? (
+                <>
+                  {reply.uuid === profile.uuid && (
+                    <OptionItem onClick={() => setIsNotEdit(!isNotEdit)}>
+                      <span>수정</span>
+                    </OptionItem>
+                  )}
+                  <OptionItem onClick={() => deleteComment(reply.id)}>
+                    <span>삭제</span>
+                  </OptionItem>
+                </>
+              ) : (
+                <>
+                  {reply.uuid === profile.uuid && (
+                    <OptionItem onClick={() => putComment(reply.id, editReply)}>
+                      <span>저장</span>
+                    </OptionItem>
+                  )}
+                  <OptionItem onClick={() => setIsNotEdit(!isNotEdit)}>
+                    <span>취소</span>
+                  </OptionItem>
+                </>
               )}
-            </>
+            </OptionList>
           )}
         </div>
       </div>

@@ -3,10 +3,12 @@ import styled from "styled-components";
 
 import BoardProfile from "components/common/items/BoardProfile";
 import { IBoardCommentsItem } from "modules/board/type";
-import Button from "./Button";
+import Button from "../Button";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 import { IProfile } from "modules/auth/type";
 import ReplyItem from "./ReplyItem";
+import OptionList from "../optionMenu/Option";
+import OptionItem from "../optionMenu/OptionItem";
 
 interface CommentProps {
   item: IBoardCommentsItem;
@@ -46,47 +48,37 @@ const Comment: React.FC<CommentProps> = ({
           )}
           {!item.comment.isDeleted && (
             <>
-              {edit ? (
-                <div>
-                  {item.comment.uuid === profile.uuid && (
-                    <Button
-                      theme={ThemeColor.first}
-                      size={ThemeSize.small}
-                      onClick={() => setEdit(!edit)}
-                    >
-                      수정
-                    </Button>
+              {(item.comment.uuid === profile.uuid || profile.rank >= 5) && (
+                <OptionList>
+                  {edit ? (
+                    (item.comment.uuid === profile.uuid ||
+                      profile.rank >= 5) && (
+                      <>
+                        {item.comment.uuid === profile.uuid && (
+                          <OptionItem onClick={() => setEdit(!edit)}>
+                            <span>수정</span>
+                          </OptionItem>
+                        )}
+                        <OptionItem
+                          onClick={() => deleteComment(item.comment.id)}
+                        >
+                          <span>삭제</span>
+                        </OptionItem>
+                      </>
+                    )
+                  ) : (
+                    <>
+                      <OptionItem
+                        onClick={() => putComment(item.comment.id, context)}
+                      >
+                        <span>저장</span>
+                      </OptionItem>
+                      <OptionItem onClick={() => setEdit(!edit)}>
+                        <span>취소</span>
+                      </OptionItem>
+                    </>
                   )}
-                  <span> </span>
-                  {(item.comment.uuid === profile.uuid ||
-                    profile.rank >= 5) && (
-                    <Button
-                      theme={ThemeColor.first}
-                      size={ThemeSize.small}
-                      onClick={() => deleteComment(item.comment.id)}
-                    >
-                      삭제
-                    </Button>
-                  )}
-                </div>
-              ) : (
-                <div>
-                  <Button
-                    theme={ThemeColor.first}
-                    size={ThemeSize.small}
-                    onClick={() => putComment(item.comment.id, context)}
-                  >
-                    저장
-                  </Button>
-                  <span> </span>
-                  <Button
-                    theme={ThemeColor.first}
-                    size={ThemeSize.small}
-                    onClick={() => setEdit(!edit)}
-                  >
-                    취소
-                  </Button>
-                </div>
+                </OptionList>
               )}
             </>
           )}

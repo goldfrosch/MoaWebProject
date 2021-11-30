@@ -4,10 +4,15 @@ import { Palette } from "styles/Pallete";
 
 interface IOptionItemProps {
   color?: string;
+  onClick?: () => void;
 }
-const OptionItem: React.FC<IOptionItemProps> = ({ color, children }) => {
+const OptionItem: React.FC<IOptionItemProps> = ({
+  color,
+  children,
+  onClick
+}) => {
   return (
-    <OptionItemBlock color={color}>
+    <OptionItemBlock color={color} onClick={onClick}>
       <div>{children}</div>
     </OptionItemBlock>
   );
@@ -25,6 +30,9 @@ const OptionItemBlock = styled.li<OptionItemBlockProps>`
     display: flex;
     align-items: center;
     gap: 0 16px;
+  }
+  :hover {
+    background-color: #f9f9f9;
   }
 `;
 

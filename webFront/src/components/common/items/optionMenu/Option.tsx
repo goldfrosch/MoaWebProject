@@ -6,7 +6,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 interface IOptionProps {}
 const OptionList: React.FC<IOptionProps> = ({ children }) => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
-  const menuRef = useRef<HTMLUListElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
@@ -28,7 +28,7 @@ const OptionList: React.FC<IOptionProps> = ({ children }) => {
   );
 };
 
-const OptionListBlock = styled.ul`
+const OptionListBlock = styled.div`
   position: relative;
   cursor: pointer;
 
@@ -41,7 +41,7 @@ const OptionListBlock = styled.ul`
     opacity: 0;
     transition-property: opacity;
     transition-duration: 0.25s;
-    & > li {
+    li {
       & > div {
         display: none;
       }
@@ -53,7 +53,7 @@ const OptionListBlock = styled.ul`
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
     opacity: 1;
-    & > li {
+    li {
       width: 100%;
       & > div {
         display: inline;

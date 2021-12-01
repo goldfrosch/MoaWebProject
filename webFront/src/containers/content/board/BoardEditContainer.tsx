@@ -7,6 +7,8 @@ import * as BoardAPI from "api/board";
 
 import { IBoardDetail } from "modules/board/type";
 import history from "utils/HistoryUtils";
+import { useSelector } from "react-redux";
+import { IRootState } from "modules";
 
 export interface match<P> {
   params: P;
@@ -27,6 +29,7 @@ export interface MatchParams {
 const BoardEditContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   match
 }) => {
+  const profile = useSelector((state: IRootState) => state.auth.profile);
   const [data, setData] = useState<IBoardDetail>({
     comments: {
       counts: 0,
@@ -75,7 +78,7 @@ const BoardEditContainer: React.FC<RouteComponentProps<MatchParams>> = ({
     getData(match.params.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [match.params.id]);
-  return <BoardEdit data={data} boardTag={boardTag} />;
+  return <BoardEdit data={data} boardTag={boardTag} profile={profile} />;
 };
 
 export default BoardEditContainer;

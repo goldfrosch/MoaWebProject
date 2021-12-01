@@ -20,7 +20,7 @@ import IconButton from "@mui/material/IconButton";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
-import { authLogoutAction } from "modules/auth/auth";
+import { authLogoutAction, authGetProfileAction } from "modules/auth/auth";
 import history from "utils/HistoryUtils";
 
 import "font/font.css";
@@ -73,7 +73,8 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
 
   useEffect(() => {
     setData({ ...profile });
-  }, [profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile, authGetProfileAction]);
 
   return (
     <HeaderBlock toggle={burgerToggle}>

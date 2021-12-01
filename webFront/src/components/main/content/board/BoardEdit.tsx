@@ -21,12 +21,14 @@ import {
 import history from "utils/HistoryUtils";
 import DescUtils from "utils/DescUtils";
 import SwitchItem from "components/common/items/SwitchItem";
+import { IProfile } from "modules/auth/type";
 
 interface BoardEditProps {
   data: IBoardDetail;
+  profile: IProfile;
   boardTag: string[];
 }
-const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
+const BoardEdit: React.FC<BoardEditProps> = ({ data, profile, boardTag }) => {
   const dispatch = useDispatch();
 
   const [datas, setDatas] = useState<IBoardData>({
@@ -106,6 +108,13 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, boardTag }) => {
       title: data.detail.title
     });
   }, [data]);
+
+  useEffect(() => {
+    if (profile.uuid !== data.detail.uuid) {
+      history.goBack();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <BoardEditBlock>

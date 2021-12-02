@@ -92,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                 {data.data.map((datas, key) => (
                   <li key={key}>
                     <Link to={datas.link} onClick={() => handleMenu(false)}>
-                      - {datas.title}
+                      {datas.title}
                     </Link>
                   </li>
                 ))}

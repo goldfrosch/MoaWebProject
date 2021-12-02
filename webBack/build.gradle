@@ -39,7 +39,9 @@ dependencies {
 
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-    
+
+    //메일 전송 관련
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

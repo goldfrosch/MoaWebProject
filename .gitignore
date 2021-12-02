@@ -3,3 +3,4 @@ webBack/src/main/resources/application.yml
 webFront/.env
 webFront/.env.development
 webFront/.env.production
+webBack/src/main/java/com/goldfrosch/webback/global/utils/EmailConfig.java

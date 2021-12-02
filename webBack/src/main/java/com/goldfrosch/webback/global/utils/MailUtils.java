@@ -8,13 +8,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class MailSend {
+public class MailUtils {
     private final String email = EmailConfig.email;
     private final String password = EmailConfig.password;
 
     String host = "smtp.naver.com";
 
-    public void sendMail(String toEmail, String title, String msg) {
+    public void sendEmail(String toEmail, String title, String msg) {
         Properties props = new Properties();
 
         props.put("mail.smtp.host", host);

@@ -105,7 +105,12 @@ public class UserRestController {
             @RequestPart(required = false, value = "file") MultipartFile file,
             @RequestPart(value = "data") Boolean isDelete
     ) {
-        log.info(file.getOriginalFilename());
         return userService.updateUserProfile(user, file, isDelete);
+    }
+
+    @CrossOrigin("*")
+    @PutMapping("/reset/pass")
+    public String resetPassword(@RequestParam String email) {
+        return userService.resetPassword(email, passwordEncoder);
     }
 }

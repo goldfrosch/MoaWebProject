@@ -1,5 +1,7 @@
 package com.goldfrosch.webback.global.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -8,6 +10,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+@Slf4j
 public class MailUtils {
     private final String email = EmailConfig.email;
     private final String password = EmailConfig.password;

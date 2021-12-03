@@ -110,7 +110,7 @@ public class UserRestController {
 
     @CrossOrigin("*")
     @PutMapping("/reset/pass")
-    public String resetPassword(@RequestParam String email) {
+    public String resetPassword(@RequestBody String email) {
         return userService.resetPassword(email, passwordEncoder);
     }
 }

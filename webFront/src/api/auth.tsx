@@ -32,3 +32,7 @@ export const updatePassword = (data: IUpdatePw) => {
 export const updateProfile = (data: any) => {
   return axios.put(`/profile`, data);
 };
+
+export const resetPassword = (email: string) => {
+  return axios.put("/reset/pass", email);
+};

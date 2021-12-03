@@ -23,17 +23,19 @@ import Input from "@mui/material/Input";
 
 interface LoginProps {
   LoginAction: (data: IUserLogin) => void;
+  resetPass: (email: string) => Promise<string>;
 }
 
-const Login: React.FC<LoginProps> = ({ LoginAction }) => {
+const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
   const [data, setData] = useState<IUserLogin>({
     email: "",
     password: ""
   });
   const [isModal, setIsModal] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<Boolean>(false);
+  const [findPassword, setFindPassword] = useState<string>("");
 
-  // const dispatch = useDispatch();
+  const [findMsg, setFindMsg] = useState<string>("");
 
   const toggleModal = () => {
     if (!isModal) {
@@ -43,6 +45,11 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
       window.document.body.style.overflowY = "auto";
     }
     setIsModal(!isModal);
+  };
+
+  const handleSubmit = async () => {
+    let msg = await resetPass(findPassword);
+    setFindMsg(msg);
   };
   // const loginKakao = () => {
   //   dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
@@ -59,7 +66,10 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
             <div className="list">
               <div className="item">
                 <span>찾을 계정의 이메일</span>
-                <input />
+                <input
+                  value={findPassword}
+                  onChange={(e: any) => setFindPassword(e.target.value)}
+                />
               </div>
             </div>
             <div
@@ -69,7 +79,12 @@ const Login: React.FC<LoginProps> = ({ LoginAction }) => {
                 justifyContent: "flex-end"
               }}
             >
-              <Button theme={ThemeColor.first} size={ThemeSize.large}>
+              <span style={{ color: "red" }}>{findMsg}</span>
+              <Button
+                theme={ThemeColor.first}
+                size={ThemeSize.large}
+                onClick={handleSubmit}
+              >
                 비번찾기
               </Button>
             </div>

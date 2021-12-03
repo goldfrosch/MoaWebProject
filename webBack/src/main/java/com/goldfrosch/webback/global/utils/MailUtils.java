@@ -36,7 +36,7 @@ public class MailUtils {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             message.setSubject(title);
-            message.setText(msg);
+            message.setContent(msg, "text/html;charset=euc-kr");
 
             Transport.send(message);
         } catch (Exception e) {

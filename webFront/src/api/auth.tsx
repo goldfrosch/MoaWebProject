@@ -25,14 +25,14 @@ export const findUUID = (data: string) => {
   return axios.get(`find/uuid?uuid=${data}`);
 };
 
+export const resetPassword = (email: string) => {
+  return axios.put(`/reset/pass?email=${email}`);
+};
+
 export const updatePassword = (data: IUpdatePw) => {
   return axios.put("/update/pass", data);
 };
 
 export const updateProfile = (data: any) => {
   return axios.put(`/profile`, data);
-};
-
-export const resetPassword = (email: string) => {
-  return axios.put("/reset/pass", email);
 };

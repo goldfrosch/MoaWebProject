@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
 import { ThemeColor, ThemeSize } from "styles/Pallete";
@@ -9,8 +9,10 @@ import { IUserLogin } from "modules/auth/type";
 import LoginForm from "components/common/template/LoginForm";
 import Button from "components/common/items/Button";
 import ModalForm from "components/common/template/ModalForm";
-// import kakao from "assets/icon/kakao.png";
-// import naver from "assets/icon/naver.png";
+
+import kakao from "assets/icon/kakao.png";
+import naver from "assets/icon/naver.png";
+import { setMessageWarningAction } from "modules/snackbar/snackbar";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -23,10 +25,13 @@ import Input from "@mui/material/Input";
 
 interface LoginProps {
   LoginAction: (data: IUserLogin) => void;
-  resetPass: (email: string) => Promise<string>;
+  resetPass: (email: string) => void;
+  msg: string;
 }
 
-const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
+const Login: React.FC<LoginProps> = ({ LoginAction, resetPass, msg }) => {
+  const dispatch = useDispatch();
+
   const [data, setData] = useState<IUserLogin>({
     email: "",
     password: ""
@@ -34,8 +39,6 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<Boolean>(false);
   const [findPassword, setFindPassword] = useState<string>("");
-
-  const [findMsg, setFindMsg] = useState<string>("");
 
   const toggleModal = () => {
     if (!isModal) {
@@ -47,16 +50,12 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
     setIsModal(!isModal);
   };
 
-  const handleSubmit = async () => {
-    let msg = await resetPass(findPassword);
-    setFindMsg(msg);
+  const loginKakao = () => {
+    dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
   };
-  // const loginKakao = () => {
-  //   dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
-  // };
-  // const loginNaver = () => {
-  //   dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
-  // };
+  const loginNaver = () => {
+    dispatch(setMessageWarningAction("준비중인 시스템입니다!"));
+  };
 
   return (
     <>
@@ -72,6 +71,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
                 />
               </div>
             </div>
+            <span style={{ color: "red" }}>{msg}</span>
             <div
               style={{
                 display: "flex",
@@ -79,11 +79,10 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
                 justifyContent: "flex-end"
               }}
             >
-              <span style={{ color: "red" }}>{findMsg}</span>
               <Button
                 theme={ThemeColor.first}
                 size={ThemeSize.large}
-                onClick={handleSubmit}
+                onClick={() => resetPass(findPassword)}
               >
                 비번찾기
               </Button>
@@ -162,7 +161,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
           <Button theme={ThemeColor.first} size={ThemeSize.space} submit={true}>
             로그인
           </Button>
-          {/* <div
+          <div
             className="btn"
             style={{ backgroundColor: "#FEDE00", color: "#3A1A1B" }}
             onClick={loginKakao}
@@ -185,7 +184,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass }) => {
               style={{ width: "36px", height: "36px", marginRight: "8px" }}
             />
             네이버로 로그인
-          </div> */}
+          </div>
         </form>
       </LoginForm>
     </>

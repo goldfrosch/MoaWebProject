@@ -48,7 +48,7 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
     preview: "",
     name: ""
   });
-
+  const [isStop, setIsStop] = useState<boolean>(false);
   const Option = {
     buttonList: [
       ["bold", "underline", "italic", "strike", "align", "formatBlock"],
@@ -73,42 +73,43 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
   };
 
   const handleSave = () => {
-    dispatch(setMessageClearAction());
-    if (datas.title === "") {
-      return dispatch(setMessageErrorAction("제목이 비어있습니다"));
-    } else if (contents === "") {
-      return dispatch(setMessageErrorAction("내용이 비어있습니다"));
-    }
+    if (!isStop) {
+      dispatch(setMessageClearAction());
+      if (datas.title === "") {
+        return dispatch(setMessageErrorAction("제목이 비어있습니다"));
+      } else if (contents === "") {
+        return dispatch(setMessageErrorAction("내용이 비어있습니다"));
+      }
 
-    let formData = new FormData();
+      setIsStop(true);
+      let formData = new FormData();
 
-    if (fileData.file) {
-      formData.append("file", fileData.file);
+      formData.append(
+        "data",
+        new Blob(
+          [
+            JSON.stringify({
+              ...datas,
+              category: data.toUpperCase(),
+              content: contents
+            })
+          ],
+          { type: "application/json" }
+        )
+      );
+      BoardAPI.postBoard(formData)
+        .then((res: AxiosResponse) => {
+          if (res.status === 200) {
+            dispatch(setMessageSuccessAction("성공적으로 작성했습니다"));
+            history.goBack();
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          setIsStop(false);
+          dispatch(setMessageErrorAction("글 작성 중 문제가 발생했습니다"));
+        });
     }
-    formData.append(
-      "data",
-      new Blob(
-        [
-          JSON.stringify({
-            ...datas,
-            category: data.toUpperCase(),
-            content: contents
-          })
-        ],
-        { type: "application/json" }
-      )
-    );
-    BoardAPI.postBoard(formData)
-      .then((res: AxiosResponse) => {
-        if (res.status === 200) {
-          dispatch(setMessageSuccessAction("성공적으로 작성했습니다"));
-          history.goBack();
-        }
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(setMessageErrorAction("글 작성 중 문제가 발생했습니다"));
-      });
   };
 
   return (

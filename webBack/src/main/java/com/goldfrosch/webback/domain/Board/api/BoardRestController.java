@@ -11,8 +11,10 @@ import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardDetailDTO;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.global.common.response.PagingResponse;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.List;
 
 
@@ -53,20 +56,29 @@ public class BoardRestController {
 
     //특정 보드 데이터 가져오기
     @GetMapping("/boards/{id}")
-    public BoardDetailDTO getBoardById(@PathVariable Long id,@CookieValue(name="view") String cookie, HttpServletResponse response) {
+    public BoardDetailDTO getBoardById(
+        @PathVariable Long id,
+        @CookieValue(name = "view", required = false) String cookie,
+        HttpServletResponse response
+    ) {
         BoardDetailDTO result = new BoardDetailDTO();
 
         result.setDetail(boardQueryRepository.getBoardById(id));
         result.setComments(boardCommentService.getBoardComments(id));
 
-        log.info(cookie + "HI");
-//        if(!(cookie.contains(String.valueOf(id)))) {
-//            cookie += id + ",";
-//            boardService.addViewCountBoard(id);
-//            log.info("HI!");
-//        }
-//        response.addCookie(new Cookie("view", cookie));
+        if(cookie != null) {
+            if (!(cookie.contains(String.valueOf(id)))) {
+                cookie += id + "/";
+                boardService.addViewCountBoard(id);
+            }
+            response.addCookie(new Cookie("view", cookie));
+        } else {
+            Cookie newCookie = new Cookie("view", id + "/");
+            newCookie.setComment("게시글 조회");
+            newCookie.setMaxAge(60 * 60 * 24);
 
+            response.addCookie(newCookie);
+        }
         return result;
     }
 

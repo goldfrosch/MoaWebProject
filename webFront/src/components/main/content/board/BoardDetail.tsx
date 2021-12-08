@@ -95,10 +95,15 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
               </div>
               <textarea
                 value={comment}
-                onChange={(e: any) => setComment(e.target.value)}
+                onChange={(e: any) => {
+                  if (e.target.value.length <= 300) {
+                    setComment(e.target.value);
+                  }
+                }}
                 placeholder="댓글을 작성해주세요"
               />
               <div className="commentOption">
+                <span>글자 수 제한: {comment.length} / 300</span>
                 <Button
                   theme={ThemeColor.first}
                   size={ThemeSize.large}

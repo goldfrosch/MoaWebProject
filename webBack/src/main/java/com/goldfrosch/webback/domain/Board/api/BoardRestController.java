@@ -67,6 +67,7 @@ public class BoardRestController {
         result.setComments(boardCommentService.getBoardComments(id));
 
         if(cookie != null) {
+            log.info(cookie);
             if (!(cookie.contains(String.valueOf(id)))) {
                 cookie += id + "/";
                 boardService.addViewCountBoard(id);
@@ -77,6 +78,7 @@ public class BoardRestController {
             newCookie.setComment("게시글 조회");
             newCookie.setMaxAge(60 * 60 * 24);
 
+            log.info(String.valueOf(newCookie));
             response.addCookie(newCookie);
         }
         return result;

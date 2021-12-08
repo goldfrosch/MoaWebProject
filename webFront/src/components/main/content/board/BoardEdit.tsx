@@ -107,81 +107,87 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, profile, boardTag }) => {
       prefix: data.detail.prefix,
       title: data.detail.title
     });
+    setContents(data.detail.content);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
-  useEffect(() => {
-    if (profile.uuid !== data.detail.uuid) {
-      history.goBack();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <BoardEditBlock>
       <div className="main">
-        <div className="header">
-          <h2 className="title">글 작성하기</h2>
-          <div className="option">
-            <select className="category" disabled>
-              <option>
-                {DescUtils.SetBoardTitle(
-                  data.detail.category.toLocaleLowerCase()
-                )}
-              </option>
-            </select>
-            <select
-              className="tag"
-              defaultValue={data.detail.prefix}
-              onChange={(e: any) =>
-                setDatas({ ...datas, prefix: e.target.value })
-              }
-            >
-              <option value="">말머리 없음</option>
-              {boardTag.map((data, key) => (
-                <option value={data} key={key}>
-                  {data}
-                </option>
-              ))}
-            </select>
+        {profile.uuid !== data.detail.uuid ? (
+          <div className="header">
+            <h2 className="title">권한이 없는 게시물입니다</h2>
           </div>
-          <div className="option">
-            <input
-              placeholder="제목을 입력해주세요"
-              defaultValue={datas.title}
-              onChange={(e: any) => {
-                setDatas(prev => ({ ...prev, title: e.target.value }));
-              }}
-            />
-          </div>
-        </div>
-        {datas.content !== "" && (
-          <div>
-            <SunEditor
-              autoFocus={true}
-              lang="ko"
-              setDefaultStyle="z-index: 0"
-              width="100%"
-              height="600px"
-              defaultValue={datas.content}
-              onChange={setContents}
-              setOptions={Option}
-            />
-          </div>
-        )}
-        <div className="footer">
-          <div className="setting">
-            <span>댓글 금지: </span>
-            <SwitchItem onChange={handleChangeComment} />
-          </div>
+        ) : (
+          <>
+            <div className="header">
+              <h2 className="title">글 작성하기</h2>
+              <div className="option">
+                <select className="category" disabled>
+                  <option>
+                    {DescUtils.SetBoardTitle(
+                      data.detail.category.toLocaleLowerCase()
+                    )}
+                  </option>
+                </select>
+                <select
+                  className="tag"
+                  value={datas.prefix}
+                  onChange={(e: any) =>
+                    setDatas({ ...datas, prefix: e.target.value })
+                  }
+                >
+                  <option value="">말머리 없음</option>
+                  {boardTag.map((data, key) => (
+                    <option value={data} key={key}>
+                      {data}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="option">
+                <input
+                  placeholder="제목을 입력해주세요"
+                  defaultValue={datas.title}
+                  onChange={(e: any) => {
+                    setDatas(prev => ({ ...prev, title: e.target.value }));
+                  }}
+                />
+              </div>
+            </div>
+            {datas.content !== "" && (
+              <div>
+                <SunEditor
+                  autoFocus={true}
+                  lang="ko"
+                  setDefaultStyle="z-index: 0"
+                  width="100%"
+                  height="600px"
+                  defaultValue={datas.content}
+                  onChange={setContents}
+                  setOptions={Option}
+                />
+              </div>
+            )}
+            <div className="footer">
+              <div className="setting">
+                <span>댓글 금지: </span>
+                <SwitchItem
+                  checked={datas.isComment}
+                  onChange={handleChangeComment}
+                />
+              </div>
 
-          <Button
-            theme={ThemeColor.first}
-            size={ThemeSize.large}
-            onClick={handleSave}
-          >
-            저장하기
-          </Button>
-        </div>
+              <Button
+                theme={ThemeColor.first}
+                size={ThemeSize.large}
+                onClick={handleSave}
+              >
+                저장하기
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </BoardEditBlock>
   );

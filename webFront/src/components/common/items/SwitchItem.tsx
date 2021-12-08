@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 interface SwitchItemProps {
+  checked: boolean;
   onChange(): void;
 }
-const SwitchItem: React.FC<SwitchItemProps> = ({ onChange }) => {
+const SwitchItem: React.FC<SwitchItemProps> = ({ checked, onChange }) => {
   return (
     <SwitchItemBlock>
       <label className="select">
-        <input type="checkbox" onChange={onChange} />
+        <input type="checkbox" onChange={onChange} checked={!checked} />
         <span className="onoff" />
       </label>
     </SwitchItemBlock>

@@ -152,7 +152,10 @@ const BoardWrite: React.FC<BoardWriteProps> = ({ data, boardTag }) => {
         <div className="footer">
           <div className="setting">
             <span>댓글 금지: </span>
-            <SwitchItem onChange={handleChangeComment} />
+            <SwitchItem
+              checked={datas.isComment}
+              onChange={handleChangeComment}
+            />
           </div>
 
           <Button

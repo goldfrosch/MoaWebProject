@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 import java.util.List;
 
 
@@ -57,30 +54,12 @@ public class BoardRestController {
     //특정 보드 데이터 가져오기
     @GetMapping("/boards/{id}")
     public BoardDetailDTO getBoardById(
-        @PathVariable Long id,
-        @CookieValue(name = "view", required = false) String cookie,
-        HttpServletResponse response
+        @PathVariable Long id
     ) {
         BoardDetailDTO result = new BoardDetailDTO();
 
         result.setDetail(boardQueryRepository.getBoardById(id));
         result.setComments(boardCommentService.getBoardComments(id));
-
-        if(cookie != null) {
-            log.info(cookie);
-            if (!(cookie.contains(String.valueOf(id)))) {
-                cookie += id + "/";
-                boardService.addViewCountBoard(id);
-            }
-            response.addCookie(new Cookie("view", cookie));
-        } else {
-            Cookie newCookie = new Cookie("view", id + "/");
-            newCookie.setComment("게시글 조회");
-            newCookie.setMaxAge(60 * 60 * 24);
-
-            log.info(String.valueOf(newCookie));
-            response.addCookie(newCookie);
-        }
         return result;
     }
 

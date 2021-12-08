@@ -111,10 +111,17 @@ const Comment: React.FC<CommentProps> = ({
           ))}
           <div style={{ width: "100%", paddingLeft: "24px" }}>
             <textarea
-              defaultValue={
-                profile.email !== "" ? newReply : "로그인 후 댓글을 작성하세요"
+              defaultValue={newReply}
+              placeholder={
+                profile.email !== ""
+                  ? "답글을 입력해주세요"
+                  : "로그인 후 댓글을 작성하세요"
               }
-              onChange={(e: any) => setNewReply(e.target.value)}
+              onChange={(e: any) => {
+                if (e.target.value.length <= 300) {
+                  setNewReply(e.target.value);
+                }
+              }}
               disabled={profile.email !== "" ? false : true}
             />
           </div>
@@ -126,7 +133,9 @@ const Comment: React.FC<CommentProps> = ({
                 justifyContent: "flex-end"
               }}
             >
-              <span style={{ paddingRight: "8px" }}>새 답글 달기:</span>
+              <span style={{ paddingRight: "8px" }}>
+                글자 수 제한: {newReply.length} / 300
+              </span>
               <Button
                 theme={ThemeColor.first}
                 size={ThemeSize.small}

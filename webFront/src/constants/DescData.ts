@@ -46,10 +46,16 @@ const DescData = {
     title: "내가 그린 기린 그림",
     context: "직접 캔버스에 그림을 그리고 자랑하는 곳!"
   },
+
   bug: {
     title: "버그 제보 게시판",
     context: "서버, 웹의 버그를 제보해주세요"
   },
+  opposition: {
+    title: "이의 신청 게시판",
+    context: "처벌에 이의가 있을 때 작성하는 게시판"
+  },
+  
   tutorial_moa: {
     title: "튜토리얼 - 모아서버",
     context: "모아서버의 관련 정보를 확인 가능한 곳"

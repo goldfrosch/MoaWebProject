@@ -31,6 +31,8 @@ class DescUtils {
         return DescData['canvas'].title;
       case 'bug':
         return DescData['bug'].title;
+      case 'opposition':
+        return DescData['opposition'].title;
       default:
         return "잘못된 접근 페이지"
     }
@@ -66,6 +68,8 @@ class DescUtils {
         return DescData['canvas'].context;
       case 'bug':
         return DescData['bug'].context;
+      case 'opposition':
+        return DescData['opposition'].context;
       default:
         return "잘못된 접근 페이지 설명"
     }

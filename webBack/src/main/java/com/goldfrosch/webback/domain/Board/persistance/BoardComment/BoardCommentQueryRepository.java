@@ -72,7 +72,7 @@ public class BoardCommentQueryRepository extends QuerydslRepositorySupport {
             ).from(boardComment)
             .where(boardComment.boardNum.eq(id))
             .where(boardComment.parentId.id.eq(parentId))
-            .orderBy(boardComment.createdDate.desc())
+            .orderBy(boardComment.createdDate.asc())
             .fetch();
     }
 

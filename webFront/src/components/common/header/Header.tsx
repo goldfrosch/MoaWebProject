@@ -412,7 +412,7 @@ const HeaderBlock = styled.header<HeaderBlockProps>`
   & > .burger {
     display: none;
     cursor: pointer;
-
+    padding-right: 4px;
     z-index: 99;
     & > div {
       width: 25px;

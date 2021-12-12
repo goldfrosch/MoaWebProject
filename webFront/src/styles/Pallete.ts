@@ -24,7 +24,7 @@ type ButtonSizeProperty = {
 
 export enum ThemeColor {
     first = "first",
-    second = "second"
+    second = "second",
 }
 
 export enum ThemeSize {

@@ -3,7 +3,7 @@ import { IBoardReply } from "modules/board/type";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Palette } from "styles/Pallete";
-import BoardProfile from "components/common/items/BoardProfile";
+import GridProfile from "components/common/items/grid/GridProfile";
 import OptionList from "../optionMenu/Option";
 import OptionItem from "../optionMenu/OptionItem";
 
@@ -32,13 +32,13 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
         }}
       >
         {reply.isDeleted ? (
-          <BoardProfile
+          <GridProfile
             nickName={"삭제됨"}
             uuid={"7b216089b1f644a4ac76bf711009df0e"}
             createdDate={reply.createdDate}
           />
         ) : (
-          <BoardProfile
+          <GridProfile
             profile={reply.profile}
             nickName={reply.nickName}
             uuid={reply.uuid}

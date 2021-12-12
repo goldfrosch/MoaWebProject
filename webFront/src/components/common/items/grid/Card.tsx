@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { IBoardListData } from "modules/board/type";
-import BoardProfile from "components/common/items/BoardProfile";
+import GridProfile from "components/common/items/grid/GridProfile";
 
 import Thumbnail from "assets/image/thumbnail.jpg";
 import history from "utils/HistoryUtils";
@@ -43,7 +43,7 @@ const Card: React.FC<ICardData> = ({ data }) => {
             </span>
           )}
         </span>
-        <BoardProfile
+        <GridProfile
           profile={data.profile}
           nickName={data.nickName}
           uuid={data.uuid}

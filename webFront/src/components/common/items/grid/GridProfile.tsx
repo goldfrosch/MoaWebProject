@@ -4,21 +4,21 @@ import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
 import DateUtils from "utils/DateUtils";
 
-interface IBoardProfile {
+interface IGridProfile {
   profile?: string;
   nickName: string;
   uuid: string;
   createdDate: Date;
 }
 
-const BoardProfile: React.FC<IBoardProfile> = ({
+const GridProfile: React.FC<IGridProfile> = ({
   profile,
   nickName,
   uuid,
   createdDate
 }) => {
   return (
-    <BoardProfileBlock>
+    <GridProfileBlock>
       {profile ? (
         <Avatar src={`http://moasv.co.kr/images/${profile}`} />
       ) : (
@@ -37,11 +37,11 @@ const BoardProfile: React.FC<IBoardProfile> = ({
         </div>
         <div className="time">{DateUtils.getPrevTime(createdDate)}</div>
       </div>
-    </BoardProfileBlock>
+    </GridProfileBlock>
   );
 };
 
-const BoardProfileBlock = styled.div`
+const GridProfileBlock = styled.div`
   display: flex;
   align-items: center;
   & > .profile {
@@ -72,4 +72,4 @@ const BoardProfileBlock = styled.div`
   }
 `;
 
-export default BoardProfile;
+export default GridProfile;

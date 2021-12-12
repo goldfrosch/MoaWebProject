@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import BoardProfile from "components/common/items/BoardProfile";
+import GridProfile from "components/common/items/grid/GridProfile";
 import { IBoardCommentsItem } from "modules/board/type";
 import Button from "../Button";
 import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
@@ -33,13 +33,13 @@ const Comment: React.FC<CommentProps> = ({
       <div className="item">
         <div className="profile">
           {item.comment.isDeleted ? (
-            <BoardProfile
+            <GridProfile
               nickName={"삭제됨"}
               uuid={"7b216089b1f644a4ac76bf711009df0e"}
               createdDate={item.comment.createdDate}
             />
           ) : (
-            <BoardProfile
+            <GridProfile
               profile={item.comment.profile}
               nickName={item.comment.nickName}
               uuid={item.comment.uuid}

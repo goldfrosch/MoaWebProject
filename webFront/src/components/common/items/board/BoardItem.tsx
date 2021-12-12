@@ -16,7 +16,7 @@ const BoardItem: React.FC<IBoardItemProps> = ({ data, image, type }) => {
     <BoardItemBlock
       type={type}
       onClick={() => {
-        history.push(`/board/${data.id}`);
+        history.push(`/user/board/${data.id}`);
       }}
     >
       <div className="profile">

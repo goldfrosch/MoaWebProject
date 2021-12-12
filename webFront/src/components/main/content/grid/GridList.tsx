@@ -49,11 +49,13 @@ const GridList: React.FC<GridListProps> = ({ data, checkLogin }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     history.push(
-      `/grid?category=${data.category}&type=${searchData.type}&query=${searchData.query}`
+      `/user/grid?category=${data.category}&type=${searchData.type}&query=${searchData.query}`
     );
   };
   const handleWriteGrid = () => {
-    checkLogin("/grid/write?category=" + data.category.toLocaleLowerCase());
+    checkLogin(
+      "/user/grid/write?category=" + data.category.toLocaleLowerCase()
+    );
   };
 
   //무한 스크롤 함수

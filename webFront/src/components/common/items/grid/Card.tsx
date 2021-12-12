@@ -12,7 +12,7 @@ interface ICardData {
 }
 const Card: React.FC<ICardData> = ({ data }) => {
   return (
-    <CardBlock onClick={() => history.push(`/board/${data.id}`)}>
+    <CardBlock onClick={() => history.push(`/user/board/${data.id}`)}>
       <div className="item">
         <div className="image">
           <img

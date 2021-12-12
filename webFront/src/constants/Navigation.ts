@@ -14,15 +14,15 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "모아서버",
-        link: "/board?category=tutorial_moa"
+        link: "/user/board?category=tutorial_moa"
       },
       {
         title: "백설기온라인",
-        link: "/board?category=tutorial_wsg"
+        link: "/user/board?category=tutorial_wsg"
       },
       {
         title: "전체 / 카페",
-        link: "/board?category=tutorial_all"
+        link: "/user/board?category=tutorial_all"
       }
     ]
   },
@@ -31,19 +31,19 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "공지사항",
-        link: "/board?category=notice"
+        link: "/user/board?category=notice"
       },
       {
         title: "업데이트",
-        link: "/board?category=update"
+        link: "/user/board?category=update"
       },
       {
         title: "이벤트",
-        link: "/board?category=event"
+        link: "/user/board?category=event"
       },
       {
         title: "후원상품",
-        link: "/grid?category=donate"
+        link: "/user/grid?category=donate"
       }
     ]
   },
@@ -52,27 +52,27 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "자유게시판",
-        link: "/board?category=free"
+        link: "/user/board?category=free"
       },
       {
         title: "사진게시판",
-        link: "/grid?category=photo"
+        link: "/user/grid?category=photo"
       },
       {
         title: "꿀팁게시판",
-        link: "/board?category=tip"
+        link: "/user/board?category=tip"
       },
       {
         title: "건의게시판",
-        link: "/board?category=suggest"
+        link: "/user/board?category=suggest"
       },
       {
         title: "자유 QnA",
-        link: "/board?category=qna"
+        link: "/user/board?category=qna"
       },
       {
         title: "내그기그",
-        link: "/grid?category=canvas"
+        link: "/user/grid?category=canvas"
       }
     ]
   },
@@ -81,23 +81,23 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "버그제보",
-        link: "/board?category=bug"
+        link: "/user/board?category=bug"
       },
       {
         title: "유저신고",
-        link: "/board?category=report"
+        link: "/user/board?category=report"
       },
       {
         title: "처리완료",
-        link: "/board?category=done"
+        link: "/user/board?category=done"
       },
       {
         title: "이의신청",
-        link: "/board?category=opposition"
+        link: "/user/board?category=opposition"
       },
       {
         title: "사과게시판",
-        link: "/board?category=apology"
+        link: "/user/board?category=apology"
       }
     ]
   },
@@ -106,19 +106,19 @@ const Navigation: INavigation[] = [
     data: [
       {
         title: "후원문의",
-        link: "/etc/donate"
+        link: "/user/etc/donate"
       },
       {
         title: "1:1 문의",
-        link: "/etc/inquiry"
+        link: "/user/etc/inquiry"
       },
       {
         title: "재능기부",
-        link: "/etc/talent"
+        link: "/user/etc/talent"
       },
       {
         title: "MINI GAME",
-        link: "/etc/minigame"
+        link: "/user/etc/minigame"
       }
     ]
   }

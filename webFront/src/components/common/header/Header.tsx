@@ -171,7 +171,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                     <span>{data.nickName}</span>
                   </MenuItem>
                   <Divider />
-                  <MenuItem onClick={() => history.push("/profile")}>
+                  <MenuItem onClick={() => history.push("/user/profile")}>
                     <ListItemIcon>
                       <Settings fontSize="small" />
                     </ListItemIcon>

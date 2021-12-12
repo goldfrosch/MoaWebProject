@@ -2,7 +2,6 @@ import { Route, Switch } from "react-router";
 
 import UserPageForm from "components/common/template/UserPageForm";
 
-import LoginContainer from "containers/auth/LoginContainer";
 import RegisterContainer from "containers/auth/RegisterContainer";
 import UserInfoContainer from "containers/auth/UserInfoContainer";
 
@@ -21,7 +20,6 @@ const UserPage: React.FC<IUserPageProps> = () => {
   return (
     <UserPageForm>
       <Switch>
-        <Route exact path="/user/login" component={LoginContainer} />
         <Route exact path="/user/register" component={RegisterContainer} />
         <Route exact path="/user/profile" component={UserInfoContainer} />
         {/* 보드 형식 게시판 */}

@@ -69,7 +69,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
               {(profile.uuid === data.detail.uuid || profile.rank > 4) && (
                 <OptionList>
                   {profile.uuid === data.detail.uuid && (
-                    <Link to={`/board/edit/${data.detail.id}`}>
+                    <Link to={`/user/board/edit/${data.detail.id}`}>
                       <OptionItem>
                         <span>수정</span>
                       </OptionItem>

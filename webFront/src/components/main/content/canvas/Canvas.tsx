@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import Painter from "components/common/items/Painter";
+import MobileNotForm from "components/common/template/MobileNotForm";
 
 const defaultColorPicker = [
   "#FF0000",
@@ -109,14 +110,16 @@ const Canvas: React.FC<ICanvasProps> = () => {
   }, [startPaint, paint, exitPaint]);
 
   return (
-    <CanvasBlock>
-      <canvas ref={canvasRef} />
-      <div className="colorList">
-        {defaultColorPicker.map((data, key) => (
-          <Painter paint={data} key={key} />
-        ))}
-      </div>
-    </CanvasBlock>
+    <MobileNotForm>
+      <CanvasBlock>
+        <canvas ref={canvasRef} />
+        <div className="colorList">
+          {defaultColorPicker.map((data, key) => (
+            <Painter paint={data} key={key} />
+          ))}
+        </div>
+      </CanvasBlock>
+    </MobileNotForm>
   );
 };
 

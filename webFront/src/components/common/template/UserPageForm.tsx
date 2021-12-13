@@ -9,6 +9,7 @@ const UserPageForm: React.FC<IUserPageFormProps> = ({ children }) => {
 const UserPageFormBlock = styled.div`
   width: 100%;
   max-width: 1080px;
+
   @media (max-width: 1080px) {
     max-width: 90%;
     min-width: 750px;

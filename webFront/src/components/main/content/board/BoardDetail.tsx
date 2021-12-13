@@ -95,7 +95,7 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
               </div>
               <textarea
                 value={comment}
-                onChange={(e: any) => {
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   if (e.target.value.length <= 300) {
                     setComment(e.target.value);
                   }

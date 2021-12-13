@@ -67,7 +67,9 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass, msg }) => {
                 <span>찾을 계정의 이메일</span>
                 <input
                   value={findPassword}
-                  onChange={(e: any) => setFindPassword(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFindPassword(e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -104,7 +106,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass, msg }) => {
               id="standard-adornment-email"
               type="text"
               value={data.email}
-              onChange={(e: any) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setData({
                   ...data,
                   email: e.target.value
@@ -121,7 +123,7 @@ const Login: React.FC<LoginProps> = ({ LoginAction, resetPass, msg }) => {
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               value={data.password}
-              onChange={(e: any) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setData({
                   ...data,
                   password: e.target.value

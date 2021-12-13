@@ -22,6 +22,10 @@ const PainterBlock = styled.div<IPainterBlock>`
   margin: 0 4px;
 
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: 8vw;
+    height: 8vw;
+  }
 `;
 
 export default Painter;

@@ -133,7 +133,7 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, profile, boardTag }) => {
                 <select
                   className="tag"
                   value={datas.prefix}
-                  onChange={(e: any) =>
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                     setDatas({ ...datas, prefix: e.target.value })
                   }
                 >
@@ -149,7 +149,7 @@ const BoardEdit: React.FC<BoardEditProps> = ({ data, profile, boardTag }) => {
                 <input
                   placeholder="제목을 입력해주세요"
                   defaultValue={datas.title}
-                  onChange={(e: any) => {
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setDatas(prev => ({ ...prev, title: e.target.value }));
                   }}
                 />

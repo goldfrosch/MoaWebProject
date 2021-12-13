@@ -86,7 +86,9 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
       ) : (
         <textarea
           defaultValue={reply.comment}
-          onChange={(e: any) => setEditReply(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setEditReply(e.target.value)
+          }
         />
       )}
     </ReplyItemBlock>

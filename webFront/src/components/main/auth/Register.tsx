@@ -261,7 +261,9 @@ const Register: React.FC<RegisterProps> = ({ register }) => {
                 id="standard-adornment-email"
                 type="text"
                 value={mcNick}
-                onChange={(e: any) => setMcNick(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setMcNick(e.target.value)
+                }
               />
             </FormControl>
             <span style={{ color: "red" }}>{errorUUID}</span>

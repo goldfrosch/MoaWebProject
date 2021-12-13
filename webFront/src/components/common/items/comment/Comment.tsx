@@ -91,7 +91,9 @@ const Comment: React.FC<CommentProps> = ({
           <textarea
             defaultValue={item.comment.comment}
             disabled={edit}
-            onChange={(e: any) => setContext(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+              setContext(e.target.value)
+            }
           />
         )}
       </div>
@@ -117,7 +119,7 @@ const Comment: React.FC<CommentProps> = ({
                   ? "답글을 입력해주세요"
                   : "로그인 후 댓글을 작성하세요"
               }
-              onChange={(e: any) => {
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                 if (e.target.value.length <= 300) {
                   setNewReply(e.target.value);
                 }

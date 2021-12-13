@@ -108,7 +108,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ data, uploadProfile }) => {
                 <input
                   type="password"
                   value={passwords.nowPass}
-                  onChange={(e: any) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setPasswords({
                       ...passwords,
                       nowPass: e.target.value
@@ -121,7 +121,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ data, uploadProfile }) => {
                 <input
                   type="password"
                   value={passwords.newPass}
-                  onChange={(e: any) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setPasswords({
                       ...passwords,
                       newPass: e.target.value
@@ -134,7 +134,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ data, uploadProfile }) => {
                 <input
                   type="password"
                   value={passwords.newPassRepeat}
-                  onChange={(e: any) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setPasswords({
                       ...passwords,
                       newPassRepeat: e.target.value

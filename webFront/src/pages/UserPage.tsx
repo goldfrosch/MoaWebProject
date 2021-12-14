@@ -1,6 +1,7 @@
 import { Route, Switch } from "react-router";
 
 import UserPageForm from "components/common/template/UserPageForm";
+import BirdItem from "components/common/items/animation/Bird";
 
 import RegisterContainer from "containers/auth/RegisterContainer";
 import UserInfoContainer from "containers/auth/UserInfoContainer";
@@ -19,6 +20,9 @@ interface IUserPageProps {}
 const UserPage: React.FC<IUserPageProps> = () => {
   return (
     <UserPageForm>
+      <BirdItem speed={3} startHeight={20} />
+      <BirdItem speed={1} startHeight={10} />
+      <BirdItem speed={6} startHeight={60} />
       <Switch>
         <Route exact path="/user/register" component={RegisterContainer} />
         <Route exact path="/user/profile" component={UserInfoContainer} />

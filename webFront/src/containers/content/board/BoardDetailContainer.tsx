@@ -8,7 +8,9 @@ import * as BoardAPI from "api/board";
 import { IBoardDetail, IComment, ICommentUpdate } from "modules/board/type";
 import { useSelector } from "react-redux";
 import { IRootState } from "modules";
+
 import history from "utils/HistoryUtils";
+import BoardUtils from "utils/BoardUtils";
 
 export interface match<P> {
   params: P;
@@ -77,14 +79,13 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
         comment: comment,
         parentNum: parentNum
       };
-      console.log(parentNum);
       BoardAPI.postComment(data)
         .then(() => {
           alert("성공적으로 등록되었습니다");
           window.location.reload();
         })
         .catch(error => {
-          console.log(error);
+          BoardUtils.checkForbidden(error.response.status);
         });
     }
   };

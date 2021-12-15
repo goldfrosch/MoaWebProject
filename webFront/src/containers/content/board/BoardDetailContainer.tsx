@@ -130,6 +130,7 @@ const BoardDetailContainer: React.FC<RouteComponentProps<MatchParams>> = ({
   useEffect(() => {
     getComment(match.params.id);
   }, [match.params.id]);
+
   return (
     <BoardDetail
       data={data}

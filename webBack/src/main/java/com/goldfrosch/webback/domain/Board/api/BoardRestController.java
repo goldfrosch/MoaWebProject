@@ -18,8 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.CookieGenerator;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -54,8 +57,13 @@ public class BoardRestController {
     //특정 보드 데이터 가져오기
     @GetMapping("/boards/{id}")
     public BoardDetailDTO getBoardById(
-        @PathVariable Long id
+        @PathVariable Long id,
+        HttpServletResponse response
     ) {
+        CookieGenerator generator = new CookieGenerator();
+        generator.setCookieName("TEST");
+        generator.addCookie(response, "TEST");
+
         BoardDetailDTO result = new BoardDetailDTO();
 
         result.setDetail(boardQueryRepository.getBoardById(id));

@@ -37,12 +37,12 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
             <HomeItem>
               <div className="borderHead">
                 <span>공지사항</span>
-                <Link to="/board?category=notice">
+                <Link to="/user/board?category=notice">
                   <AddIcon />
                 </Link>
               </div>
               {list.noticeList.map((data, key) => (
-                <Link to={`/board/${data.id}`} key={key}>
+                <Link to={`/user/board/${data.id}`} key={key}>
                   <div className="borderBody" style={{ cursor: "pointer" }}>
                     <span className="title">{data.title}</span>
                     <span className="date">
@@ -61,12 +61,12 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
             <HomeItem>
               <div className="borderHead">
                 <span>업데이트</span>
-                <Link to="/board?category=update">
+                <Link to="/user/board?category=update">
                   <AddIcon />
                 </Link>
               </div>
               {list.updateList.map((data, key) => (
-                <Link to={`/board/${data.id}`} key={key}>
+                <Link to={`/user/board/${data.id}`} key={key}>
                   <div className="borderBody">
                     <span className="title">{data.title}</span>
                     <span className="date">
@@ -87,13 +87,13 @@ const Home: React.FC<HomeProps> = ({ data, list }) => {
             <HomeItem>
               <div className="borderHead">
                 <span>사진게시판</span>
-                <Link to="/grid?category=photo">
+                <Link to="/user/grid?category=photo">
                   <AddIcon />
                 </Link>
               </div>
               <div className="gridBody">
                 {list.photoList.map((data, key) => (
-                  <Link to={`/board/${data.id}`} key={key}>
+                  <Link to={`/user/board/${data.id}`} key={key}>
                     <div className="gridItem">
                       <img
                         src={

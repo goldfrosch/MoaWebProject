@@ -84,6 +84,10 @@ const GridWrite: React.FC<GridWriteProps> = ({ data, boardTag }) => {
       setIsStop(true);
       let formData = new FormData();
 
+      if (fileData.file) {
+        formData.append("file", fileData.file);
+      }
+
       formData.append(
         "data",
         new Blob(

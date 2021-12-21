@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router";
 import UserPageForm from "components/common/template/UserPageForm";
 import BirdItem from "components/common/items/animation/Bird";
 
-import RegisterContainer from "containers/auth/RegisterContainer";
 import UserInfoContainer from "containers/auth/UserInfoContainer";
 
 import BoardContainer from "containers/content/board/BoardListContainer";
@@ -24,7 +23,6 @@ const UserPage: React.FC<IUserPageProps> = () => {
       <BirdItem speed={1} startHeight={10} />
       <BirdItem speed={6} startHeight={60} />
       <Switch>
-        <Route exact path="/user/register" component={RegisterContainer} />
         <Route exact path="/user/profile" component={UserInfoContainer} />
         {/* 보드 형식 게시판 */}
         <Route exact path="/user/board" component={BoardContainer} />

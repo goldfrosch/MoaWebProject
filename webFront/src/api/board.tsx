@@ -8,7 +8,7 @@ export const getBoards = (data: IGetBoards) => {
 };
 
 export const getBoard = (id: number) => {
-  return axios.get(`/boards/${id}`);
+  return axios.get(`/boards/${id}`, { withCredentials: true });
 };
 
 export const getBoardTag = (category: string) => {

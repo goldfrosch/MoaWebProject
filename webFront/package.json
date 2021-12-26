@@ -1,6 +1,6 @@
 {
-  "name": "test",
-  "version": "0.1.0",
+  "name": "moa-web",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@disjukr/croquis-js": "^0.0.3",

@@ -9,13 +9,18 @@ import com.goldfrosch.webback.domain.Board.persistance.Board.BoardRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
 import com.goldfrosch.webback.global.utils.FileUpload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -52,9 +57,41 @@ public class BoardService {
     }
 
     @Transactional
-    public void addViewCountBoard(Long id) {
+    public void addViewCountBoard(Long id, HttpServletRequest req, HttpServletResponse res) {
+        Cookie oldCookie = null;
+        Cookie[] cookies = req.getCookies();
+
         Board board = boardRepository.getOne(id);
-        board.setCount(board.getCount() + 1);
+
+        if(cookies != null) {
+            log.info(String.valueOf(cookies));
+            for(Cookie cookie: cookies) {
+                if(cookie.getName().equals("boardView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if(oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + id + "]")) {
+                board.setCount(board.getCount() + 1);
+
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+
+                res.addCookie(oldCookie);
+            }
+        }
+        else {
+            board.setCount(board.getCount() + 1);
+
+            Cookie newCookie = new Cookie("boardView", "[" + id + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+
+            res.addCookie(newCookie);
+        }
     }
 
     @Transactional

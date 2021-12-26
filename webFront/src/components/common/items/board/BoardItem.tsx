@@ -19,7 +19,24 @@ const BoardItem: React.FC<IBoardItemProps> = ({ data, image, type }) => {
         history.push(`/user/board/${data.id}`);
       }}
     >
-      <div className="profile">
+      <td>{data.id}</td>
+      <td>
+        <span>
+          {image && <img src={image} alt="" />}
+          {data.title + " "}
+          {data.commentCount > 0 && (
+            <span style={{ color: "red", fontSize: "12px" }}>
+              [ {data.commentCount} ]
+            </span>
+          )}
+        </span>
+      </td>
+      <td>{data.id}</td>
+      <td>{data.count}</td>
+      <td>
+        <span className="times">{DateUtils.getPrevTime(data.createdDate)}</span>
+      </td>
+      {/* <td className="profile">
         {image && <img src={image} alt="" />}
         <div className="form">
           <div className="title">
@@ -46,10 +63,10 @@ const BoardItem: React.FC<IBoardItemProps> = ({ data, image, type }) => {
             <span className="nick">{data.nickName}</span>
           </div>
         </div>
-      </div>
-      <div className="time">
+      </td> */}
+      {/* <td className="time">
         <span className="times">{DateUtils.getPrevTime(data.createdDate)}</span>
-      </div>
+      </td> */}
     </BoardItemBlock>
   );
 };
@@ -57,22 +74,45 @@ const BoardItem: React.FC<IBoardItemProps> = ({ data, image, type }) => {
 type BoardItemBlockProps = {
   type: "important" | "normal";
 };
-const BoardItemBlock = styled.div<BoardItemBlockProps>`
+const BoardItemBlock = styled.tr<BoardItemBlockProps>`
   width: 100%;
-  min-height: 56px;
-
   background-color: ${props =>
     props.type === "important" ? "#f6f6f6" : "#ffffff"};
 
-  border-bottom: 1px solid #e7e7e7;
+  & > td {
+    padding: 16px 0;
 
+    & > span {
+      display: flex;
+      align-items: center;
+      & > img {
+        width: 24px;
+        height: 24px;
+
+        margin-right: 8px;
+      }
+    }
+    & > .times {
+      color: #797979;
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+
+  & > td:nth-child(2) {
+    padding: 16px;
+    & > span {
+      text-align: left;
+    }
+  }
+  /* 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding: 0 16px;
 
-  cursor: pointer;
+  cursor: pointer; */
 
   & > .profile {
     display: flex;
@@ -112,17 +152,6 @@ const BoardItemBlock = styled.div<BoardItemBlockProps>`
         }
       }
     }
-  }
-  & > .time {
-    display: flex;
-    align-items: center;
-    & > .times {
-      color: #797979;
-      font-size: 12px;
-    }
-  }
-  :hover {
-    background-color: #e0e0e0;
   }
   @media (max-width: 768px) {
     padding: 0 4px;

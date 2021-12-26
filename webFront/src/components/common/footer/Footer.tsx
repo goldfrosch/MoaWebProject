@@ -32,10 +32,7 @@ const FooterBlock = styled.div`
 
   & > .content {
     color: #949494;
-    font-size: 0.6vw;
-  }
-  @media (max-width: 800px) {
-    padding: 16px;
+    font-size: 0.8vw;
   }
 `;
 

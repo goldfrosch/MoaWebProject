@@ -8,6 +8,9 @@ import noticePhone from "assets/icon/megaphone.png";
 import Button from "components/common/items/Button";
 import BoardItem from "components/common/items/board/BoardItem";
 import Search from "components/common/items/Search";
+import BoardListTable, {
+  IBoardHead
+} from "components/common/items/board/BoardListTable";
 
 import { Pagination } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -18,6 +21,29 @@ import Select from "@mui/material/Select";
 import { IBoardData } from "containers/content/board/BoardListContainer";
 import { IBoard, IBoardDesc } from "modules/board/type";
 import history from "utils/HistoryUtils";
+
+const TableHeadList: IBoardHead[] = [
+  {
+    title: "ID",
+    width: "6%"
+  },
+  {
+    title: "제목",
+    width: "50%"
+  },
+  {
+    title: "글쓴이",
+    width: "20%"
+  },
+  {
+    title: "조회수",
+    width: "10%"
+  },
+  {
+    title: "날짜",
+    width: "10%"
+  }
+];
 
 export interface BoardListProps {
   board: IBoard;
@@ -127,22 +153,24 @@ const BoardList: React.FC<BoardListProps> = ({
           </div>
         </div>
         <div className="content">
-          {board.newNotice.map((data, key) => (
-            <BoardItem
-              type="important"
-              image={noticePhone}
-              data={data}
-              key={key}
-            />
-          ))}
           {board.list.results.length === 0 ? (
             <p style={{ color: "#797979", padding: "24px 0" }}>
               게시글들이 존재하지 않습니다
             </p>
           ) : (
-            board.list.results.map((data, key) => (
-              <BoardItem type="normal" data={data} key={key} />
-            ))
+            <BoardListTable headList={TableHeadList}>
+              {board.newNotice.map((data, key) => (
+                <BoardItem
+                  type="important"
+                  data={data}
+                  image={noticePhone}
+                  key={key}
+                />
+              ))}
+              {board.list.results.map((data, key) => (
+                <BoardItem type="normal" data={data} key={key} />
+              ))}
+            </BoardListTable>
           )}
         </div>
         {board.list.results.length !== 0 && (

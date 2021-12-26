@@ -10,6 +10,7 @@ import com.goldfrosch.webback.domain.Board.entity.dao.BoardSearchType;
 import com.goldfrosch.webback.domain.Board.entity.dto.Board.BoardDetailDTO;
 import com.goldfrosch.webback.domain.Board.persistance.Board.BoardQueryRepository;
 import com.goldfrosch.webback.domain.User.domain.User;
+
 import com.goldfrosch.webback.global.common.response.PagingResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.CookieGenerator;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -58,13 +58,12 @@ public class BoardRestController {
     @GetMapping("/boards/{id}")
     public BoardDetailDTO getBoardById(
         @PathVariable Long id,
+        HttpServletRequest request,
         HttpServletResponse response
     ) {
-        CookieGenerator generator = new CookieGenerator();
-        generator.setCookieName("TEST");
-        generator.addCookie(response, "TEST");
-
         BoardDetailDTO result = new BoardDetailDTO();
+
+        boardService.addViewCountBoard(id, request, response);
 
         result.setDetail(boardQueryRepository.getBoardById(id));
         result.setComments(boardCommentService.getBoardComments(id));

@@ -29,11 +29,11 @@ const TableHeadList: IBoardHead[] = [
   },
   {
     title: "제목",
-    width: "50%"
+    width: "55%"
   },
   {
     title: "글쓴이",
-    width: "20%"
+    width: "10%"
   },
   {
     title: "조회수",
@@ -41,7 +41,7 @@ const TableHeadList: IBoardHead[] = [
   },
   {
     title: "날짜",
-    width: "10%"
+    width: "15%"
   }
 ];
 

@@ -31,42 +31,23 @@ const BoardItem: React.FC<IBoardItemProps> = ({ data, image, type }) => {
           )}
         </span>
       </td>
-      <td>{data.id}</td>
+      <td>
+        <div className="info">
+          <img
+            src={`https://crafatar.com/renders/head/${
+              data.uuid !== ""
+                ? data.uuid
+                : "ec561538-f3fd-461d-aff5-086b22154bce"
+            }`}
+            alt=""
+          />
+          <span className="nick">{data.nickName}</span>
+        </div>
+      </td>
       <td>{data.count}</td>
       <td>
         <span className="times">{DateUtils.getPrevTime(data.createdDate)}</span>
       </td>
-      {/* <td className="profile">
-        {image && <img src={image} alt="" />}
-        <div className="form">
-          <div className="title">
-            <span className="prefix">
-              {data.prefix !== "" ? "[ " + data.prefix + " ]" : ""}
-            </span>
-            <span className="title">{data.title}</span>
-            {data.commentCount > 0 && (
-              <span style={{ color: "red", fontSize: "12px" }}>
-                {" "}
-                [ {data.commentCount} ]
-              </span>
-            )}
-          </div>
-          <div className="info">
-            <img
-              src={`https://crafatar.com/renders/head/${
-                data.uuid !== ""
-                  ? data.uuid
-                  : "ec561538-f3fd-461d-aff5-086b22154bce"
-              }`}
-              alt=""
-            />
-            <span className="nick">{data.nickName}</span>
-          </div>
-        </div>
-      </td> */}
-      {/* <td className="time">
-        <span className="times">{DateUtils.getPrevTime(data.createdDate)}</span>
-      </td> */}
     </BoardItemBlock>
   );
 };
@@ -79,9 +60,16 @@ const BoardItemBlock = styled.tr<BoardItemBlockProps>`
   background-color: ${props =>
     props.type === "important" ? "#f6f6f6" : "#ffffff"};
 
+  @media (max-width: 768px) {
+    padding: 0 4px;
+  }
+
   & > td {
     padding: 16px 0;
 
+    @media (max-width: 768px) {
+      font-size: 1vw;
+    }
     & > span {
       display: flex;
       align-items: center;
@@ -92,9 +80,27 @@ const BoardItemBlock = styled.tr<BoardItemBlockProps>`
         margin-right: 8px;
       }
     }
+
+    & > .info {
+      display: flex;
+      align-items: center;
+      & > img {
+        width: 16px;
+        height: 16px;
+      }
+      & > .nick {
+        color: #464646;
+        font-weight: 500;
+
+        padding-left: 6px;
+      }
+    }
+
     & > .times {
+      display: flex;
+      justify-content: center;
+
       color: #797979;
-      text-align: center;
       font-size: 12px;
     }
   }
@@ -105,14 +111,6 @@ const BoardItemBlock = styled.tr<BoardItemBlockProps>`
       text-align: left;
     }
   }
-  /* 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 16px;
-
-  cursor: pointer; */
 
   & > .profile {
     display: flex;

@@ -6,7 +6,7 @@ import { Palette, ThemeColor, ThemeSize } from "styles/Pallete";
 import noticePhone from "assets/icon/megaphone.png";
 
 import Button from "components/common/items/Button";
-import BoardItem from "components/common/items/board/BoardItem";
+import BoardItemBlock from "components/common/items/board/BoardItem";
 import Search from "components/common/items/Search";
 import BoardListTable, {
   IBoardHead
@@ -20,7 +20,9 @@ import Select from "@mui/material/Select";
 
 import { IBoardData } from "containers/content/board/BoardListContainer";
 import { IBoard, IBoardDesc } from "modules/board/type";
+
 import history from "utils/HistoryUtils";
+import DateUtils from "utils/DateUtils";
 
 const TableHeadList: IBoardHead[] = [
   {
@@ -29,11 +31,11 @@ const TableHeadList: IBoardHead[] = [
   },
   {
     title: "제목",
-    width: "55%"
+    width: "50%"
   },
   {
     title: "글쓴이",
-    width: "10%"
+    width: "15%"
   },
   {
     title: "조회수",
@@ -160,15 +162,85 @@ const BoardList: React.FC<BoardListProps> = ({
           ) : (
             <BoardListTable headList={TableHeadList}>
               {board.newNotice.map((data, key) => (
-                <BoardItem
+                <BoardItemBlock
                   type="important"
-                  data={data}
-                  image={noticePhone}
+                  onClick={() => {
+                    history.push(`/user/board/${data.id}`);
+                  }}
                   key={key}
-                />
+                >
+                  <td>{data.id}</td>
+                  <td>
+                    <span>
+                      <img src={noticePhone} alt="" />
+                      <div className="title">{data.title + " "}</div>
+                      {data.commentCount > 0 && (
+                        <span style={{ color: "red", fontSize: "12px" }}>
+                          [ {data.commentCount} ]
+                        </span>
+                      )}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="info">
+                      <img
+                        src={`https://crafatar.com/renders/head/${
+                          data.uuid !== ""
+                            ? data.uuid
+                            : "ec561538-f3fd-461d-aff5-086b22154bce"
+                        }`}
+                        alt=""
+                      />
+                      <span className="nick">{data.nickName}</span>
+                    </div>
+                  </td>
+                  <td>{data.count}</td>
+                  <td>
+                    <span className="times">
+                      {DateUtils.getPrevTime(data.createdDate)}
+                    </span>
+                  </td>
+                </BoardItemBlock>
               ))}
               {board.list.results.map((data, key) => (
-                <BoardItem type="normal" data={data} key={key} />
+                <BoardItemBlock
+                  type="normal"
+                  onClick={() => {
+                    history.push(`/user/board/${data.id}`);
+                  }}
+                  key={key}
+                >
+                  <td>{data.id}</td>
+                  <td>
+                    <span>
+                      <div className="title">{data.title + " "}</div>
+                      {data.commentCount > 0 && (
+                        <span style={{ color: "red", fontSize: "12px" }}>
+                          [ {data.commentCount} ]
+                        </span>
+                      )}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="info">
+                      <img
+                        src={`https://crafatar.com/renders/head/${
+                          data.uuid !== ""
+                            ? data.uuid
+                            : "ec561538-f3fd-461d-aff5-086b22154bce"
+                        }`}
+                        alt=""
+                      />
+                      <span className="nick">{data.nickName}</span>
+                    </div>
+                  </td>
+                  <td>{data.count}</td>
+                  <td>
+                    <span className="times">
+                      {DateUtils.getPrevTime(data.createdDate)}
+                    </span>
+                  </td>
+                </BoardItemBlock>
               ))}
             </BoardListTable>
           )}

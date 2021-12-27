@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import ClearIcon from "@mui/icons-material/Clear";
+
 interface IModalForm {
   toggleModal: () => void;
 }
@@ -9,7 +11,9 @@ const ModalForm: React.FC<IModalForm> = ({ children, toggleModal }) => {
     <ModalBlock>
       <div className="modal">
         <div className="modalHead">
-          <span onClick={toggleModal}>X</span>
+          <span>
+            <ClearIcon fontSize="small" onClick={toggleModal} />
+          </span>
         </div>
         <div className="content">{children}</div>
       </div>
@@ -22,7 +26,7 @@ const ModalBlock = styled.div`
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
@@ -56,6 +60,8 @@ const ModalBlock = styled.div`
       justify-content: flex-end;
 
       & > span {
+        display: flex;
+        align-items: center;
         cursor: pointer;
       }
     }

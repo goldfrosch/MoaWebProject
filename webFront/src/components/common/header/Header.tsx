@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 
@@ -177,6 +178,14 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                     </ListItemIcon>
                     개인 설정
                   </MenuItem>
+                  {data.rank >= 5 && (
+                    <MenuItem>
+                      <ListItemIcon>
+                        <AdminPanelSettingsIcon fontSize="small" />
+                      </ListItemIcon>
+                      관리자 설정
+                    </MenuItem>
+                  )}
                   <MenuItem onClick={logout}>
                     <ListItemIcon>
                       <Logout fontSize="small" />

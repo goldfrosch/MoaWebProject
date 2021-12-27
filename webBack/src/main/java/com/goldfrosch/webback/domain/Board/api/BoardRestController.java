@@ -42,7 +42,7 @@ public class BoardRestController {
     public PagingResponse getBoardPaging (
         @RequestParam BoardList category,
         @RequestParam int page,
-        @RequestParam(required = false, defaultValue = "10") int size,
+        @RequestParam(required = false, defaultValue = "15") int size,
         @RequestParam(required = false, defaultValue = "TITLE") BoardSearchType type,
         @RequestParam(required = false, defaultValue = "") String query
     ){

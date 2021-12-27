@@ -30,9 +30,16 @@ const FooterBlock = styled.div`
   display: flex;
   align-items: center;
 
+  font-size: 12px;
+
   & > .content {
     color: #949494;
-    font-size: 0.8vw;
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    font-size: 8px;
   }
 `;
 

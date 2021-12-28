@@ -1,7 +1,7 @@
 {
-  "name": "moa-web",
+  "name": "test",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@disjukr/croquis-js": "^0.0.3",
     "@emotion/react": "^11.5.0",

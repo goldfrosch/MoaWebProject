@@ -11,6 +11,7 @@ import Comment from "components/common/items/comment/Comment";
 import { Link } from "react-router-dom";
 import OptionList from "components/common/items/optionMenu/Option";
 import OptionItem from "components/common/items/optionMenu/OptionItem";
+import HEAD_LINK from "constants/HeadLink";
 
 interface BoardDetailProps {
   data: IBoardDetail;
@@ -54,11 +55,12 @@ const BoardDetail: React.FC<BoardDetailProps> = ({
             <div className="profile">
               <div className="item">
                 <img
-                  src={`https://crafatar.com/renders/head/${
-                    datas.detail.uuid !== ""
+                  src={
+                    HEAD_LINK +
+                    (datas.detail.uuid !== ""
                       ? datas.detail.uuid
-                      : "ec561538-f3fd-461d-aff5-086b22154bce"
-                  }`}
+                      : "ec561538-f3fd-461d-aff5-086b22154bce")
+                  }
                   alt=""
                 />
                 <span className="nick">{datas.detail.nickName}</span>

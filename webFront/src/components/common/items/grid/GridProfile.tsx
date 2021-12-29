@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Avatar from "@mui/material/Avatar";
 import DateUtils from "utils/DateUtils";
+import HEAD_LINK from "constants/HeadLink";
 
 interface IGridProfile {
   profile?: string;
@@ -28,9 +29,10 @@ const GridProfile: React.FC<IGridProfile> = ({
       <div className="profile">
         <div className="nick">
           <img
-            src={`https://crafatar.com/renders/head/${
-              uuid !== "" ? uuid : "ec561538-f3fd-461d-aff5-086b22154bce"
-            }`}
+            src={
+              HEAD_LINK +
+              (uuid !== "" ? uuid : "ec561538-f3fd-461d-aff5-086b22154bce")
+            }
             alt=""
           />
           <span>{nickName}</span>

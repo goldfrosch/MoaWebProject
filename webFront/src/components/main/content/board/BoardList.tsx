@@ -24,6 +24,8 @@ import { IBoard, IBoardDesc } from "modules/board/type";
 import history from "utils/HistoryUtils";
 import DateUtils from "utils/DateUtils";
 
+import HEAD_LINK from "constants/HeadLink";
+
 const TableHeadList: IBoardHead[] = [
   {
     title: "ID",
@@ -184,11 +186,12 @@ const BoardList: React.FC<BoardListProps> = ({
                   <td>
                     <div className="info">
                       <img
-                        src={`https://crafatar.com/renders/head/${
-                          data.uuid !== ""
+                        src={
+                          HEAD_LINK +
+                          (data.uuid !== ""
                             ? data.uuid
-                            : "ec561538-f3fd-461d-aff5-086b22154bce"
-                        }`}
+                            : "ec561538-f3fd-461d-aff5-086b22154bce")
+                        }
                         alt=""
                       />
                       <span className="nick">{data.nickName}</span>
@@ -224,11 +227,12 @@ const BoardList: React.FC<BoardListProps> = ({
                   <td>
                     <div className="info">
                       <img
-                        src={`https://crafatar.com/renders/head/${
-                          data.uuid !== ""
+                        src={
+                          HEAD_LINK +
+                          (data.uuid !== ""
                             ? data.uuid
-                            : "ec561538-f3fd-461d-aff5-086b22154bce"
-                        }`}
+                            : "ec561538-f3fd-461d-aff5-086b22154bce")
+                        }
                         alt=""
                       />
                       <span className="nick">{data.nickName}</span>

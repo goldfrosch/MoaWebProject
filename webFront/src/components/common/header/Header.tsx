@@ -179,7 +179,7 @@ const Header: React.FC<HeaderProps> = ({ profile }) => {
                     개인 설정
                   </MenuItem>
                   {data.rank >= 5 && (
-                    <MenuItem>
+                    <MenuItem onClick={() => history.push("/admin")}>
                       <ListItemIcon>
                         <AdminPanelSettingsIcon fontSize="small" />
                       </ListItemIcon>

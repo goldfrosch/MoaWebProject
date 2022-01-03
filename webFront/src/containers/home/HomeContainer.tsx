@@ -22,14 +22,13 @@ const HomeContainer: React.FC<HomeContainerProps> = () => {
     updateList: [],
     photoList: []
   });
-  const getBanners = () => {
-    BannerAPI.getBanners()
-      .then((res: AxiosResponse) => {
-        setData(res.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  const getBanners = async () => {
+    try {
+      const { data } = await BannerAPI.getBanners();
+      setData(data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getHome = () => {

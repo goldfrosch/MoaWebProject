@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
 import App from "./App";
 
+import { QueryClientProvider, QueryClient } from "react-query";
+
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -12,6 +14,7 @@ import history from "utils/HistoryUtils";
 import GlobalStyle from "styles/Global";
 
 const sagaMiddleware = createSagaMiddleware();
+const queryClient = new QueryClient();
 
 const store = createStore(
   rootStore,
@@ -23,8 +26,10 @@ sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <GlobalStyle />
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <GlobalStyle />
+        <App />
+      </QueryClientProvider>
     </Router>
   </Provider>,
   document.getElementById("root")

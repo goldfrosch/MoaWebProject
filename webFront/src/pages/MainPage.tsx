@@ -15,6 +15,7 @@ import NotForbidden from "components/common/template/NotForbidden";
 import NotFound from "components/common/template/NotFound";
 
 import UserPage from "./UserPage";
+import AdminPage from "./AdminPage";
 
 const MainPage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -35,17 +36,18 @@ const MainPage = () => {
   });
 
   return (
-    <BaseTemplate>
-      <Switch>
+    <Switch>
+      <BaseTemplate>
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/register" component={RegisterContainer} />
         <Route path="/user" component={UserPage} />
         {/* Error Page */}
         <Route exact path="/forbidden" component={NotForbidden} />
-        <Route path={"*"} component={NotFound} />
-      </Switch>
-    </BaseTemplate>
+      </BaseTemplate>
+      <Route path="/admin" component={AdminPage} />
+      <Route path={"*"} component={NotFound} />
+    </Switch>
   );
 };
 
